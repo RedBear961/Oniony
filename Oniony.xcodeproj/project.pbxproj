@@ -7,13 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		050135D8232450C900872DC0 /* EasySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 050135D7232450C900872DC0 /* EasySwift.framework */; };
+		050135D9232450C900872DC0 /* EasySwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 050135D7232450C900872DC0 /* EasySwift.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		05F2ACB12323FB240066B45B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F2ACB02323FB240066B45B /* AppDelegate.swift */; };
 		05F2ACB32323FB240066B45B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F2ACB22323FB240066B45B /* SceneDelegate.swift */; };
 		05F2ACB72323FB260066B45B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05F2ACB62323FB260066B45B /* Assets.xcassets */; };
 		05F2ACBD2323FB260066B45B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05F2ACBB2323FB260066B45B /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		050135DA232450C900872DC0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				050135D9232450C900872DC0 /* EasySwift.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		050135D7232450C900872DC0 /* EasySwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EasySwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05F2ACAD2323FB240066B45B /* Oniony.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Oniony.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05F2ACB02323FB240066B45B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		05F2ACB22323FB240066B45B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -27,17 +44,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				050135D8232450C900872DC0 /* EasySwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		050135D6232450C900872DC0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				050135D7232450C900872DC0 /* EasySwift.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		05F2ACA42323FB240066B45B = {
 			isa = PBXGroup;
 			children = (
 				05F2ACAF2323FB240066B45B /* Oniony */,
 				05F2ACAE2323FB240066B45B /* Products */,
+				050135D6232450C900872DC0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,6 +98,8 @@
 				05F2ACA92323FB240066B45B /* Sources */,
 				05F2ACAA2323FB240066B45B /* Frameworks */,
 				05F2ACAB2323FB240066B45B /* Resources */,
+				050135DA232450C900872DC0 /* Embed Frameworks */,
+				050135DB232450EF00872DC0 /* [Carthage] Copy Script */,
 			);
 			buildRules = (
 			);
@@ -125,6 +154,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		050135DB232450EF00872DC0 /* [Carthage] Copy Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Swinject.framework",
+			);
+			name = "[Carthage] Copy Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		05F2ACA92323FB240066B45B /* Sources */ = {

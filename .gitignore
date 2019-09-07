@@ -2,3 +2,4 @@
 *.xcuserdatad
 *.xcuserstate
 Oniony.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+Carthage/Checkouts
