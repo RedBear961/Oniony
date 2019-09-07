@@ -13,6 +13,8 @@
 		050135E1232453EC00872DC0 /* Swinject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 050135E0232453EC00872DC0 /* Swinject.framework */; };
 		050135E2232453EC00872DC0 /* Swinject.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 050135E0232453EC00872DC0 /* Swinject.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		050135E42324541500872DC0 /* AutoAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050135E32324541500872DC0 /* AutoAssembly.swift */; };
+		0548CCC5232456E600247E07 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548CCC4232456E600247E07 /* AppCoordinator.swift */; };
+		0548CCC72324587900247E07 /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548CCC62324587900247E07 /* NavigationCoordinator.swift */; };
 		05F2ACB12323FB240066B45B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F2ACB02323FB240066B45B /* AppDelegate.swift */; };
 		05F2ACB32323FB240066B45B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F2ACB22323FB240066B45B /* SceneDelegate.swift */; };
 		05F2ACB72323FB260066B45B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05F2ACB62323FB260066B45B /* Assets.xcassets */; };
@@ -39,6 +41,8 @@
 		050135DE232453C100872DC0 /* SwinjectConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwinjectConfigurator.swift; sourceTree = "<group>"; };
 		050135E0232453EC00872DC0 /* Swinject.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swinject.framework; path = Carthage/Build/iOS/Swinject.framework; sourceTree = "<group>"; };
 		050135E32324541500872DC0 /* AutoAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoAssembly.swift; sourceTree = "<group>"; };
+		0548CCC4232456E600247E07 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		0548CCC62324587900247E07 /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		05F2ACAD2323FB240066B45B /* Oniony.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Oniony.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05F2ACB02323FB240066B45B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		05F2ACB22323FB240066B45B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +90,23 @@
 			path = "Dependency Injection";
 			sourceTree = "<group>";
 		};
+		0548CCC22324568900247E07 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				0548CCC3232456CE00247E07 /* Coordinator */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		0548CCC3232456CE00247E07 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				0548CCC62324587900247E07 /* NavigationCoordinator.swift */,
+				0548CCC4232456E600247E07 /* AppCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		05F2ACA42323FB240066B45B = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +130,7 @@
 				05F2ACB02323FB240066B45B /* AppDelegate.swift */,
 				05F2ACB22323FB240066B45B /* SceneDelegate.swift */,
 				050135DC2324535A00872DC0 /* Business Logic */,
+				0548CCC22324568900247E07 /* UI */,
 				05F2ACB62323FB260066B45B /* Assets.xcassets */,
 				05F2ACBB2323FB260066B45B /* LaunchScreen.storyboard */,
 				05F2ACBE2323FB260066B45B /* Info.plist */,
@@ -212,7 +234,9 @@
 			files = (
 				05F2ACB12323FB240066B45B /* AppDelegate.swift in Sources */,
 				050135DF232453C100872DC0 /* SwinjectConfigurator.swift in Sources */,
+				0548CCC5232456E600247E07 /* AppCoordinator.swift in Sources */,
 				05F2ACB32323FB240066B45B /* SceneDelegate.swift in Sources */,
+				0548CCC72324587900247E07 /* NavigationCoordinator.swift in Sources */,
 				050135E42324541500872DC0 /* AutoAssembly.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
