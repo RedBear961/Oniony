@@ -25,9 +25,13 @@ final public class AppCoordinator {
     /// DI-контейнер для работы координатора.
     private let container: Container
     
+    /// Следующий координатор.
+    /// Управляет модулем запуска приложения.
+    private var child: SplashScreenCoordinator?
+    
     /// Основной конструктор координатора для указанного окна и
     /// DI-контейнера.
-    public init(window: UIWindow, container: Container) {
+    public init(for window: UIWindow, in container: Container) {
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window
@@ -37,5 +41,8 @@ final public class AppCoordinator {
     /// Запускает навигацию проекта.
     /// Презентует модуль запуска приложения.
     public func start() {
+        let child = SplashScreenCoordinator(container: container)
+        child.show(on: navigationController)
+        self.child = child
     }
 }
