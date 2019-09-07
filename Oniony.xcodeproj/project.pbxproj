@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		050135D8232450C900872DC0 /* EasySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 050135D7232450C900872DC0 /* EasySwift.framework */; };
 		050135D9232450C900872DC0 /* EasySwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 050135D7232450C900872DC0 /* EasySwift.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		050135DF232453C100872DC0 /* SwinjectConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050135DE232453C100872DC0 /* SwinjectConfigurator.swift */; };
+		050135E1232453EC00872DC0 /* Swinject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 050135E0232453EC00872DC0 /* Swinject.framework */; };
+		050135E2232453EC00872DC0 /* Swinject.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 050135E0232453EC00872DC0 /* Swinject.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		050135E42324541500872DC0 /* AutoAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050135E32324541500872DC0 /* AutoAssembly.swift */; };
 		05F2ACB12323FB240066B45B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F2ACB02323FB240066B45B /* AppDelegate.swift */; };
 		05F2ACB32323FB240066B45B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F2ACB22323FB240066B45B /* SceneDelegate.swift */; };
 		05F2ACB72323FB260066B45B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05F2ACB62323FB260066B45B /* Assets.xcassets */; };
@@ -23,6 +27,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				050135D9232450C900872DC0 /* EasySwift.framework in Embed Frameworks */,
+				050135E2232453EC00872DC0 /* Swinject.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -31,6 +36,9 @@
 
 /* Begin PBXFileReference section */
 		050135D7232450C900872DC0 /* EasySwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EasySwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		050135DE232453C100872DC0 /* SwinjectConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwinjectConfigurator.swift; sourceTree = "<group>"; };
+		050135E0232453EC00872DC0 /* Swinject.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swinject.framework; path = Carthage/Build/iOS/Swinject.framework; sourceTree = "<group>"; };
+		050135E32324541500872DC0 /* AutoAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoAssembly.swift; sourceTree = "<group>"; };
 		05F2ACAD2323FB240066B45B /* Oniony.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Oniony.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05F2ACB02323FB240066B45B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		05F2ACB22323FB240066B45B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +53,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				050135D8232450C900872DC0 /* EasySwift.framework in Frameworks */,
+				050135E1232453EC00872DC0 /* Swinject.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,9 +63,27 @@
 		050135D6232450C900872DC0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				050135E0232453EC00872DC0 /* Swinject.framework */,
 				050135D7232450C900872DC0 /* EasySwift.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		050135DC2324535A00872DC0 /* Business Logic */ = {
+			isa = PBXGroup;
+			children = (
+				050135DD232453AE00872DC0 /* Dependency Injection */,
+			);
+			path = "Business Logic";
+			sourceTree = "<group>";
+		};
+		050135DD232453AE00872DC0 /* Dependency Injection */ = {
+			isa = PBXGroup;
+			children = (
+				050135DE232453C100872DC0 /* SwinjectConfigurator.swift */,
+				050135E32324541500872DC0 /* AutoAssembly.swift */,
+			);
+			path = "Dependency Injection";
 			sourceTree = "<group>";
 		};
 		05F2ACA42323FB240066B45B = {
@@ -81,6 +108,7 @@
 			children = (
 				05F2ACB02323FB240066B45B /* AppDelegate.swift */,
 				05F2ACB22323FB240066B45B /* SceneDelegate.swift */,
+				050135DC2324535A00872DC0 /* Business Logic */,
 				05F2ACB62323FB260066B45B /* Assets.xcassets */,
 				05F2ACBB2323FB260066B45B /* LaunchScreen.storyboard */,
 				05F2ACBE2323FB260066B45B /* Info.plist */,
@@ -183,7 +211,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				05F2ACB12323FB240066B45B /* AppDelegate.swift in Sources */,
+				050135DF232453C100872DC0 /* SwinjectConfigurator.swift in Sources */,
 				05F2ACB32323FB240066B45B /* SceneDelegate.swift in Sources */,
+				050135E42324541500872DC0 /* AutoAssembly.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +353,10 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 7C2D27973D;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Oniony/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -343,6 +377,10 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 7C2D27973D;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Oniony/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -12,6 +12,13 @@ import EasySwift
 /// Делегат приложения.
 @UIApplicationMain
 final public class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    /// Конфигурутор системы внедрения зависимостей проекта.
+    private let configurator: SwinjectConfigurator = {
+        let c = SwinjectConfigurator.shared
+        c.configure()
+        return c
+    }()
 
     /// Настраивает стандартную конфигурацию сцены.
     func application(
