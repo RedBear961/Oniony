@@ -196,6 +196,7 @@
 				050135DA232450C900872DC0 /* Embed Frameworks */,
 				050135DB232450EF00872DC0 /* [Carthage] Copy Script */,
 				050E3A9C2325373200197116 /* [SwiftGen] Run Script */,
+				050E3AA723254E4D00197116 /* [SwiftLint] Run Script */,
 			);
 			buildRules = (
 			);
@@ -289,6 +290,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Пути к рабочим файлам.\nSG_IM=\"Oniony/SwiftGen/Images.swift\"\nSG_ST=\"Oniony/SwiftGen/Strings.swift\"\n\n# Снимает защиту с файла генерации имен изображений.\nchmod +w \"$SRCROOT\"/\"$SG_IM\"\nchmod +w \"$SRCROOT\"/\"$SG_ST\"\n\n# Запускает кодогенерацию.\nswiftgen config run\n\n# Ставит защиту на генерируемые файлы.\nchmod -w \"$SRCROOT\"/\"$SG_IM\"\nchmod -w \"$SRCROOT\"/\"$SG_ST\"\n";
+		};
+		050E3AA723254E4D00197116 /* [SwiftLint] Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[SwiftLint] Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint --config \".swiftlint.yaml\"\nelse\n  echo \"Error: SwiftLint does not exist, download it from https://github.com/realm/SwiftLint.\"\n  exit 1\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

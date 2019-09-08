@@ -1,0 +1,40 @@
+disabled_rules:
+    #- function_parameter_count
+    #- nesting
+    - identifier_name
+    - weak_delegate
+    #- trailing_comma
+    - trailing_whitespace
+
+opt_in_rules:
+    - closure_end_indentation
+    - closure_parameter_position
+    - missing_docs
+    - closing_brace
+    - opening_brace
+    - return_arrow_whitespace
+    - trailing_semicolon
+    - statement_position
+    - colon
+    - empty_count
+
+excluded:
+    - Carthage/
+    - Frameworks/
+    - Oniony/SwiftGen/
+
+line_length: 110
+
+trailing_semicolon: error
+empty_count: error
+closing_brace: error
+opening_brace: error
+return_arrow_whitespace: error
+comma: error
+
+file_length:
+    warning: 500
+
+type_body_length:
+    warning: 400
+    error: 450
