@@ -16,6 +16,7 @@
 		050E3AA02325477B00197116 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 050E3AA22325477B00197116 /* Localizable.strings */; };
 		050E3AA52325478F00197116 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E3AA32325478F00197116 /* Images.swift */; };
 		050E3AA62325478F00197116 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E3AA42325478F00197116 /* Strings.swift */; };
+		050E3AA92325669D00197116 /* SplashScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E3AA82325669D00197116 /* SplashScreenPresenter.swift */; };
 		0548CCC5232456E600247E07 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548CCC4232456E600247E07 /* AppCoordinator.swift */; };
 		0548CCC72324587900247E07 /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548CCC62324587900247E07 /* NavigationCoordinator.swift */; };
 		0548CCCB23245D6800247E07 /* SplashScreenCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548CCCA23245D6800247E07 /* SplashScreenCoordinator.swift */; };
@@ -51,6 +52,7 @@
 		050E3AA12325477B00197116 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		050E3AA32325478F00197116 /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		050E3AA42325478F00197116 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		050E3AA82325669D00197116 /* SplashScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenPresenter.swift; sourceTree = "<group>"; };
 		0548CCC4232456E600247E07 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		0548CCC62324587900247E07 /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		0548CCCA23245D6800247E07 /* SplashScreenCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenCoordinator.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 			children = (
 				0548CCD2232463F200247E07 /* SplashScreenAssembly.swift */,
 				0548CCCA23245D6800247E07 /* SplashScreenCoordinator.swift */,
+				050E3AA82325669D00197116 /* SplashScreenPresenter.swift */,
 				0548CCCC23245EAF00247E07 /* SplashScreenController.swift */,
 				0548CCD023245EE100247E07 /* SplashScreen.swift */,
 			);
@@ -318,6 +321,7 @@
 			files = (
 				0548CCD123245EE100247E07 /* SplashScreen.swift in Sources */,
 				05F2ACB12323FB240066B45B /* AppDelegate.swift in Sources */,
+				050E3AA92325669D00197116 /* SplashScreenPresenter.swift in Sources */,
 				0548CCD3232463F200247E07 /* SplashScreenAssembly.swift in Sources */,
 				050E3AA52325478F00197116 /* Images.swift in Sources */,
 				050135DF232453C100872DC0 /* SwinjectConfigurator.swift in Sources */,

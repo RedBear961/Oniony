@@ -15,8 +15,9 @@ final public class SplashScreenAssembly: AutoAssembly {
     
     /// Отображение модуля.
     internal func splashScreen() {
-        container?.register(SplashScreen.self, factory: { (_) -> SplashScreen in
-            let spl = SplashScreen()
+        container?.register(SplashScreen.self, factory: { (resolver) -> SplashScreen in
+            let p = resolver.resolve(SplashScreenPresenter.self)!
+            let spl = SplashScreen(presenter: p)
             return spl
         })
     }
@@ -27,6 +28,14 @@ final public class SplashScreenAssembly: AutoAssembly {
             let view = resolver.resolve(SplashScreen.self)!
             let c = SplashScreenController(rootView: view)
             return c
+        })
+    }
+    
+    /// Презентер модуля.
+    internal func splashScreenPresenter() {
+        container?.register(SplashScreenPresenter.self, factory: { (_) -> SplashScreenPresenter in
+            let p = SplashScreenPresenter()
+            return p
         })
     }
 }
