@@ -18,7 +18,8 @@ final public class AppCoordinator {
     /// Корневой контроллер навигации приложения.
     public let navigationController: UINavigationController = {
         let nc = UINavigationController()
-        nc.setNavigationBarHidden(true, animated: false)
+        nc.navigationBar.isTranslucent = false
+        nc.navigationBar.shadowImage = UIImage()
         return nc
     }()
     

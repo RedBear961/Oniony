@@ -10,7 +10,7 @@ import SwiftUI
 import EasySwift
 
 /// Делегат сцены приложения.
-final public class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+final public class SceneDelegate: ESSceneDelegate {
 
     /// Основное окно приложения.
     public var window: UIWindow?
@@ -19,7 +19,7 @@ final public class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     public var coordinator: AppCoordinator?
 
     /// Сцена была создана.
-    public func windowSceneWillConnect(_ scene: UIWindowScene) {
+    public override func windowSceneWillConnect(_ scene: UIWindowScene) {
         let window = UIWindow(windowScene: scene)
         let container = SwinjectConfigurator.shared.container
         let coordinator = AppCoordinator(for: window, in: container)

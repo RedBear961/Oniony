@@ -14,7 +14,7 @@ import SwiftUI
 final public class SplashScreenAssembly: AutoAssembly {
     
     /// Отображение модуля.
-    private func splashScreen() {
+    internal func splashScreen() {
         container?.register(SplashScreen.self, factory: { (_) -> SplashScreen in
             let spl = SplashScreen()
             return spl
@@ -22,7 +22,7 @@ final public class SplashScreenAssembly: AutoAssembly {
     }
     
     /// Контроллер модуля.
-    private func splashScreenController() {
+    internal func splashScreenController() {
         container?.register(SplashScreenController.self, factory: { (resolver) -> SplashScreenController in
             let view = resolver.resolve(SplashScreen.self)!
             let c = SplashScreenController(rootView: view)

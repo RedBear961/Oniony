@@ -27,7 +27,6 @@ open class AutoAssembly: NSObject, Assembly {
     }
     
     /// Определяет все методы регистрации и выполняет их вызов.
-    @nonobjc
     private func invoke() {
         guard container.isSome else {
             fatalError("[Swinject] DI-контейнер не предоставлен!")
@@ -44,7 +43,8 @@ open class AutoAssembly: NSObject, Assembly {
             let pointer = methodList[i]
             let method = ObjCMethod(pointer)
             
-            if method.numberOfArguments != 2 ||
+            if method.name == #selector(NSObject.init) ||
+                method.numberOfArguments != 2 ||
                 !method.isVoid {
                 continue
             }

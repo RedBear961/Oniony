@@ -11,7 +11,7 @@ import EasySwift
 
 /// Делегат приложения.
 @UIApplicationMain
-final public class AppDelegate: UIResponder, UIApplicationDelegate {
+final public class AppDelegate: ESAppDelegate {
     
     /// Конфигурутор системы внедрения зависимостей проекта.
     private let configurator: SwinjectConfigurator = {
@@ -19,12 +19,4 @@ final public class AppDelegate: UIResponder, UIApplicationDelegate {
         c.configure()
         return c
     }()
-
-    /// Настраивает стандартную конфигурацию сцены.
-    func application(
-        _ application: UIApplication,
-        didConnect session: UISceneSession
-    ) -> UISceneConfiguration {
-        return UISceneConfiguration.default(role: session.role)
-    }
 }
