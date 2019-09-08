@@ -1,0 +1,64 @@
+/**
+ Image.swift
+
+ Oniony SwiftGen
+
+ This file was automatically generated and should not be edited.
+ */
+
+import UIKit.UIImage
+
+{% macro enumBlock assets sp %}
+{{sp}}{% call casesBlock assets sp %}
+{% endmacro %}
+{% macro casesBlock assets sp %}
+{{sp}}{% for asset in assets %}
+{{sp}}{% if asset.type == "image" %}
+
+{{sp}}public static var {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: UIImage {
+{{sp}}    return image(named: "{{asset.value}}")
+{{sp}}}
+{{sp}}{% elif asset.items %}
+
+{{sp}}public enum {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}} {
+{{sp}}{% set sp2 %}{{sp}}    {% endset %}
+{{sp}}{% call casesBlock asset.items sp2 %}
+{{sp}}}
+{{sp}}{% endif %}
+{{sp}}{% endfor %}
+{% endmacro %}
+{% macro allValuesBlock assets filter prefix sp %}
+{{sp}}{% for asset in assets %}
+{{sp}}{% if asset.type == filter %}
+{{sp}}{{prefix}}{{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}},
+{{sp}}{% elif asset.items %}
+{{sp}}{% set prefix2 %}{{prefix}}{{asset.name|swiftIdentifier:"pretty"|escapeReservedKeywords}}.{% endset %}
+{{sp}}{% call allValuesBlock asset.items filter prefix2 sp %}
+{{sp}}{% endif %}
+{{sp}}{% endfor %}
+{% endmacro %}
+/// Перечисление всех имен изображений проекта.
+/// Прозволяет получить доступ к любому изображению.
+public enum Images {
+    {% if catalogs.count > 1 %}
+    {% for catalog in catalogs %}
+    public enum {{catalog.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}} {
+        {% call enumBlock catalog.assets "    " %}
+    }
+    {% endfor %}
+    {% else %}
+    {% call enumBlock catalogs.first.assets "    " %}
+    {% endif %}
+}
+
+/// Приватное расширение для получения изображений по имени.
+private extension Images {
+
+    /// Получает изображение по его имени в каталоге.
+    static func image(named name: String) -> UIImage {
+        guard let image = UIImage(named: name) else {
+            fatalError("[SwiftGen] Не удалось получилось изображение с именем \(name).")
+        }
+        return image
+    }
+}

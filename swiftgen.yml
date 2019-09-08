@@ -1,0 +1,11 @@
+xcassets:
+  inputs: Oniony/Assets.xcassets
+  outputs:
+    - templatePath: SwiftGen/images.stencil
+      output: Oniony/SwiftGen/Images.swift
+
+strings:
+  inputs: Oniony/SwiftGen/en.lproj/Localizable.strings
+  outputs:
+    - templatePath: SwiftGen/strings.stencil
+      output: Oniony/SwiftGen/Strings.swift

@@ -13,6 +13,9 @@
 		050135E1232453EC00872DC0 /* Swinject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 050135E0232453EC00872DC0 /* Swinject.framework */; };
 		050135E2232453EC00872DC0 /* Swinject.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 050135E0232453EC00872DC0 /* Swinject.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		050135E42324541500872DC0 /* AutoAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050135E32324541500872DC0 /* AutoAssembly.swift */; };
+		050E3AA02325477B00197116 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 050E3AA22325477B00197116 /* Localizable.strings */; };
+		050E3AA52325478F00197116 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E3AA32325478F00197116 /* Images.swift */; };
+		050E3AA62325478F00197116 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E3AA42325478F00197116 /* Strings.swift */; };
 		0548CCC5232456E600247E07 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548CCC4232456E600247E07 /* AppCoordinator.swift */; };
 		0548CCC72324587900247E07 /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548CCC62324587900247E07 /* NavigationCoordinator.swift */; };
 		0548CCCB23245D6800247E07 /* SplashScreenCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548CCCA23245D6800247E07 /* SplashScreenCoordinator.swift */; };
@@ -45,6 +48,9 @@
 		050135DE232453C100872DC0 /* SwinjectConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwinjectConfigurator.swift; sourceTree = "<group>"; };
 		050135E0232453EC00872DC0 /* Swinject.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swinject.framework; path = Carthage/Build/iOS/Swinject.framework; sourceTree = "<group>"; };
 		050135E32324541500872DC0 /* AutoAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoAssembly.swift; sourceTree = "<group>"; };
+		050E3AA12325477B00197116 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		050E3AA32325478F00197116 /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		050E3AA42325478F00197116 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		0548CCC4232456E600247E07 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		0548CCC62324587900247E07 /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		0548CCCA23245D6800247E07 /* SplashScreenCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenCoordinator.swift; sourceTree = "<group>"; };
@@ -96,6 +102,16 @@
 				050135E32324541500872DC0 /* AutoAssembly.swift */,
 			);
 			path = "Dependency Injection";
+			sourceTree = "<group>";
+		};
+		050E3A9D232546F600197116 /* SwiftGen */ = {
+			isa = PBXGroup;
+			children = (
+				050E3AA22325477B00197116 /* Localizable.strings */,
+				050E3AA32325478F00197116 /* Images.swift */,
+				050E3AA42325478F00197116 /* Strings.swift */,
+			);
+			path = SwiftGen;
 			sourceTree = "<group>";
 		};
 		0548CCC22324568900247E07 /* UI */ = {
@@ -159,6 +175,7 @@
 				05F2ACB22323FB240066B45B /* SceneDelegate.swift */,
 				050135DC2324535A00872DC0 /* Business Logic */,
 				0548CCC22324568900247E07 /* UI */,
+				050E3A9D232546F600197116 /* SwiftGen */,
 				05F2ACB62323FB260066B45B /* Assets.xcassets */,
 				05F2ACBB2323FB260066B45B /* LaunchScreen.storyboard */,
 				05F2ACBE2323FB260066B45B /* Info.plist */,
@@ -178,6 +195,7 @@
 				05F2ACAB2323FB240066B45B /* Resources */,
 				050135DA232450C900872DC0 /* Embed Frameworks */,
 				050135DB232450EF00872DC0 /* [Carthage] Copy Script */,
+				050E3A9C2325373200197116 /* [SwiftGen] Run Script */,
 			);
 			buildRules = (
 			);
@@ -227,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05F2ACBD2323FB260066B45B /* LaunchScreen.storyboard in Resources */,
+				050E3AA02325477B00197116 /* Localizable.strings in Resources */,
 				05F2ACB72323FB260066B45B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -251,7 +270,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "# Копирует зависимости проекта в исполняемый пакет приложения.\n/usr/local/bin/carthage copy-frameworks\n";
+		};
+		050E3A9C2325373200197116 /* [SwiftGen] Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[SwiftGen] Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Пути к рабочим файлам.\nSG_IM=\"Oniony/SwiftGen/Images.swift\"\nSG_ST=\"Oniony/SwiftGen/Strings.swift\"\n\n# Снимает защиту с файла генерации имен изображений.\nchmod +w \"$SRCROOT\"/\"$SG_IM\"\nchmod +w \"$SRCROOT\"/\"$SG_ST\"\n\n# Запускает кодогенерацию.\nswiftgen config run\n\n# Ставит защиту на генерируемые файлы.\nchmod -w \"$SRCROOT\"/\"$SG_IM\"\nchmod -w \"$SRCROOT\"/\"$SG_ST\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -263,12 +300,14 @@
 				0548CCD123245EE100247E07 /* SplashScreen.swift in Sources */,
 				05F2ACB12323FB240066B45B /* AppDelegate.swift in Sources */,
 				0548CCD3232463F200247E07 /* SplashScreenAssembly.swift in Sources */,
+				050E3AA52325478F00197116 /* Images.swift in Sources */,
 				050135DF232453C100872DC0 /* SwinjectConfigurator.swift in Sources */,
 				0548CCCD23245EAF00247E07 /* SplashScreenController.swift in Sources */,
 				0548CCC5232456E600247E07 /* AppCoordinator.swift in Sources */,
 				0548CCCB23245D6800247E07 /* SplashScreenCoordinator.swift in Sources */,
 				05F2ACB32323FB240066B45B /* SceneDelegate.swift in Sources */,
 				0548CCC72324587900247E07 /* NavigationCoordinator.swift in Sources */,
+				050E3AA62325478F00197116 /* Strings.swift in Sources */,
 				050135E42324541500872DC0 /* AutoAssembly.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,6 +315,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		050E3AA22325477B00197116 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				050E3AA12325477B00197116 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		05F2ACBB2323FB260066B45B /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

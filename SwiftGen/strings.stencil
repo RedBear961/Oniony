@@ -1,0 +1,68 @@
+/**
+ Localization.swift
+
+ Oniony SwiftGen
+
+ This file was automatically generated and should not be edited.
+ */
+
+import Foundation
+{# Объявление вспомогательных макросов #}
+{% macro parametersBlock types %}{% filter removeNewlines:"leading" %}
+  {% for type in types %}
+    _ p{{forloop.counter}}: {{type}}{% if not forloop.last %}, {% endif %}
+  {% endfor %}
+{% endfilter %}{% endmacro %}
+{% macro argumentsBlock types %}{% filter removeNewlines:"leading" %}
+  {% for type in types %}
+    p{{forloop.counter}}{% if not forloop.last %}, {% endif %}
+  {% endfor %}
+{% endfilter %}{% endmacro %}
+{# Объявление макроса который создает либо вложенный enum либо статичную константу для доступа к значению #}
+{% macro recursiveBlock table item sp %}
+{{sp}}{% for string in item.strings %}
+{{sp}}{% if string.types %}
+{{sp}}public static func {{string.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}({% call parametersBlock string.types %}) -> String {
+{{sp}}    return localize("{{string.key}}", {% call argumentsBlock string.types %})
+{{sp}}}
+{{sp}}{% else %}
+
+{{sp}}public static let {{string.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}} = localize("{{string.key}}")
+{{sp}}{% endif %}
+{{sp}}{% endfor %}
+{{sp}}{% for child in item.children %}
+
+{{sp}}public enum {{child.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}} {
+{{sp}}
+{{sp}}{% set sp2 %}{{sp}}    {% endset %}
+{{sp}}{% call recursiveBlock table child sp2 %}
+{{sp}}}
+{{sp}}{% endfor %}
+{% endmacro %}
+
+/// Перечисление ключей локализации.
+/// Позволяет получить доступ к любой строке локализации.
+public enum Strings {
+    {% if tables.count > 1 %}
+    {% for table in tables %}
+    public enum {{table.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}} {
+        {% call recursiveBlock table.name table.levels "    " %}
+    }
+    {% endfor %}
+
+    {% else %}
+    {% call recursiveBlock tables.first.name tables.first.levels "    " %}
+    {% endif %}
+}
+
+/// Приватное расширение для получения строк локализации по ключам.
+private extension Strings {
+
+    /// Получает строку локализации по ключу.
+    static func localize(_ key: String, _ args: CVarArg...) -> String {
+        let format = NSLocalizedString(key, comment: "")
+        return String(format: format,
+                      locale: Locale.current,
+                      arguments: args)
+    }
+}
