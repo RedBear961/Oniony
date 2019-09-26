@@ -17,6 +17,8 @@
 		050E3AA52325478F00197116 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E3AA32325478F00197116 /* Images.swift */; };
 		050E3AA62325478F00197116 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E3AA42325478F00197116 /* Strings.swift */; };
 		050E3AA92325669D00197116 /* SplashScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E3AA82325669D00197116 /* SplashScreenPresenter.swift */; };
+		051D81D1233C981200370DFB /* OnionDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051D81D0233C981200370DFB /* OnionDirector.swift */; };
+		051D81D4233C988700370DFB /* DirectorAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051D81D3233C988700370DFB /* DirectorAssembly.swift */; };
 		0548CCC5232456E600247E07 /* SplashScreenCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548CCC4232456E600247E07 /* SplashScreenCoordinator.swift */; };
 		0548CCC72324587900247E07 /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548CCC62324587900247E07 /* NavigationCoordinator.swift */; };
 		0548CCCD23245EAF00247E07 /* SplashScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548CCCC23245EAF00247E07 /* SplashScreenController.swift */; };
@@ -52,6 +54,8 @@
 		050E3AA32325478F00197116 /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		050E3AA42325478F00197116 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		050E3AA82325669D00197116 /* SplashScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenPresenter.swift; sourceTree = "<group>"; };
+		051D81D0233C981200370DFB /* OnionDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnionDirector.swift; sourceTree = "<group>"; };
+		051D81D3233C988700370DFB /* DirectorAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorAssembly.swift; sourceTree = "<group>"; };
 		0548CCC4232456E600247E07 /* SplashScreenCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenCoordinator.swift; sourceTree = "<group>"; };
 		0548CCC62324587900247E07 /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		0548CCCC23245EAF00247E07 /* SplashScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenController.swift; sourceTree = "<group>"; };
@@ -90,6 +94,7 @@
 		050135DC2324535A00872DC0 /* Business Logic */ = {
 			isa = PBXGroup;
 			children = (
+				051D81CF233C961200370DFB /* Director */,
 				050135DD232453AE00872DC0 /* Dependency Injection */,
 			);
 			path = "Business Logic";
@@ -98,6 +103,7 @@
 		050135DD232453AE00872DC0 /* Dependency Injection */ = {
 			isa = PBXGroup;
 			children = (
+				051D81D2233C987200370DFB /* Assembly */,
 				050135DE232453C100872DC0 /* SwinjectConfigurator.swift */,
 				050135E32324541500872DC0 /* AutoAssembly.swift */,
 			);
@@ -112,6 +118,22 @@
 				050E3AA42325478F00197116 /* Strings.swift */,
 			);
 			path = SwiftGen;
+			sourceTree = "<group>";
+		};
+		051D81CF233C961200370DFB /* Director */ = {
+			isa = PBXGroup;
+			children = (
+				051D81D0233C981200370DFB /* OnionDirector.swift */,
+			);
+			path = Director;
+			sourceTree = "<group>";
+		};
+		051D81D2233C987200370DFB /* Assembly */ = {
+			isa = PBXGroup;
+			children = (
+				051D81D3233C988700370DFB /* DirectorAssembly.swift */,
+			);
+			path = Assembly;
 			sourceTree = "<group>";
 		};
 		0548CCC22324568900247E07 /* UI */ = {
@@ -142,8 +164,8 @@
 		0548CCC923245D4700247E07 /* Splash Screen */ = {
 			isa = PBXGroup;
 			children = (
-				0548CCC4232456E600247E07 /* SplashScreenCoordinator.swift */,
 				0548CCD2232463F200247E07 /* SplashScreenAssembly.swift */,
+				0548CCC4232456E600247E07 /* SplashScreenCoordinator.swift */,
 				050E3AA82325669D00197116 /* SplashScreenPresenter.swift */,
 				0548CCCC23245EAF00247E07 /* SplashScreenController.swift */,
 				0548CCD023245EE100247E07 /* SplashScreen.swift */,
@@ -327,6 +349,8 @@
 				05F2ACB32323FB240066B45B /* SceneDelegate.swift in Sources */,
 				0548CCC72324587900247E07 /* NavigationCoordinator.swift in Sources */,
 				050E3AA62325478F00197116 /* Strings.swift in Sources */,
+				051D81D4233C988700370DFB /* DirectorAssembly.swift in Sources */,
+				051D81D1233C981200370DFB /* OnionDirector.swift in Sources */,
 				050135E42324541500872DC0 /* AutoAssembly.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

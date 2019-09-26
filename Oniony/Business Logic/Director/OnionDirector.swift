@@ -20,21 +20,13 @@
 * THE SOFTWARE.
 */
 
-import SwiftUI
+import Foundation
 
-/// Презентер модуля запуска.
-final public class SplashScreenPresenter: ObservableObject {
-    
-    /// Прогресс загрузки.
-    @Published public var progress: CGFloat = 0
-    
-    /// Описание текущего процента загрузки.
-    @Published public var description = "Идет загрузка тор-сети..."
-    
-    /// Директор тор-сети.
-    @Environment(\.onionDirector) private var onionDirector: NetworkDirector
-    
-    /// Начинает запуск приложения, загрузку тор-сети.
-    public func beginLaunch() {
-    }
+/// Протокол директора сети.
+public protocol NetworkDirector {
+}
+
+/// Директор тор-сети.
+/// Запускает и управляет тор-сетью.
+final public class OnionDirector: NetworkDirector {
 }

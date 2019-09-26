@@ -20,21 +20,28 @@
 * THE SOFTWARE.
 */
 
+import Swinject
 import SwiftUI
 
-/// Презентер модуля запуска.
-final public class SplashScreenPresenter: ObservableObject {
-    
-    /// Прогресс загрузки.
-    @Published public var progress: CGFloat = 0
-    
-    /// Описание текущего процента загрузки.
-    @Published public var description = "Идет загрузка тор-сети..."
+/// Сборщик директоров проекта.
+final public class DirectorAssembly: AutoAssembly {
+
+    /// Директор тор-сети.
+    /// Является синглтоном.
+    internal func onionDirector() {
+        container?.register(OnionDirector.self, factory: { (_) -> OnionDirector in
+            let director = OnionDirector()
+            return director
+        }).inObjectScope(.container)
+    }
+}
+
+internal extension EnvironmentValues {
     
     /// Директор тор-сети.
-    @Environment(\.onionDirector) private var onionDirector: NetworkDirector
-    
-    /// Начинает запуск приложения, загрузку тор-сети.
-    public func beginLaunch() {
+    /// Является синглтоном.
+    var onionDirector: NetworkDirector {
+        let container = SwinjectConfigurator.shared.container
+        return container.resolve(OnionDirector.self)!
     }
 }

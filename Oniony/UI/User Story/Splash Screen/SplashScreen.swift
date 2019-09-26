@@ -26,7 +26,7 @@ import SwiftUI
 public struct SplashScreen: View {
     
     /// Презентер модуля.
-    @Environment(\.splashScreenPresenter) private var presenter
+    @Environment(\.splashScreenPresenter) private var presenter: SplashScreenPresenter
       
     /// Глобальный отступ сверху.
     @State private var offset: CGFloat = -5
@@ -90,6 +90,10 @@ public struct SplashScreen: View {
             withAnimation(.easeInOut(duration: 1)) {
                 self.offset = self.endOffset
                 self.isStart = true
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.presenter.beginLaunch()
             }
         }
     }
