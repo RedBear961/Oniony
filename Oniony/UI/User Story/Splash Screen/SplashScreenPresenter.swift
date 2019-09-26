@@ -32,9 +32,30 @@ final public class SplashScreenPresenter: ObservableObject {
     @Published public var description = "Идет загрузка тор-сети..."
     
     /// Директор тор-сети.
-    @Environment(\.onionDirector) private var onionDirector: NetworkDirector
+    internal var onionDirector: NetworkDirector!
     
     /// Начинает запуск приложения, загрузку тор-сети.
     public func beginLaunch() {
+        self.onionDirector.subscribe(toStartup: self)
+        self.onionDirector.start()
+    }
+}
+
+extension SplashScreenPresenter: NetworkDirectorStartupDelegate {
+    
+    /// Начат запуск тор-сети.
+    public func networkDidStartLaunching(_ director: NetworkDirector) {
+    }
+    
+    /// Статус запуска  тор-сети обновился.
+    public func network(_ director: NetworkDirector, didUpdate progress: CGFloat, status: String) {
+        DispatchQueue.main.async {
+            self.progress = progress
+            self.description = status
+        }
+    }
+    
+    /// Тор-сеть запущена.
+    public func networkDidFinishLaunching(_ director: NetworkDirector) {
     }
 }

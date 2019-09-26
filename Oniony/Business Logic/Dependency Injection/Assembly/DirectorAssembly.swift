@@ -34,14 +34,14 @@ final public class DirectorAssembly: AutoAssembly {
             return director
         }).inObjectScope(.container)
     }
-}
-
-internal extension EnvironmentValues {
     
-    /// Директор тор-сети.
-    /// Является синглтоном.
-    var onionDirector: NetworkDirector {
-        let container = SwinjectConfigurator.shared.container
-        return container.resolve(OnionDirector.self)!
+    #if DEBUG
+    /// Мок директора тор-сети.
+    /// Не загружает тор, но имитирует процессы загрузки/ перезагрузки.
+    internal func mockOnionDirector() {
+        container?.register(MockOnionDirector.self, factory: { (_) -> MockOnionDirector in
+            return MockOnionDirector()
+        }).inObjectScope(.container)
     }
+    #endif
 }

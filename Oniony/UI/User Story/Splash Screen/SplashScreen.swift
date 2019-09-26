@@ -26,13 +26,16 @@ import SwiftUI
 public struct SplashScreen: View {
     
     /// Презентер модуля.
-    @Environment(\.splashScreenPresenter) private var presenter: SplashScreenPresenter
+    @ObservedObject public var presenter: SplashScreenPresenter
       
     /// Глобальный отступ сверху.
     @State private var offset: CGFloat = -5
     
     /// Стартовала ли анимация.
     @State private var isStart = false
+    
+    /// Показывать ли прогресс.
+    @State private var isShowProgress = false
     
     /// Конечный глобальный отступ сверху.
     private let endOffset: CGFloat = -45
@@ -47,8 +50,7 @@ public struct SplashScreen: View {
                 .foregroundColor(.white)
                 .shadow(color: Color(white: 0, opacity: 0.2), radius: 6, y: 4)
                 .offset(y: endOffset)
-                .opacity(isStart ? 1 : 0)
-                .animation(Animation.easeInOut(duration: 0.5).delay(1))
+                .opacity(isShowProgress ? 1 : 0)
           
             // Круглая полоска прогресса.
             Circle()
@@ -58,8 +60,8 @@ public struct SplashScreen: View {
                 .foregroundColor(.blue)
                 .frame(width: 100, height: 100)
                 .offset(y: endOffset)
-                .opacity(isStart ? 1 : 0)
-                .animation(Animation.easeInOut(duration: 0.5).delay(1))
+                .opacity(isShowProgress ? 1 : 0)
+                .animation(Animation.easeInOut(duration: 0.35))
               
             // Логотип приложения.
             Image(uiImage: Images.app.logo)
@@ -75,21 +77,23 @@ public struct SplashScreen: View {
             Text(presenter.progress.percent)
                 .font(.headline)
                 .bold()
-                .opacity(isStart ? 1 : 0)
+                .opacity(isShowProgress ? 1 : 0)
                 .offset(y: 40)
-                .animation(Animation.easeInOut(duration: 0.5).delay(1))
           
             // Описание статуса загрузки.
             Text(presenter.description)
                 .font(.footnote)
-                .opacity(isStart ? 1 : 0)
+                .opacity(isShowProgress ? 1 : 0)
                 .offset(y: 65)
-                .animation(Animation.easeInOut(duration: 0.5).delay(1))
         }
         .onAppear {
             withAnimation(.easeInOut(duration: 1)) {
                 self.offset = self.endOffset
                 self.isStart = true
+            }
+            
+            withAnimation(Animation.easeIn(duration: 0.5).delay(1)) {
+                self.isShowProgress = true
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
@@ -103,7 +107,7 @@ public struct SplashScreen: View {
 /// Превью для дебага.
 private struct Preview: PreviewProvider {
     static var previews: some View {
-        SplashScreen()
+        SplashScreen(presenter: SplashScreenPresenter())
     }
 }
 #endif
