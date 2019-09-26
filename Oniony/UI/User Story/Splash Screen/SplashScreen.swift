@@ -1,9 +1,23 @@
-/**
- SplashScreen.swift
-
- Oniony
-
- Copyright (c) 2019 WebView, Lab. All rights reserved.
+/*
+* Copyright (c) 2019  WebView, Lab
+*
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
 */
 
 import SwiftUI
@@ -12,31 +26,29 @@ import SwiftUI
 public struct SplashScreen: View {
     
     /// Презентер модуля.
-    @ObservedObject public var presenter: SplashScreenPresenter
+    @Environment(\.splashScreenPresenter) private var presenter
       
     /// Глобальный отступ сверху.
-    @State private var offset = CGFloat()
+    @State private var offset: CGFloat = -5
     
-    /// Прозрачность полей прогресса загрузки.
-    @State private var progressOpacity = 0.0
+    /// Стартовала ли анимация.
+    @State private var isStart = false
     
-    /// Прозрачность логотипа.
-    @State private var titleOpacity = 1.0
-    
-    /// Цвет тени обводки прогресса.
-    private let shadowColor = Color(white: 0).opacity(0.2)
+    /// Конечный глобальный отступ сверху.
+    private let endOffset: CGFloat = -45
 
+    /// Контент отображения.
     public var body: some View {
-        let topOffset = UINavigationBar.topOffset / 2
-        return ZStack {
+        ZStack {
             // Круговой контейнер для полоски прогресса.
             Circle()
                 .path(in: CGRect(x: 10, y: 10, width: 110, height: 110))
                 .frame(width: 130, height: 130)
                 .foregroundColor(.white)
-                .shadow(color: shadowColor, radius: 6, y: 4)
-                .offset(y: offset - topOffset)
-                .opacity(progressOpacity)
+                .shadow(color: Color(white: 0, opacity: 0.2), radius: 6, y: 4)
+                .offset(y: endOffset)
+                .opacity(isStart ? 1 : 0)
+                .animation(Animation.easeInOut(duration: 0.5).delay(1))
           
             // Круглая полоска прогресса.
             Circle()
@@ -45,50 +57,49 @@ public struct SplashScreen: View {
                 .stroke(lineWidth: 10)
                 .foregroundColor(.blue)
                 .frame(width: 100, height: 100)
-                .offset(y: offset - topOffset)
-                .opacity(progressOpacity)
+                .offset(y: endOffset)
+                .opacity(isStart ? 1 : 0)
+                .animation(Animation.easeInOut(duration: 0.5).delay(1))
               
             // Логотип приложения.
             Image(uiImage: Images.app.logo)
-                .offset(y: offset - topOffset)
+                .offset(y: offset)
             
             // Лейбл приложения.
             Text("Oniony")
                 .font(.title)
-                .offset(y: topOffset + 21.5)
-                .opacity(titleOpacity)
+                .offset(y: 71)
+                .opacity(isStart ? 0 : 1)
           
             //  Процент загрузки.
-            Text("\(Int(presenter.progress * 100))%")
+            Text(presenter.progress.percent)
                 .font(.headline)
                 .bold()
-                .opacity(progressOpacity)
-                .offset(y: topOffset - 10)
+                .opacity(isStart ? 1 : 0)
+                .offset(y: 40)
+                .animation(Animation.easeInOut(duration: 0.5).delay(1))
           
             // Описание статуса загрузки.
             Text(presenter.description)
                 .font(.footnote)
-                .opacity(progressOpacity)
-                .offset(y: topOffset + 20)
+                .opacity(isStart ? 1 : 0)
+                .offset(y: 65)
+                .animation(Animation.easeInOut(duration: 0.5).delay(1))
         }
         .onAppear {
             withAnimation(.easeInOut(duration: 1)) {
-                self.offset = -40
-                self.titleOpacity = 0
-            }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                withAnimation(.easeInOut(duration: 0.5)) {
-                    self.progressOpacity = 1
-                }
+                self.offset = self.endOffset
+                self.isStart = true
             }
         }
     }
 }
 
+#if DEBUG
 /// Превью для дебага.
 private struct Preview: PreviewProvider {
     static var previews: some View {
-        SplashScreen(presenter: SplashScreenPresenter())
+        SplashScreen()
     }
 }
+#endif

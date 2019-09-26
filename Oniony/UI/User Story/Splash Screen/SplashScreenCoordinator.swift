@@ -1,36 +1,48 @@
-/**
- SplashScreenCoordinator.swift
- 
- Oniony
- 
- Copyright (c) 2019 WebView, Lab. All rights reserved.
- */
+/*
+* Copyright (c) 2019  WebView, Lab
+*
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*/
 
-import SwiftUI
-import EasySwift
+import UIKit
 import Swinject
 
-/// Координатор модуля запуска.
-final public class SplashScreenCoordinator: NavigationCoordinator {
-
-    /// Контроллер модуля запуска.
-    public let controller: SplashScreenController
+/// Основной координатор навигации приложения.
+final public class SplashScreenCoordinator {
     
-    /// DI-контейнер.
+    /// Основное окно приложения.
+    public let window: UIWindow
+    
+    /// DI-контейнер для работы координатора.
     private let container: Container
     
-    /// Основной конструктор.
-    public init(container: Container) {
-        self.controller = container.resolve(SplashScreenController.self)!
+    /// Основной конструктор координатора для указанного окна и
+    /// DI-контейнера.
+    public init(for window: UIWindow, in container: Container) {
+        self.window = window
         self.container = container
     }
     
-    /// Отображает модуль запуска.
-    public func show(on controller: UIViewController) {
-        guard let navVC = controller as? UINavigationController else {
-            fatalError("SplashScreenCoordinator", "Необходимо предоставить контроллер навигации!")
-        }
-        
-        navVC.pushViewController(self.controller, animated: true)
+    /// Запускает навигацию проекта.
+    /// Презентует модуль запуска приложения.
+    public func start() {
+        self.window.rootViewController = container.resolve(SplashScreenController.self)!
+        self.window.makeKeyAndVisible()
     }
 }
