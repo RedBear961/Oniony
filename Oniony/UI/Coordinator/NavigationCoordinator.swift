@@ -33,7 +33,7 @@ public protocol NavigationCoordinator {
     associatedtype Parent: UIViewController
     
     /// Управляемый модуль.
-    var controller: Controller { get }
+    var controller: Controller! { get }
     
     /// Основной конструктор координатора.
     /// - Parameter container: DI-контейнер приложения.

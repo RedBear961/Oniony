@@ -22,23 +22,9 @@
 
 import SwiftUI
 
-/// Отображение переключения вкладок.
-public struct TabSelector: View {
-    
-    /// Презентер модуля.
-    @ObservedObject public var presenter: TabSelectorPresenter
-    
-    /// Контент отображения.
-    public var body: some View {
-        Text("TabSelector")
-    }
-}
+/// Презентер модуля переключения вкладок.
+final public class TabSelectorPresenter: ObservableObject {
 
-#if DEBUG
-/// Превью для дебага.
-struct TabSelector_Previews: PreviewProvider {
-    static var previews: some View {
-        TabSelector(presenter: TabSelectorPresenter())
-    }
+    /// Координатор модуля.
+    internal var coordinator: TabSelectorCoordinator!
 }
-#endif

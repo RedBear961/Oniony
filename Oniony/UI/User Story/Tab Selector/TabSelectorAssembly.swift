@@ -23,23 +23,37 @@
 import Swinject
 import SwiftUI
 
+// swiftlint:disable line_length
+
 /// Сборщик модуля переключения вкладок.
 final public class TabSelectorAssembly: AutoAssembly {
     
     /// Отображение модуля.
     internal func tabSelector() {
-        container?.register(TabSelector.self, factory: { (_) -> TabSelector in
-            let ts = TabSelector()
+        container?.register(TabSelector.self, factory: { (_, presenter: TabSelectorPresenter) -> TabSelector in
+            let ts = TabSelector(presenter: presenter)
             return ts
         })
     }
 
     /// Контроллер модуля.
     internal func tabSelectorController() {
-        container?.register(TabSelectorController.self, factory: { (resolver) -> TabSelectorController in
-            let tb = resolver.resolve(TabSelector.self)!
+        container?.register(TabSelectorController.self, factory: { (resolver, coordinator: TabSelectorCoordinator) -> TabSelectorController in
+            let presenter = resolver.resolve(TabSelectorPresenter.self, argument: coordinator)!
+            let tb = resolver.resolve(TabSelector.self, argument: presenter)!
             let controller = TabSelectorController(rootView: tb)
             return controller
         })
     }
+    
+    /// Презентер модуля.
+    internal func tabSelectorPresenter() {
+        container?.register(TabSelectorPresenter.self, factory: { (_, coordinator: TabSelectorCoordinator) -> TabSelectorPresenter in
+            let presenter = TabSelectorPresenter()
+            presenter.coordinator = coordinator
+            return presenter
+        })
+    }
 }
+
+// swiftlint:enable line_length

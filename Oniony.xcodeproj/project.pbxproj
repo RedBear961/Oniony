@@ -17,6 +17,7 @@
 		050E3AA52325478F00197116 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E3AA32325478F00197116 /* Images.swift */; };
 		050E3AA62325478F00197116 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E3AA42325478F00197116 /* Strings.swift */; };
 		050E3AA92325669D00197116 /* SplashScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E3AA82325669D00197116 /* SplashScreenPresenter.swift */; };
+		0512C717233F8569007CC258 /* TabSelectorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0512C716233F8569007CC258 /* TabSelectorPresenter.swift */; };
 		051D81D1233C981200370DFB /* OnionDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051D81D0233C981200370DFB /* OnionDirector.swift */; };
 		051D81D4233C988700370DFB /* DirectorAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051D81D3233C988700370DFB /* DirectorAssembly.swift */; };
 		051D81D7233CC07400370DFB /* TabSelectorCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051D81D6233CC07400370DFB /* TabSelectorCoordinator.swift */; };
@@ -60,6 +61,7 @@
 		050E3AA32325478F00197116 /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		050E3AA42325478F00197116 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		050E3AA82325669D00197116 /* SplashScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenPresenter.swift; sourceTree = "<group>"; };
+		0512C716233F8569007CC258 /* TabSelectorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectorPresenter.swift; sourceTree = "<group>"; };
 		051D81D0233C981200370DFB /* OnionDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnionDirector.swift; sourceTree = "<group>"; };
 		051D81D3233C988700370DFB /* DirectorAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorAssembly.swift; sourceTree = "<group>"; };
 		051D81D6233CC07400370DFB /* TabSelectorCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectorCoordinator.swift; sourceTree = "<group>"; };
@@ -151,8 +153,9 @@
 		051D81D5233CBFAD00370DFB /* Tab Selector */ = {
 			isa = PBXGroup;
 			children = (
-				059727C7233CCA8A004D17B4 /* TabSelectorAssembly.swift */,
 				051D81DC233CC31C00370DFB /* Coordination */,
+				059727C7233CCA8A004D17B4 /* TabSelectorAssembly.swift */,
+				0512C716233F8569007CC258 /* TabSelectorPresenter.swift */,
 				051D81D8233CC0CE00370DFB /* TabSelectorController.swift */,
 				051D81DA233CC0EB00370DFB /* TabSelector.swift */,
 			);
@@ -163,8 +166,8 @@
 			isa = PBXGroup;
 			children = (
 				051D81D6233CC07400370DFB /* TabSelectorCoordinator.swift */,
-				051D81DD233CC36700370DFB /* TabSelectorAnimatedTransitioning.swift */,
 				059727C5233CC6FD004D17B4 /* TabSelectorTransitioningDelegate.swift */,
+				051D81DD233CC36700370DFB /* TabSelectorAnimatedTransitioning.swift */,
 			);
 			path = Coordination;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				050E3AA52325478F00197116 /* Images.swift in Sources */,
 				051D81D7233CC07400370DFB /* TabSelectorCoordinator.swift in Sources */,
 				050135DF232453C100872DC0 /* SwinjectConfigurator.swift in Sources */,
+				0512C717233F8569007CC258 /* TabSelectorPresenter.swift in Sources */,
 				0548CCCD23245EAF00247E07 /* SplashScreenController.swift in Sources */,
 				051D81DB233CC0EB00370DFB /* TabSelector.swift in Sources */,
 				0548CCC5232456E600247E07 /* SplashScreenCoordinator.swift in Sources */,

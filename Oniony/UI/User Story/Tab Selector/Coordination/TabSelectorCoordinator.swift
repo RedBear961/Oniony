@@ -27,7 +27,7 @@ import SwiftUI
 final public class TabSelectorCoordinator: NavigationCoordinator {
 
     /// Модуль переключения вкладок.
-    public private(set) var controller: TabSelectorController
+    public private(set) var controller: TabSelectorController!
     
     /// DI-контейнер для работы координатора.
     private var container: Container
@@ -38,16 +38,16 @@ final public class TabSelectorCoordinator: NavigationCoordinator {
     /// Основной конструктор координатора.
     /// - Parameter container: DI-контейнер приложения.
     public init(container: Container) {
-        let controller = container.resolve(TabSelectorController.self)!
+        self.container = container
+        
+        let controller = container.resolve(TabSelectorController.self, argument: self)!
         controller.transitioningDelegate = transitiongDelegate
         controller.modalPresentationStyle = .fullScreen
-        
         self.controller = controller
-        self.container = container
     }
 
     /// Запускает показ модуля.
     public func show(on controller: SplashScreenController) {
-        controller.present(self.controller, animated: true)
+        controller.present(self.controller!, animated: true)
     }
 }

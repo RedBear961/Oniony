@@ -31,7 +31,7 @@ final public class SplashScreenCoordinator {
     public let window: UIWindow
     
     /// Контроллер модуля запуска.
-    public private(set) var controller: SplashScreenController?
+    public private(set) var controller: SplashScreenController!
     
     /// DI-контейнер для работы координатора.
     private let container: Container
@@ -49,16 +49,13 @@ final public class SplashScreenCoordinator {
     /// Запускает навигацию проекта.
     /// Презентует модуль запуска приложения.
     public func start() {
-        self.controller = container.resolve(SplashScreenController.self, argument: self)
+        self.controller = container.resolve(SplashScreenController.self, argument: self)!
         self.window.rootViewController = controller
         self.window.makeKeyAndVisible()
     }
     
     /// Показывает модуль переключения вкладок.
     public func showTabSelector() {
-        guard let controller = controller else {
-            fatalError("SplashScreenCoordinator", "Контроллер модуля запуска не был создан!")
-        }
         let child = TabSelectorCoordinator(container: container)
         self.child = child
         child.show(on: controller)
