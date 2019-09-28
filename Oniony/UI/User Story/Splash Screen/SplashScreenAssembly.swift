@@ -23,22 +23,24 @@
 import Swinject
 import SwiftUI
 
+// swiftlint:disable line_length
+
 /// Сборщик модуля запуска.
 @objcMembers
 final public class SplashScreenAssembly: AutoAssembly {
     
     /// Отображение модуля.
     internal func splashScreen() {
-        container?.register(SplashScreen.self, factory: { (resolver) -> SplashScreen in
-            let p = resolver.resolve(SplashScreenPresenter.self)!
+        container?.register(SplashScreen.self, factory: { (resolver, coordinator: SplashScreenCoordinator) -> SplashScreen in
+            let p = resolver.resolve(SplashScreenPresenter.self, argument: coordinator)!
             return SplashScreen(presenter: p)
         })
     }
     
     /// Контроллер модуля.
     internal func splashScreenController() {
-        container?.register(SplashScreenController.self, factory: { (resolver) -> SplashScreenController in
-            let view = resolver.resolve(SplashScreen.self)!
+        container?.register(SplashScreenController.self, factory: { (resolver, coordinator: SplashScreenCoordinator) -> SplashScreenController in
+            let view = resolver.resolve(SplashScreen.self, argument: coordinator)!
             let c = SplashScreenController(rootView: view)
             return c
         })
@@ -46,9 +48,10 @@ final public class SplashScreenAssembly: AutoAssembly {
     
     /// Презентер модуля.
     internal func splashScreenPresenter() {
-        container?.register(SplashScreenPresenter.self, factory: { (resolver) -> SplashScreenPresenter in
+        container?.register(SplashScreenPresenter.self, factory: { (resolver, coordinator: SplashScreenCoordinator) -> SplashScreenPresenter in
             let p = SplashScreenPresenter()
             p.onionDirector = resolver.resolve(MockOnionDirector.self)!
+            p.coordinator = coordinator
             return p
         })
     }
@@ -62,3 +65,5 @@ internal extension EnvironmentValues {
         return container.resolve(SplashScreenPresenter.self)!
     }
 }
+
+// swiftlint:enable line_length

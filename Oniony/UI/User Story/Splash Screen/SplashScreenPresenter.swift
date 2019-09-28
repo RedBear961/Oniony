@@ -34,6 +34,9 @@ final public class SplashScreenPresenter: ObservableObject {
     /// Директор тор-сети.
     internal var onionDirector: NetworkDirector!
     
+    /// Координатор модуля.
+    internal var coordinator: SplashScreenCoordinator!
+    
     /// Начинает запуск приложения, загрузку тор-сети.
     public func beginLaunch() {
         self.onionDirector.subscribe(toStartup: self)
@@ -57,5 +60,8 @@ extension SplashScreenPresenter: NetworkDirectorStartupDelegate {
     
     /// Тор-сеть запущена.
     public func networkDidFinishLaunching(_ director: NetworkDirector) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.coordinator.showTabSelector()
+        }
     }
 }

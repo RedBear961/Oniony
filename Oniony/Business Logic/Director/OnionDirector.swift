@@ -91,7 +91,7 @@ final public class MockOnionDirector: NetworkDirector {
             self.startupDelegate?.networkDidStartLaunching(self)
         }
         
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (_) in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { (_) in
             DispatchQueue.global().async {
                 self.tick()
             }
