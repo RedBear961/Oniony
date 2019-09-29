@@ -29,9 +29,6 @@ public protocol NetworkDirector {
     /// Делегат запуска сети.
     var startupDelegate: NetworkDirectorStartupDelegate? { get set }
     
-    /// Подписывает класс на события запуска.
-    func subscribe(toStartup delegate: NetworkDirectorStartupDelegate?)
-    
     /// Запускает сеть.
     func start()
 }
@@ -57,10 +54,6 @@ final public class OnionDirector: NetworkDirector {
     /// Делегат запуска сети.
     unowned public var startupDelegate: NetworkDirectorStartupDelegate?
     
-    public func subscribe(toStartup delegate: NetworkDirectorStartupDelegate?) {
-        self.startupDelegate = delegate
-    }
-    
     /// Запускает сеть.
     public func start() {
     }
@@ -79,11 +72,6 @@ final public class MockOnionDirector: NetworkDirector {
     
     /// Текущее время.
     private var time: TimeInterval = 0
-    
-    /// Подписывает класс на события запуска.
-    public func subscribe(toStartup delegate: NetworkDirectorStartupDelegate?) {
-        self.startupDelegate = delegate
-    }
     
     /// Запускает сеть.
     public func start() {

@@ -39,7 +39,7 @@ final public class SplashScreenPresenter: ObservableObject {
     
     /// Начинает запуск приложения, загрузку тор-сети.
     public func beginLaunch() {
-        self.onionDirector.subscribe(toStartup: self)
+        self.onionDirector.startupDelegate = self
         self.onionDirector.start()
     }
 }
