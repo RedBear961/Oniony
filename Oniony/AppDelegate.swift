@@ -27,10 +27,26 @@ import EasySwift
 @UIApplicationMain
 final public class AppDelegate: ESAppDelegate {
     
+    /// Контроллер вкладок.
+    lazy private var tabsManager: TabsManagement = {
+        let container = configurator.container
+        return container.resolve(TabsController.self)!
+    }()
+    
     /// Конфигурутор системы внедрения зависимостей проекта.
     private let configurator: SwinjectConfigurator = {
         let c = SwinjectConfigurator.shared
         c.configure()
         return c
     }()
+    
+    /// Приложение было запущено.
+    public func applicationDidFinishLaunching(_ application: UIApplication) {
+        tabsManager.beginSession()
+    }
+    
+    /// Приложение будет завершено.
+    public func applicationWillTerminate(_ application: UIApplication) {
+        tabsManager.finishSession()
+    }
 }

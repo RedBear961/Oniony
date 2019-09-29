@@ -21,7 +21,22 @@
 */
 
 import UIKit
+import SwiftUI
 import EasySwift
+
+/// Псевдонимм адреса, для внесения ясности, что
+/// используемый адрес зарезервирован браузером.
+public typealias ReservedURL = URL
+
+/// Расширение URL, определяющее зарезервированные
+/// адреса.
+public extension URL {
+    
+    /// Адрес пустой страницы `about:blank`.
+    static var blank: ReservedURL {
+        return URL(string: "about:blank")!
+    }
+}
 
 /// Модель веб-вкладки.
 public struct Tab {
@@ -30,25 +45,46 @@ public struct Tab {
     ///
     /// Хранит отображение для повышения производительности.
     /// Экземпляр этого отображения уже отрисовал свой
-    /// контент, что необходимо вво избежании перезагрузок
+    /// контент, что необходимо во избежании перезагрузок
     /// при каждом новом появлении вкладки на экране.
     public let webView: WebView
     
     /// Заголовок текущей страницы.
     public var title: String? {
+        if webView.request.isNone {
+            return URL.blank.absoluteString
+        }
         return webView.stringByEvaluatingJavaScript(from: "document.title")
     }
     
     /// Создает новую вкладку с адресом `about:blank`.
     public init() {
         let webView = WebView()
-        webView.loadHTMLString("", baseURL: URL(string: "about:blank"))
+        webView.loadHTMLString("", baseURL: .blank)
         self.webView = webView
+        webView.frame = defaultRect()
+    }
+    
+    /// Создает новую вкладку и загружает адрес.
+    public init(with url: URL) {
+        let webView = WebView()
+        self.webView = webView
+        webView.frame = defaultRect()
+        
+        let request = URLRequest(url: url)
+        webView.loadRequest(request)
     }
     
     /// Получает заголовок текущей страницы без использования JS.
     @available(*, unavailable)
     public func titleWithoutJS() -> String? {
         return nil
+    }
+    
+    /// Вычисляет размер вкладки по-умолчанию.
+    private func defaultRect() -> CGRect {
+        let screenSize = UIScreen.main.bounds.size
+        let resultSize = screenSize.applying(CGAffineTransform(scaleX: 0.3, y: 0.3))
+        return CGRect(origin: .zero, size: resultSize.rounded)
     }
 }

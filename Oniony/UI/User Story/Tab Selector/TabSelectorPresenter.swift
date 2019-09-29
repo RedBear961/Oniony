@@ -20,11 +20,66 @@
 * THE SOFTWARE.
 */
 
-import SwiftUI
+import Foundation
+
+/// Протокол презентера модуля переключения вкладок.
+public protocol TabSelectorPresenting {
+    
+    /// Модуль был загружен.
+    func viewDidLoad()
+    
+    /// Отображение будет показано.
+    func viewWillAppear()
+    
+    /// Отображение было показано.
+    func viewDidAppear()
+    
+    /// Количество секций коллекции.
+    func numberOfSection() -> UInt
+    
+    /// Количество элементов в секции.
+    func numberOfItems(in section: UInt) -> UInt
+    
+    /// Модель ячейки для индекса пути.
+    func item(at indexPath: IndexPath) -> Tab
+}
 
 /// Презентер модуля переключения вкладок.
-final public class TabSelectorPresenter: ObservableObject {
+final public class TabSelectorPresenter: TabSelectorPresenting {
 
     /// Координатор модуля.
     internal var coordinator: TabSelectorCoordinator!
+    
+    /// Контроллер вкладок.
+    internal var tabsController: TabsManagement!
+    
+    /// Модуль был загружен.
+    public func viewDidLoad() {
+    }
+    
+    /// Отображение будет показано.
+    public func viewWillAppear() {
+    }
+    
+    /// Отображение было показано.
+    public func viewDidAppear() {
+    }
+}
+
+public extension TabSelectorPresenter {
+    
+    /// Количество секций коллекции.
+    func numberOfSection() -> UInt {
+        return 1
+    }
+    
+    /// Количество элементов в секции.
+    func numberOfItems(in section: UInt) -> UInt {
+        return 3
+    }
+    
+    /// Модель ячейки для индекса пути.
+    func item(at indexPath: IndexPath) -> Tab {
+        Tab()
+    }
 }

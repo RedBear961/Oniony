@@ -22,11 +22,12 @@
 		0512C71D233F89AF007CC258 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0512C71C233F89AF007CC258 /* Tab.swift */; };
 		0512C71F233F908B007CC258 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0512C71E233F908B007CC258 /* Preferences.swift */; };
 		0512C721234098E3007CC258 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0512C720234098E3007CC258 /* UserDefaults.swift */; };
+		0512C7252340B250007CC258 /* TabsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0512C7242340B250007CC258 /* TabsController.swift */; };
+		0512C7272340BADD007CC258 /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0512C7262340BADD007CC258 /* ServiceAssembly.swift */; };
 		051D81D1233C981200370DFB /* OnionDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051D81D0233C981200370DFB /* OnionDirector.swift */; };
 		051D81D4233C988700370DFB /* DirectorAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051D81D3233C988700370DFB /* DirectorAssembly.swift */; };
 		051D81D7233CC07400370DFB /* TabSelectorCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051D81D6233CC07400370DFB /* TabSelectorCoordinator.swift */; };
 		051D81D9233CC0CE00370DFB /* TabSelectorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051D81D8233CC0CE00370DFB /* TabSelectorController.swift */; };
-		051D81DB233CC0EB00370DFB /* TabSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051D81DA233CC0EB00370DFB /* TabSelector.swift */; };
 		051D81DE233CC36700370DFB /* TabSelectorAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051D81DD233CC36700370DFB /* TabSelectorAnimatedTransitioning.swift */; };
 		0548CCC5232456E600247E07 /* SplashScreenCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548CCC4232456E600247E07 /* SplashScreenCoordinator.swift */; };
 		0548CCC72324587900247E07 /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548CCC62324587900247E07 /* NavigationCoordinator.swift */; };
@@ -35,6 +36,7 @@
 		0548CCD3232463F200247E07 /* SplashScreenAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0548CCD2232463F200247E07 /* SplashScreenAssembly.swift */; };
 		059727C6233CC6FD004D17B4 /* TabSelectorTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059727C5233CC6FD004D17B4 /* TabSelectorTransitioningDelegate.swift */; };
 		059727C8233CCA8A004D17B4 /* TabSelectorAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 059727C7233CCA8A004D17B4 /* TabSelectorAssembly.swift */; };
+		05C77B6D23412CB300489475 /* TabSelectorController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05C77B6C23412CB300489475 /* TabSelectorController.storyboard */; };
 		05F2ACB12323FB240066B45B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F2ACB02323FB240066B45B /* AppDelegate.swift */; };
 		05F2ACB32323FB240066B45B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F2ACB22323FB240066B45B /* SceneDelegate.swift */; };
 		05F2ACB72323FB260066B45B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05F2ACB62323FB260066B45B /* Assets.xcassets */; };
@@ -70,11 +72,12 @@
 		0512C71C233F89AF007CC258 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		0512C71E233F908B007CC258 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		0512C720234098E3007CC258 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		0512C7242340B250007CC258 /* TabsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsController.swift; sourceTree = "<group>"; };
+		0512C7262340BADD007CC258 /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
 		051D81D0233C981200370DFB /* OnionDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnionDirector.swift; sourceTree = "<group>"; };
 		051D81D3233C988700370DFB /* DirectorAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorAssembly.swift; sourceTree = "<group>"; };
 		051D81D6233CC07400370DFB /* TabSelectorCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectorCoordinator.swift; sourceTree = "<group>"; };
 		051D81D8233CC0CE00370DFB /* TabSelectorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectorController.swift; sourceTree = "<group>"; };
-		051D81DA233CC0EB00370DFB /* TabSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelector.swift; sourceTree = "<group>"; };
 		051D81DD233CC36700370DFB /* TabSelectorAnimatedTransitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectorAnimatedTransitioning.swift; sourceTree = "<group>"; };
 		0548CCC4232456E600247E07 /* SplashScreenCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenCoordinator.swift; sourceTree = "<group>"; };
 		0548CCC62324587900247E07 /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
@@ -83,6 +86,7 @@
 		0548CCD2232463F200247E07 /* SplashScreenAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenAssembly.swift; sourceTree = "<group>"; };
 		059727C5233CC6FD004D17B4 /* TabSelectorTransitioningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectorTransitioningDelegate.swift; sourceTree = "<group>"; };
 		059727C7233CCA8A004D17B4 /* TabSelectorAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectorAssembly.swift; sourceTree = "<group>"; };
+		05C77B6C23412CB300489475 /* TabSelectorController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TabSelectorController.storyboard; sourceTree = "<group>"; };
 		05F2ACAD2323FB240066B45B /* Oniony.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Oniony.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05F2ACB02323FB240066B45B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		05F2ACB22323FB240066B45B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -149,6 +153,7 @@
 				0512C720234098E3007CC258 /* UserDefaults.swift */,
 				0512C71E233F908B007CC258 /* Preferences.swift */,
 				0512C719233F8916007CC258 /* TabsStorage.swift */,
+				0512C7242340B250007CC258 /* TabsController.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -173,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				051D81D3233C988700370DFB /* DirectorAssembly.swift */,
+				0512C7262340BADD007CC258 /* ServiceAssembly.swift */,
 			);
 			path = Assembly;
 			sourceTree = "<group>";
@@ -184,7 +190,7 @@
 				059727C7233CCA8A004D17B4 /* TabSelectorAssembly.swift */,
 				0512C716233F8569007CC258 /* TabSelectorPresenter.swift */,
 				051D81D8233CC0CE00370DFB /* TabSelectorController.swift */,
-				051D81DA233CC0EB00370DFB /* TabSelector.swift */,
+				05C77B6C23412CB300489475 /* TabSelectorController.storyboard */,
 			);
 			path = "Tab Selector";
 			sourceTree = "<group>";
@@ -332,6 +338,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05C77B6D23412CB300489475 /* TabSelectorController.storyboard in Resources */,
 				05F2ACBD2323FB260066B45B /* LaunchScreen.storyboard in Resources */,
 				050E3AA02325477B00197116 /* Localizable.strings in Resources */,
 				05F2ACB72323FB260066B45B /* Assets.xcassets in Resources */,
@@ -412,15 +419,16 @@
 				0512C721234098E3007CC258 /* UserDefaults.swift in Sources */,
 				059727C6233CC6FD004D17B4 /* TabSelectorTransitioningDelegate.swift in Sources */,
 				050E3AA52325478F00197116 /* Images.swift in Sources */,
+				0512C7252340B250007CC258 /* TabsController.swift in Sources */,
 				051D81D7233CC07400370DFB /* TabSelectorCoordinator.swift in Sources */,
 				050135DF232453C100872DC0 /* SwinjectConfigurator.swift in Sources */,
 				0512C717233F8569007CC258 /* TabSelectorPresenter.swift in Sources */,
 				0548CCCD23245EAF00247E07 /* SplashScreenController.swift in Sources */,
-				051D81DB233CC0EB00370DFB /* TabSelector.swift in Sources */,
 				0548CCC5232456E600247E07 /* SplashScreenCoordinator.swift in Sources */,
 				0512C71F233F908B007CC258 /* Preferences.swift in Sources */,
 				051D81DE233CC36700370DFB /* TabSelectorAnimatedTransitioning.swift in Sources */,
 				05F2ACB32323FB240066B45B /* SceneDelegate.swift in Sources */,
+				0512C7272340BADD007CC258 /* ServiceAssembly.swift in Sources */,
 				0548CCC72324587900247E07 /* NavigationCoordinator.swift in Sources */,
 				0512C71D233F89AF007CC258 /* Tab.swift in Sources */,
 				050E3AA62325478F00197116 /* Strings.swift in Sources */,

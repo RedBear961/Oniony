@@ -22,38 +22,32 @@
 
 import Swinject
 import SwiftUI
+import EasySwift
 
-// swiftlint:disable line_length
+// swiftlint:disable line_length force_cast
 
 /// Сборщик модуля переключения вкладок.
 final public class TabSelectorAssembly: AutoAssembly {
-    
-    /// Отображение модуля.
-    internal func tabSelector() {
-        container?.register(TabSelector.self, factory: { (_, presenter: TabSelectorPresenter) -> TabSelector in
-            let ts = TabSelector(presenter: presenter)
-            return ts
-        })
-    }
 
     /// Контроллер модуля.
     internal func tabSelectorController() {
         container?.register(TabSelectorController.self, factory: { (resolver, coordinator: TabSelectorCoordinator) -> TabSelectorController in
-            let presenter = resolver.resolve(TabSelectorPresenter.self, argument: coordinator)!
-            let tb = resolver.resolve(TabSelector.self, argument: presenter)!
-            let controller = TabSelectorController(rootView: tb)
+            let storyboard = UIStoryboard(name: "TabSelectorController", bundle: nil)
+            let controller = storyboard.instantiateInitialViewController() as! TabSelectorController
+            controller.presenter = resolver.resolve(TabSelectorPresenter.self, argument: coordinator)!
             return controller
         })
     }
     
     /// Презентер модуля.
     internal func tabSelectorPresenter() {
-        container?.register(TabSelectorPresenter.self, factory: { (_, coordinator: TabSelectorCoordinator) -> TabSelectorPresenter in
+        container?.register(TabSelectorPresenter.self, factory: { (resolver, coordinator: TabSelectorCoordinator) -> TabSelectorPresenter in
             let presenter = TabSelectorPresenter()
             presenter.coordinator = coordinator
+            presenter.tabsController = resolver.resolve(TabsController.self)
             return presenter
         })
     }
 }
 
-// swiftlint:enable line_length
+// swiftlint:enable line_length force_cast

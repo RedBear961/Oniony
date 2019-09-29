@@ -20,25 +20,16 @@
 * THE SOFTWARE.
 */
 
-import SwiftUI
+import UIKit
 
-/// Отображение переключения вкладок.
-public struct TabSelector: View {
-    
-    /// Презентер модуля.
-    @ObservedObject public var presenter: TabSelectorPresenter
-    
-    /// Контент отображения.
-    public var body: some View {
-        Text("TabSelector")
+/// Сборщик сервисов проекта.
+final public class ServiceAssembly: AutoAssembly {
+
+    /// Контроллер вкладок.
+    internal func tabsController() {
+        container?.register(TabsController.self, factory: { (_) -> TabsController in
+            let controller = TabsController()
+            return controller
+        }).inObjectScope(.container)
     }
 }
-
-#if DEBUG
-/// Превью для дебага.
-struct TabSelector_Previews: PreviewProvider {
-    static var previews: some View {
-        TabSelector(presenter: TabSelectorPresenter())
-    }
-}
-#endif

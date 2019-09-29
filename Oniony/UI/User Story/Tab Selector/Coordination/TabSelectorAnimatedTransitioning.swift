@@ -43,6 +43,7 @@ final public class TabSelectorAnimatedTransitioning: NSObject, UIViewControllerA
         to.alpha = 0
         to.frame = from.frame
         to.transform = reducedScale
+        to.backgroundColor = .white
         container.addSubview(to)
         
         UIView.animate(withDuration: duration, animations: {

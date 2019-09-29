@@ -20,8 +20,16 @@
 * THE SOFTWARE.
 */
 
-import SwiftUI
+import UIKit
 
 /// Модуль переключения вкладок.
-final public class TabSelectorController: UIHostingController<TabSelector> {
+final public class TabSelectorController: UIViewController {
+    
+    /// Презентер модуля.
+    public var presenter: TabSelectorPresenting!
+    
+    /// Модуль был загружен.
+    public override func viewDidLoad() {
+        presenter.viewDidLoad()
+    }
 }
