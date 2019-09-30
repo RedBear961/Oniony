@@ -91,8 +91,12 @@ public struct Tab {
     /// Кэширует изображение.
     /// Смена адреса приводит к удалению кэша.
     public func snapshot(in rect: CGRect = .zero) -> UIImage {
-        let image = webView.draw() ?? UIImage()
-        return image
+        let rect = UIScreen.main.bounds
+        guard let image = webView.draw(in: rect, scale: 1) else {
+            return UIImage()
+        }
+        
+        return image.scaled(by: 0.4) ?? UIImage()
     }
     
     /// Получает заголовок текущей страницы без использования JS.
@@ -104,7 +108,7 @@ public struct Tab {
     /// Вычисляет размер вкладки по-умолчанию.
     private func defaultRect() -> CGRect {
         let screenSize = UIScreen.main.bounds.size
-        let resultSize = screenSize.applying(CGAffineTransform(scaleX: 0.3, y: 0.3))
+        let resultSize = screenSize.applying(CGAffineTransform(scaleX: 0.4, y: 0.4))
         return CGRect(origin: .zero, size: resultSize.rounded)
     }
 }
