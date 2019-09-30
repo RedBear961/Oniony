@@ -35,10 +35,10 @@ public protocol TabSelectorPresenting {
     func viewDidAppear()
     
     /// Количество секций коллекции.
-    func numberOfSection() -> UInt
+    func numberOfSections() -> Int
     
     /// Количество элементов в секции.
-    func numberOfItems(in section: UInt) -> UInt
+    func numberOfItems(in section: Int) -> Int
     
     /// Модель ячейки для индекса пути.
     func item(at indexPath: IndexPath) -> Tab
@@ -69,17 +69,17 @@ final public class TabSelectorPresenter: TabSelectorPresenting {
 public extension TabSelectorPresenter {
     
     /// Количество секций коллекции.
-    func numberOfSection() -> UInt {
-        return 1
+    func numberOfSections() -> Int {
+        return 2
     }
     
     /// Количество элементов в секции.
-    func numberOfItems(in section: UInt) -> UInt {
-        return 3
+    func numberOfItems(in section: Int) -> Int {
+        return section == 0 ? 2 : 1
     }
     
     /// Модель ячейки для индекса пути.
     func item(at indexPath: IndexPath) -> Tab {
-        Tab()
+        return tabsController.tabs[indexPath.section + indexPath.row]
     }
 }

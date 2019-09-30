@@ -76,11 +76,14 @@ public protocol TabsControlDelegate: class {
 final public class TabsController: TabsManagement {
 
     /// Все открытые вкладки.
-    public var tabs: [Tab]
+    public var tabs: [Tab] = [
+        Tab(with: URL(string: "https://yandex.ru")!),
+        Tab(with: URL(string: "https://google.com")!),
+        Tab(with: URL(string: "https://mail.ru")!)
+    ]
     
     /// Основной конструктор.
     public init() {
-        self.tabs = [Tab(), Tab(), Tab()]
     }
     
     /// Текущая вкладка.

@@ -21,7 +21,7 @@
 */
 
 import Swinject
-import SwiftUI
+import UIKit
 
 /// Координатор модуля переключения вкладок.
 final public class TabSelectorCoordinator: NavigationCoordinator {
@@ -34,20 +34,28 @@ final public class TabSelectorCoordinator: NavigationCoordinator {
     
     /// Делегат перехода на контроллер переключения вкладок.
     private var transitiongDelegate = TabSelectorTransitioningDelegate()
+    
+    /// Контроллер навигации.
+    private var navigationController: UINavigationController = {
+        let nc = UINavigationController()
+        nc.navigationBar.barStyle = .black
+        nc.isToolbarHidden = false
+        nc.toolbar.barStyle = .black
+        return nc
+    }()
 
     /// Основной конструктор координатора.
     /// - Parameter container: DI-контейнер приложения.
     public init(container: Container) {
         self.container = container
-        
-        let controller = container.resolve(TabSelectorController.self, argument: self)!
-        controller.transitioningDelegate = transitiongDelegate
-        controller.modalPresentationStyle = .fullScreen
-        self.controller = controller
+        self.controller = container.resolve(TabSelectorController.self, argument: self)!
+        navigationController.transitioningDelegate = transitiongDelegate
+        navigationController.modalPresentationStyle = .fullScreen
     }
 
     /// Запускает показ модуля.
     public func show(on controller: SplashScreenController) {
-        controller.present(self.controller!, animated: true)
+        navigationController.pushViewController(self.controller!, animated: true)
+        controller.present(navigationController, animated: true)
     }
 }
