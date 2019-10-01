@@ -71,7 +71,7 @@ public extension TabSelectorController {
             withReuseIdentifier: TabViewCell.selfIdentifier,
             for: indexPath
         ) as! TabViewCell
-        cell.imageView.image = data.snapshot()
+        cell.configure(using: data)
         return cell
     }
 }

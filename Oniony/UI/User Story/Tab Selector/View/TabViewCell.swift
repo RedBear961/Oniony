@@ -22,7 +22,24 @@
 
 import UIKit
 
+/// Ячейка коллекции для отображения вкладки.
 final public class TabViewCell: UICollectionViewCell {
     
+    /// Имя вкладки.
+    @IBOutlet var name: UILabel!
+    
+    /// Изображение вкладки.
     @IBOutlet var imageView: UIImageView!
+    
+    /// Настраивает ячейку после загрузки из XIB.
+    public override func awakeFromNib() {
+        layer.cornerRadius = 10
+    }
+    
+    /// Настраивает ячейку с помощью модели.
+    public func configure(using tab: Tab) {
+        name.text = tab.title
+        let image = tab.snapshot(in: bounds)
+        imageView.image = image
+    }
 }

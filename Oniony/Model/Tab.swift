@@ -49,17 +49,6 @@ public struct Tab {
     /// при каждом новом появлении вкладки на экране.
     public let webView: WebView
     
-    /// URL последней страницы для которой сделан снэпшот.
-    ///
-    /// Если текущий адрес равен этому, то возьмет снэпшот
-    /// из памяти, в противном случае сделает еще один.
-    private var snapshotURL: URL?
-    
-    /// Снэпшот страницы.
-    ///
-    /// При смене адреса, этот снэпшот будет перезаписан.
-    private var snapshot: UIImage?
-    
     /// Заголовок текущей страницы.
     public var title: String? {
         if webView.request.isNone {
@@ -87,16 +76,22 @@ public struct Tab {
     }
     
     /// Создает снэпшот текущей страницы.
-    ///
-    /// Кэширует изображение.
-    /// Смена адреса приводит к удалению кэша.
     public func snapshot(in rect: CGRect = .zero) -> UIImage {
-        let rect = UIScreen.main.bounds
-        guard let image = webView.draw(in: rect, scale: 1) else {
+        let screenRect = UIScreen.main.bounds
+        guard let image = webView.draw(in: screenRect, scale: 1) else {
             return UIImage()
         }
         
-        return image.scaled(by: 0.4) ?? UIImage()
+        if rect != .zero {
+            guard let scaled = image.scaled(toWidth: rect.width),
+                let cropped = scaled.cropped(in: rect) else {
+                return UIImage()
+            }
+            
+            return cropped
+        }
+        
+        return image
     }
     
     /// Получает заголовок текущей страницы без использования JS.
