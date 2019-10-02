@@ -28,12 +28,18 @@ final public class TabViewCell: UICollectionViewCell {
     /// Имя вкладки.
     @IBOutlet var name: UILabel!
     
+    /// Обводка вкладки.
+    @IBOutlet var borderView: UIView!
+    
     /// Изображение вкладки.
     @IBOutlet var imageView: UIImageView!
     
     /// Настраивает ячейку после загрузки из XIB.
     public override func awakeFromNib() {
         layer.cornerRadius = 10
+        borderView.layer.borderWidth = 5
+        borderView.layer.borderColor = UIColor.gray.cgColor
+        borderView.layer.cornerRadius = 10
     }
     
     /// Настраивает ячейку с помощью модели.

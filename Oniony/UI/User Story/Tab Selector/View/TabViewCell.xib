@@ -3,7 +3,6 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,15 +18,19 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f2Z-mO-23m">
                         <rect key="frame" x="0.0" y="0.0" width="200" height="150"/>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="le9-pn-z3u">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="150"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                     <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tVb-em-wXC">
-                        <rect key="frame" x="0.0" y="0.0" width="200" height="20"/>
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="30"/>
                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="epc-2b-4G2">
-                            <rect key="frame" x="0.0" y="0.0" width="200" height="20"/>
+                            <rect key="frame" x="0.0" y="0.0" width="200" height="30"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;Имя вкладки&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0lJ-nx-SCh">
-                                    <rect key="frame" x="10" y="2" width="98" height="16"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <rect key="frame" x="10" y="6" width="111" height="18"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -38,24 +41,28 @@
                             </constraints>
                         </view>
                         <constraints>
-                            <constraint firstAttribute="height" constant="20" id="eTv-6K-t0n"/>
+                            <constraint firstAttribute="height" constant="30" id="eTv-6K-t0n"/>
                         </constraints>
                         <blurEffect style="dark"/>
                     </visualEffectView>
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="f2Z-mO-23m" firstAttribute="bottom" secondItem="ZTg-uK-7eu" secondAttribute="bottom" id="5Dq-5r-2Bo"/>
+                <constraint firstItem="f2Z-mO-23m" firstAttribute="bottom" secondItem="gTV-IL-0wX" secondAttribute="bottom" id="5Dq-5r-2Bo"/>
                 <constraint firstAttribute="top" secondItem="f2Z-mO-23m" secondAttribute="top" id="5bi-UL-Ss9"/>
                 <constraint firstAttribute="trailing" secondItem="f2Z-mO-23m" secondAttribute="trailing" id="Cbq-Sq-juF"/>
-                <constraint firstItem="tVb-em-wXC" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="YvZ-jR-UTy"/>
+                <constraint firstItem="le9-pn-z3u" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="MCA-pm-84Q"/>
+                <constraint firstItem="tVb-em-wXC" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="YvZ-jR-UTy"/>
+                <constraint firstItem="le9-pn-z3u" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Zxv-vJ-BSv"/>
                 <constraint firstAttribute="top" secondItem="tVb-em-wXC" secondAttribute="top" id="bf3-vR-ZDA"/>
                 <constraint firstItem="tVb-em-wXC" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" id="jUH-q9-Lr8"/>
-                <constraint firstItem="f2Z-mO-23m" firstAttribute="leading" secondItem="ZTg-uK-7eu" secondAttribute="leading" id="ojw-sm-MQK"/>
+                <constraint firstAttribute="trailing" secondItem="le9-pn-z3u" secondAttribute="trailing" id="l9J-r1-M6L"/>
+                <constraint firstItem="f2Z-mO-23m" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ojw-sm-MQK"/>
+                <constraint firstAttribute="bottom" secondItem="le9-pn-z3u" secondAttribute="bottom" id="pFk-LE-8mH"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="202" height="134"/>
             <connections>
+                <outlet property="borderView" destination="le9-pn-z3u" id="bkz-qq-wVa"/>
                 <outlet property="imageView" destination="f2Z-mO-23m" id="lQi-Bn-ZeE"/>
                 <outlet property="name" destination="0lJ-nx-SCh" id="uBE-sJ-4Vb"/>
             </connections>

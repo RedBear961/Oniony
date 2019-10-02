@@ -22,6 +22,8 @@
 
 import Foundation
 
+private let kItemsInSection = 2
+
 /// Протокол презентера модуля переключения вкладок.
 public protocol TabSelectorPresenting {
     
@@ -70,16 +72,22 @@ public extension TabSelectorPresenter {
     
     /// Количество секций коллекции.
     func numberOfSections() -> Int {
-        return 2
+        let tabsCount = tabsController.tabs.count
+        let sections = tabsController.tabs.count / kItemsInSection
+        let isIncrease = tabsCount - sections > 0
+        return isIncrease ? sections + 1 : sections
     }
     
     /// Количество элементов в секции.
     func numberOfItems(in section: Int) -> Int {
-        return section == 0 ? 2 : 1
+        let fullSections = section * kItemsInSection
+        let remaining = tabsController.tabs.count - fullSections
+        return remaining < kItemsInSection ? remaining : kItemsInSection
     }
     
     /// Модель ячейки для индекса пути.
     func item(at indexPath: IndexPath) -> Tab {
-        return tabsController.tabs[indexPath.section + indexPath.row]
+        let fullSections = indexPath.section * kItemsInSection
+        return tabsController.tabs[fullSections + indexPath.row]
     }
 }
