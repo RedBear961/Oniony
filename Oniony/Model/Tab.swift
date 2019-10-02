@@ -49,12 +49,23 @@ public struct Tab {
     /// при каждом новом появлении вкладки на экране.
     public let webView: WebView
     
+    /// Кэш хранения картинки для повышения производительности.
+    private let cache: NSCache<NSString, UIImage> = {
+        let c = NSCache<NSString, UIImage>()
+        c.countLimit = 1
+        return c
+    }()
+    
+    /// Уникальный идентификатор вкладки для использования кэша.
+    private let identifier: NSString = UUID().uuidString as NSString
+    
     /// Заголовок текущей страницы.
-    public var title: String? {
+    public var title: String {
         if webView.request.isNone {
             return URL.blank.absoluteString
         }
-        return webView.stringByEvaluatingJavaScript(from: "document.title")
+        let title = webView.stringByEvaluatingJavaScript(from: "document.title")
+        return title ?? "Без названия"
     }
     
     /// Создает новую вкладку с адресом `about:blank`.
@@ -76,22 +87,33 @@ public struct Tab {
     }
     
     /// Создает снэпшот текущей страницы.
-    public func snapshot(in rect: CGRect = .zero) -> UIImage {
-        let screenRect = UIScreen.main.bounds
-        guard let image = webView.draw(in: screenRect, scale: 1) else {
-            return UIImage()
-        }
+    public func snapshot(in rect: CGRect = .zero, redraw: Bool = false) -> UIImage {
+        var image = screenshot(redraw)
         
-        if rect != .zero {
-            guard let scaled = image.scaled(toWidth: rect.width),
-                let cropped = scaled.cropped(in: rect) else {
-                return UIImage()
-            }
-            
-            return cropped
+        if rect != .zero,
+            let scaled = image.scaled(toWidth: rect.width),
+            let cropped = scaled.cropped(in: rect) {
+            image = cropped
         }
         
         return image
+    }
+    
+    /// Создает скриншот вкладки полного размера.
+    ///
+    /// Вернет кэшированное изображение, если не указана
+    /// принудительная перерисовка. Если кэш пуст, выполнит
+    /// перерисовку без  указания флага.
+    private func screenshot(_ redraw: Bool) -> UIImage {
+        let cached = cache.object(forKey: identifier)
+        if redraw || cached.isNone {
+            let screenRect = UIScreen.main.bounds
+            let image = webView.draw(in: screenRect, scale: 1) ?? UIImage()
+            cache.setObject(image, forKey: identifier)
+            return image
+        }
+        
+        return cached!
     }
     
     /// Получает заголовок текущей страницы без использования JS.

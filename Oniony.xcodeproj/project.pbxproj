@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		050135D8232450C900872DC0 /* EasySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 050135D7232450C900872DC0 /* EasySwift.framework */; };
-		050135D9232450C900872DC0 /* EasySwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 050135D7232450C900872DC0 /* EasySwift.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		050135D9232450C900872DC0 /* EasySwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 050135D7232450C900872DC0 /* EasySwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		050135DF232453C100872DC0 /* SwinjectConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050135DE232453C100872DC0 /* SwinjectConfigurator.swift */; };
 		050135E1232453EC00872DC0 /* Swinject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 050135E0232453EC00872DC0 /* Swinject.framework */; };
-		050135E2232453EC00872DC0 /* Swinject.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 050135E0232453EC00872DC0 /* Swinject.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		050135E2232453EC00872DC0 /* Swinject.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 050135E0232453EC00872DC0 /* Swinject.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		050135E42324541500872DC0 /* AutoAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050135E32324541500872DC0 /* AutoAssembly.swift */; };
 		050E3AA02325477B00197116 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 050E3AA22325477B00197116 /* Localizable.strings */; };
 		050E3AA52325478F00197116 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E3AA32325478F00197116 /* Images.swift */; };
@@ -597,7 +597,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = 7C2D27973D;
+				DEVELOPMENT_TEAM = Y36GWGGPJS;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -608,7 +608,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = webview.lab.ios.oniony;
+				PRODUCT_BUNDLE_IDENTIFIER = com.webview.lab.oniony;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -621,7 +621,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = 7C2D27973D;
+				DEVELOPMENT_TEAM = Y36GWGGPJS;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -632,7 +632,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = webview.lab.ios.oniony;
+				PRODUCT_BUNDLE_IDENTIFIER = com.webview.lab.oniony;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

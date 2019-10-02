@@ -23,6 +23,18 @@
 import UIKit
 import EasySwift
 
+/// Стандартный отступ между ячейками.
+private let kCellIndent: CGFloat = 20
+
+/// Половинный отступ между ячейками (для выравнивания по ввертикали).
+private let kHalfCellIndent = kCellIndent / 2
+
+/// Соотношение сторон ячейки для портретной ориентации.
+private let kCellPortraitRatio: CGFloat = 1.1
+
+/// Соотношение сторон ячейки для альбомной ориентации.
+private let kCellLandscapeRatio: CGFloat = 0.6
+
 /// Модуль переключения вкладок.
 final public class TabSelectorController: UICollectionViewController {
     
@@ -38,10 +50,20 @@ final public class TabSelectorController: UICollectionViewController {
         presenter.viewDidLoad()
     }
     
+    /// Отображение будет показано.
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         presenter.viewWillAppear()
+        collectionView.reloadData()
+    }
+    
+    /// Произошла смена ориентации.
+    public override func viewWillTransition(
+        to size: CGSize,
+        with coordinator: UIViewControllerTransitionCoordinator
+    ) {
+        super.viewWillTransition(to: size, with: coordinator)
         collectionView.reloadData()
     }
 }
@@ -78,31 +100,62 @@ public extension TabSelectorController {
 
 extension TabSelectorController: UICollectionViewDelegateFlowLayout {
     
+    /// Размер ячейки.
     public func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let screenSize = UIScreen.main.bounds.size
-        let itemSize = screenSize.applying(CGAffineTransform(scaleX: 0.4, y: 0.4))
-        return itemSize
+        return itemSize()
     }
     
+    /// Отступы для ячейки.
     public func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         insetForSectionAt section: Int
     ) -> UIEdgeInsets {
         let endSection = presenter.numberOfSections() - 1
+        let numItems = presenter.numberOfItems(in: section)
+        var insets = numItems == 1 ? singleInsets() : UIEdgeInsets(kCellIndent)
+
+        // Делает фикс верха и низа для равномерного размещения
+        // всех ячеек в коллекции.
+        let fix = kHalfCellIndent
         switch section {
         case 0:
-            return UIEdgeInsets(top: 20, left: 20, bottom: 10, right: 20)
-            
+            insets.bottom = fix
+
         case endSection:
-            return UIEdgeInsets(top: 10, left: 20, bottom: 20, right: 20)
-            
+            insets.top = fix
+
         default:
-            return UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+            insets.top = fix
+            insets.bottom = fix
         }
+
+        return insets
+    }
+    
+    /// Вычисляет размер ячейки.
+    private func itemSize() -> CGSize {
+        let screenSize = collectionView.frame.size
+        let orientation = UIDevice.current.statusBarOrientation
+        let ratio = orientation.isPortrait ? kCellPortraitRatio : kCellLandscapeRatio
+        
+        // На экране 3 промежутка между отступами и 2 ячейки на нем.
+        let width = (screenSize.width - kCellIndent * 3) / 2
+        let height = width * ratio
+        return CGSize(width: width, height: height)
+    }
+    
+    /// Создает шаблон отступом для секции с одиночном ячейкой.
+    /// Эти отступы требуют фикса верха и низа.
+    private func singleInsets() -> UIEdgeInsets {
+        let screenWidth = collectionView.frame.width
+        var insets = UIEdgeInsets(kCellIndent)
+        insets.left = kCellIndent
+        insets.right = screenWidth - (itemSize().width + kCellIndent)
+        return insets
     }
 }
