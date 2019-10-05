@@ -186,7 +186,20 @@ extension TabSelectorController: PanHandlerDelegate {
         guard let x = panHandler?.defaultCenter?.x else {
             return
         }
-        view.center.x = x + translation.x
+        
+        let tab = view as! TabViewCell
+        let row = collectionView.indexPath(for: tab)!.row
+        let newX = x + translation.x
+        let diff = newX - x
+        
+        switch row {
+            case 0 where diff < 0,
+                 1 where diff > 0:
+                view.center.x = newX
+                
+            default:
+                view.center.x = x
+        }
     }
     
     /// Жест закончен в точке.
