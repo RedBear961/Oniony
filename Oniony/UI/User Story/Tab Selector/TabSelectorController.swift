@@ -44,13 +44,20 @@ final public class TabSelectorController: UICollectionViewController {
     /// Обработчик жеста движения.
     private var panHandler: PanGestureHandler<TabViewCell>?
     
+    /// Обработчик длительного нажатия.
+    private var longPressHandler: LongPressGestureHandler<TabViewCell>?
+    
     /// Модуль был загружен.
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Обработчик жеста движения для удаления ячеек.
         panHandler = PanGestureHandler(for: collectionView)
         panHandler?.delegate = self
+        panHandler?.gesture.delegate = self
+        
+        longPressHandler = LongPressGestureHandler(for: collectionView)
+        longPressHandler?.delegate = self
+        longPressHandler?.gesture.delegate = self
         
         let nib = UINib(for: TabViewCell.self)
         collectionView.register(nib, forCellWithReuseIdentifier: TabViewCell.selfIdentifier)
@@ -167,10 +174,10 @@ extension TabSelectorController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension TabSelectorController: PanHandlerDelegate {
+extension TabSelectorController: PanHandlerDelegate, LongPressHandlerDelegate, UIGestureRecognizerDelegate {
     
     /// Запрашивает отображение для работы.
-    public func panHandler(viewIn point: CGPoint) -> UIView? {
+    public func gestureHandler(viewAt point: CGPoint) -> UIView? {
         guard let indexPath = collectionView.indexPathForItem(at: point) else {
             return nil
         }
@@ -208,8 +215,70 @@ extension TabSelectorController: PanHandlerDelegate {
             return
         }
         
+        let tab = view as! TabViewCell
+        let indexPath = collectionView.indexPath(for: tab)!
+        let diff = abs(view.center.x - center.x)
+        if diff > view.frame.size.width / 2 {
+            deleteCell(tab, at: indexPath)
+            return
+        }
+        
         UIView.animate(withDuration: 0.25) {
             view.center = center
         }
+    }
+    
+    /// Разрешает начать жест движение, если активен жест длительное нажатие.
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer is UILongPressGestureRecognizer { return true }
+        return longPressHandler?.view != nil
+    }
+    
+    /// Расзрешает продолжить жест движение после жеста длительного нажатия.
+    public func gestureRecognizer(
+        _ first: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWith other: UIGestureRecognizer
+    ) -> Bool {
+        return first is UILongPressGestureRecognizer &&
+               other is UIPanGestureRecognizer
+    }
+    
+    /// Начался жест длительное нажатие.
+    public func longPressBegan(in point: CGPoint, for view: UIView) {
+        UIView.animate(withDuration: 0.1) {
+            view.transform = CGAffineTransform(scaled: 0.9)
+        }
+    }
+    
+    /// Закончился жест длительное нажатие.
+    public func longPressEnded(in point: CGPoint, for view: UIView) {
+        UIView.animate(withDuration: 0.1) {
+            view.transform = CGAffineTransform(scaled: 1)
+        }
+    }
+    
+    /// Удаляет ячейку из таблицы.
+    private func deleteCell(_ cell: TabViewCell, at indexPath: IndexPath) {
+        let sign: CGFloat = indexPath.row == 0 ? -1 : 1
+        UIView.animate(withDuration: 0.1, animations: {
+            cell.frame = cell.frame.offsetBy(dx: sign * 1000, dy: 0)
+            cell.alpha = 0
+        }) { (_) in
+            self.batchUpdates(at: indexPath)
+        }
+    }
+    
+    /// Проводит обновление таблицы.
+    private func batchUpdates(at indexPath: IndexPath) {
+        let before = presenter.numberOfSections()
+        collectionView.performBatchUpdates({
+            let after = self.presenter.removeItem(at: indexPath)
+            
+            if before != after {
+                self.collectionView.deleteSections(IndexSet(arrayLiteral: after))
+            } else {
+                self.collectionView.deleteItems(at: [indexPath])
+            }
+        })
     }
 }

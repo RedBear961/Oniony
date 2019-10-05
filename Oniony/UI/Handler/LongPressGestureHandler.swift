@@ -22,29 +22,23 @@
 
 import UIKit
 
-/// Делегат обработчика жеста движения.
-public protocol PanHandlerDelegate: GestureHandlerDelegate {
+/// Делегат обработчика длительного нажатия.
+public protocol LongPressHandlerDelegate: GestureHandlerDelegate {
     
-    /// Жест начался в точке.
+    /// Началось длительное нажатие.
     /// - Parameter point: Точка в координатной системе `view`.
-    func panDidStart(in point: CGPoint, for view: UIView)
+    func longPressBegan(in point: CGPoint, for view: UIView)
     
-    /// Жест продолжен с изменением от изначальной позиции.
-    func panContinued(with translation: CGPoint, for view: UIView)
-    
-    /// Жест закончен в точке.
+    /// Закончилось длительное нажатие.
     /// - Parameter point: Точка в координатной системе `view`.
-    func panEnded(in point: CGPoint, for view: UIView)
+    func longPressEnded(in point: CGPoint, for view: UIView)
 }
 
-/// Обработчика жеста движения.
-public final class PanGestureHandler<View: UIView>: GestureHandler<UIPanGestureRecognizer, View> {
+/// Обработчик жеста длительного нажатия.
+public final class LongPressGestureHandler<View: UIView>: GestureHandler<UILongPressGestureRecognizer, View> {
     
     /// Делегат обработчика жестов.
-    public weak var delegate: PanHandlerDelegate?
-    
-    /// Изначальный центр рабочего отображения.
-    public var defaultCenter: CGPoint?
+    public weak var delegate: LongPressHandlerDelegate?
     
     /// Отображение для точки начала жеста.
     public override func view(at point: CGPoint) -> View? {
@@ -53,20 +47,12 @@ public final class PanGestureHandler<View: UIView>: GestureHandler<UIPanGestureR
     
     /// Обработать начало жеста.
     public override func handleBegan(for view: View, at point: CGPoint) {
-        defaultCenter = view.center
-        delegate?.panDidStart(in: point, for: view)
-    }
-    
-    /// Обработать продолжение жеста.
-    public override func handleChanged(for view: View, at point: CGPoint) {
-        let translation = gesture.translation(in: view)
-        delegate?.panContinued(with: translation, for: view)
+        delegate?.longPressBegan(in: point, for: view)
     }
     
     /// Обработать конец жеста.
     public override func handleEnded(for view: View, at point: CGPoint) {
-        delegate?.panEnded(in: point, for: view)
+        delegate?.longPressEnded(in: point, for: view)
         self.view = nil
-        self.defaultCenter = nil
     }
 }

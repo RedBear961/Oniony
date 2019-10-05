@@ -44,6 +44,10 @@ public protocol TabSelectorPresenting {
     
     /// Модель ячейки для индекса пути.
     func item(at indexPath: IndexPath) -> Tab
+    
+    /// Удаляет вкладку по индексу пути.
+    /// - Returns: Количество секций после удаления.
+    func removeItem(at indexPath: IndexPath) -> Int
 }
 
 /// Презентер модуля переключения вкладок.
@@ -89,5 +93,13 @@ public extension TabSelectorPresenter {
     func item(at indexPath: IndexPath) -> Tab {
         let fullSections = indexPath.section * kItemsInSection
         return tabsController.tabs[fullSections + indexPath.row]
+    }
+    
+    /// Удаляет вкладку по индексу пути.
+    func removeItem(at indexPath: IndexPath) -> Int {
+        let fullSections = indexPath.section * kItemsInSection
+        let index = UInt(fullSections + indexPath.row)
+        tabsController.removeTab(at: index)
+        return numberOfSections()
     }
 }

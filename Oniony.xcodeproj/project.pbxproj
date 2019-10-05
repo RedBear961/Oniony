@@ -44,6 +44,8 @@
 		05F2ACB32323FB240066B45B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F2ACB22323FB240066B45B /* SceneDelegate.swift */; };
 		05F2ACB72323FB260066B45B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05F2ACB62323FB260066B45B /* Assets.xcassets */; };
 		05F2ACBD2323FB260066B45B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05F2ACBB2323FB260066B45B /* LaunchScreen.storyboard */; };
+		05FC783A2348E317000832DF /* LongPressGestureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FC78392348E317000832DF /* LongPressGestureHandler.swift */; };
+		05FC783C2348F590000832DF /* GestureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FC783B2348F590000832DF /* GestureHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -99,6 +101,8 @@
 		05F2ACB62323FB260066B45B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		05F2ACBC2323FB260066B45B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		05F2ACBE2323FB260066B45B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		05FC78392348E317000832DF /* LongPressGestureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongPressGestureHandler.swift; sourceTree = "<group>"; };
+		05FC783B2348F590000832DF /* GestureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,7 +267,9 @@
 		059719832348D807009F3AA6 /* Handler */ = {
 			isa = PBXGroup;
 			children = (
+				05FC783B2348F590000832DF /* GestureHandler.swift */,
 				059719812348BA9F009F3AA6 /* PanGestureHandler.swift */,
+				05FC78392348E317000832DF /* LongPressGestureHandler.swift */,
 			);
 			path = Handler;
 			sourceTree = "<group>";
@@ -446,9 +452,11 @@
 				059727C6233CC6FD004D17B4 /* TabSelectorTransitioningDelegate.swift in Sources */,
 				050E3AA52325478F00197116 /* Images.swift in Sources */,
 				0512C7252340B250007CC258 /* TabsController.swift in Sources */,
+				05FC783A2348E317000832DF /* LongPressGestureHandler.swift in Sources */,
 				051D81D7233CC07400370DFB /* TabSelectorCoordinator.swift in Sources */,
 				050135DF232453C100872DC0 /* SwinjectConfigurator.swift in Sources */,
 				0512C717233F8569007CC258 /* TabSelectorPresenter.swift in Sources */,
+				05FC783C2348F590000832DF /* GestureHandler.swift in Sources */,
 				0548CCCD23245EAF00247E07 /* SplashScreenController.swift in Sources */,
 				0548CCC5232456E600247E07 /* SplashScreenCoordinator.swift in Sources */,
 				0512C71F233F908B007CC258 /* Preferences.swift in Sources */,

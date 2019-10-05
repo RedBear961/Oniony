@@ -49,6 +49,9 @@ public protocol TabsManagement {
     /// функция проигнорирует выбор.
     func selectTab(at index: UInt)
     
+    /// Удаляет вкладку по индексу.
+    func removeTab(at index: UInt)
+    
     /// Начинает новую сессию.
     ///
     /// При запуске приложения, выполнит проверку
@@ -112,6 +115,16 @@ final public class TabsController: TabsManagement {
         let tab = tabs[i]
         tabs.remove(at: i)
         tabs.insert(tab, at: 0)
+    }
+    
+    /// Удаляет вкладку по индексу.
+    public func removeTab(at index: UInt) {
+        let i = Int(index)
+        guard i < tabs.count else {
+            return
+        }
+        
+        tabs.remove(at: i)
     }
     
     /// Начинает новую сессию.
