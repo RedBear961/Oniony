@@ -79,7 +79,12 @@ final public class TabsController: TabsManagement {
     public var tabs: [Tab] = [
         Tab(with: URL(string: "https://yandex.ru")!),
         Tab(with: URL(string: "https://google.com")!),
-        Tab(with: URL(string: "https://mail.ru")!)
+        Tab(with: URL(string: "https://mail.ru")!),
+        Tab(with: URL(string: "https://yandex.ru")!),
+        Tab(with: URL(string: "https://google.com")!),
+        Tab(with: URL(string: "https://mail.ru")!),
+        Tab(with: URL(string: "https://yandex.ru")!),
+        Tab(with: URL(string: "https://google.com")!)
     ]
     
     /// Основной конструктор.

@@ -39,11 +39,18 @@ private let kCellLandscapeRatio: CGFloat = 0.6
 final public class TabSelectorController: UICollectionViewController {
     
     /// Презентер модуля.
-    public var presenter: TabSelectorPresenting!
+    internal var presenter: TabSelectorPresenting!
+    
+    /// Обработчик жеста движения.
+    private var panHandler: PanGestureHandler<TabViewCell>?
     
     /// Модуль был загружен.
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Обработчик жеста движения для удаления ячеек.
+        panHandler = PanGestureHandler(for: collectionView)
+        panHandler?.delegate = self
         
         let nib = UINib(for: TabViewCell.self)
         collectionView.register(nib, forCellWithReuseIdentifier: TabViewCell.selfIdentifier)
@@ -157,5 +164,39 @@ extension TabSelectorController: UICollectionViewDelegateFlowLayout {
         insets.left = kCellIndent
         insets.right = screenWidth - (itemSize().width + kCellIndent)
         return insets
+    }
+}
+
+extension TabSelectorController: PanHandlerDelegate {
+    
+    /// Запрашивает отображение для работы.
+    public func panHandler(viewIn point: CGPoint) -> UIView? {
+        guard let indexPath = collectionView.indexPathForItem(at: point) else {
+            return nil
+        }
+        return collectionView.cellForItem(at: indexPath)
+    }
+    
+    /// Жест начался в точке.
+    public func panDidStart(in point: CGPoint, for view: UIView) {
+    }
+    
+    /// Жест продолжен с изменением от изначальной позиции.
+    public func panContinued(with translation: CGPoint, for view: UIView) {
+        guard let x = panHandler?.defaultCenter?.x else {
+            return
+        }
+        view.center.x = x + translation.x
+    }
+    
+    /// Жест закончен в точке.
+    public func panEnded(in point: CGPoint, for view: UIView) {
+        guard let center = panHandler?.defaultCenter else {
+            return
+        }
+        
+        UIView.animate(withDuration: 0.25) {
+            view.center = center
+        }
     }
 }
