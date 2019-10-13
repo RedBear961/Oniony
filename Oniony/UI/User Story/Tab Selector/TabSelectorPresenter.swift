@@ -21,33 +21,19 @@
 */
 
 import Foundation
+import UIKit
+import EasySwift
 
 private let kItemsInSection = 2
 
 /// Протокол презентера модуля переключения вкладок.
-public protocol TabSelectorPresenting {
-    
-    /// Модуль был загружен.
-    func viewDidLoad()
-    
-    /// Отображение будет показано.
-    func viewWillAppear()
-    
-    /// Отображение было показано.
-    func viewDidAppear()
-    
-    /// Количество секций коллекции.
-    func numberOfSections() -> Int
-    
-    /// Количество элементов в секции.
-    func numberOfItems(in section: Int) -> Int
+public protocol TabSelectorPresenting: CollectionPresenter {
     
     /// Модель ячейки для индекса пути.
     func item(at indexPath: IndexPath) -> Tab
     
-    /// Удаляет вкладку по индексу пути.
-    /// - Returns: Количество секций после удаления.
-    func removeItem(at indexPath: IndexPath) -> Int
+    /// Был нажат элемент по индексу.
+    func didSelectItem(at indexPath: IndexPath, in frame: CGRect)
 }
 
 /// Презентер модуля переключения вкладок.
@@ -61,14 +47,6 @@ final public class TabSelectorPresenter: TabSelectorPresenting {
     
     /// Модуль был загружен.
     public func viewDidLoad() {
-    }
-    
-    /// Отображение будет показано.
-    public func viewWillAppear() {
-    }
-    
-    /// Отображение было показано.
-    public func viewDidAppear() {
     }
 }
 
@@ -101,5 +79,18 @@ public extension TabSelectorPresenter {
         let index = UInt(fullSections + indexPath.row)
         tabsController.removeTab(at: index)
         return numberOfSections()
+    }
+    
+    /// Был нажат элемент по индексу.
+    func didSelectItem(at indexPath: IndexPath, in frame: CGRect) {
+        let fullSections = indexPath.section * kItemsInSection
+        let index = UInt(fullSections + indexPath.row)
+        tabsController.selectTab(at: index)
+        
+        let context = WebViewTransitionContext(
+            frame: frame,
+            cornerRadius: 10
+        )
+        coordinator.toWebView(using: context)
     }
 }

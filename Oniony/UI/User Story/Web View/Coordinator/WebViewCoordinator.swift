@@ -20,53 +20,56 @@
 * THE SOFTWARE.
 */
 
-import Swinject
 import UIKit
+import Swinject
 
-/// Координатор модуля переключения вкладок.
-final public class TabSelectorCoordinator: NavigationCoordinator, WebViewCoordinatorDelegate {
+public protocol WebViewCoordinatorDelegate: class {
+}
+
+final public class WebViewCoordinator: NavigationCoordinator {
 
     /// Модуль переключения вкладок.
-    public private(set) var controller: TabSelectorController!
+    public private(set) var controller: WebViewController!
+    
+    /// Контекст перехода на модуль веб отображения.
+    public private(set) var context: WebViewTransitionContext?
+    
+    /// Делегат координатора.
+    public weak var delegate: WebViewCoordinatorDelegate?
     
     /// DI-контейнер для работы координатора.
     private var container: Container
     
-    /// Делегат перехода на контроллер переключения вкладок.
-    private var transitiongDelegate = TabSelectorTransitioningDelegate()
-    
-    /// Дочерний координатор модуля веб отображения.
-    private var child: WebViewCoordinator?
-    
     /// Контроллер навигации.
     private var navigationController: UINavigationController = {
         let nc = UINavigationController()
-        nc.navigationBar.barStyle = .black
+        nc.isNavigationBarHidden = true
         nc.isToolbarHidden = false
         nc.toolbar.barStyle = .black
         return nc
     }()
-
+    
+    /// Делегат перехода на контроллер переключения вкладок.
+    private var transitiongDelegate: WebViewTransitioningDelegate?
+    
     /// Основной конструктор координатора.
     /// - Parameter container: DI-контейнер приложения.
     public init(container: Container) {
         self.container = container
-        self.controller = container.resolve(TabSelectorController.self, argument: self)!
-        navigationController.transitioningDelegate = transitiongDelegate
+        self.controller = container.resolve(WebViewController.self, argument: self)!
         navigationController.modalPresentationStyle = .fullScreen
     }
 
     /// Запускает показ модуля.
-    public func show(on controller: SplashScreenController) {
+    public func show(on controller: TabSelectorController) {
         navigationController.pushViewController(self.controller, animated: true)
         controller.present(navigationController, animated: true)
     }
     
-    /// Выполняет переход на модуль веб представления.
-    public func toWebView(using context: WebViewTransitionContext) {
-        let child = WebViewCoordinator(container: container)
-        child.delegate = self
-        child.show(on: controller, using: context)
-        self.child = child
+    /// Запускает показ модуля, используя контекст представления.
+    public func show(on controller: TabSelectorController, using context: WebViewTransitionContext) {
+        transitiongDelegate = WebViewTransitioningDelegate(with: context)
+        navigationController.transitioningDelegate = transitiongDelegate
+        show(on: controller)
     }
 }

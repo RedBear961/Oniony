@@ -34,3 +34,32 @@ final public class TabSelectorTransitioningDelegate: NSObject, UIViewControllerT
         return TabSelectorAnimatedTransitioning()
     }
 }
+
+/// Аниматор перехода на контроллер модуля переключения вкладок.
+final public class TabSelectorAnimatedTransitioning: AnimatedTransitioning {
+    
+    /// Анимирует переход.
+    override public func animateTransition(
+        from: UIView,
+        to: UIView,
+        using context: UIViewControllerContextTransitioning) {
+        let container = context.containerView
+        let reducedScale = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        
+        to.alpha = 0
+        to.frame = from.frame
+        to.transform = reducedScale
+        container.addSubview(to)
+        
+        UIView.animate(withDuration: 0.8, animations: {
+            to.alpha = 1
+            to.transform = CGAffineTransform(scaled: 1)
+            
+            from.alpha = 0
+            from.transform = reducedScale
+            
+        }, completion: { (_) in
+            context.completeTransition(true)
+        })
+    }
+}

@@ -68,7 +68,7 @@ final public class TabSelectorController: UICollectionViewController {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        presenter.viewWillAppear()
+//        presenter.viewWillAppear()
         collectionView.reloadData()
     }
     
@@ -109,6 +109,16 @@ public extension TabSelectorController {
         ) as! TabViewCell
         cell.configure(using: data)
         return cell
+    }
+    
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        let cell = collectionView.cellForItem(at: indexPath)!
+        var frame = cell.frame
+        frame.y -= collectionView.contentOffset.y
+        presenter.didSelectItem(at: indexPath, in: frame)
     }
 }
 
