@@ -24,6 +24,7 @@ import Foundation
 import UIKit
 import EasySwift
 
+/// Количество элементов в секции.
 private let kItemsInSection = 2
 
 /// Протокол презентера модуля переключения вкладок.
@@ -40,10 +41,13 @@ public protocol TabSelectorPresenting: CollectionPresenter {
 final public class TabSelectorPresenter: TabSelectorPresenting {
 
     /// Координатор модуля.
-    internal var coordinator: TabSelectorCoordinator!
+    public var coordinator: TabSelectorCoordinator!
     
     /// Контроллер вкладок.
-    internal var tabsController: TabsManagement!
+    public var tabsManager: TabsManagement!
+    
+    /// Контроллер модуля.
+    public var tabSelector: TabSelector!
     
     /// Модуль был загружен.
     public func viewDidLoad() {
@@ -54,42 +58,41 @@ public extension TabSelectorPresenter {
     
     /// Количество секций коллекции.
     func numberOfSections() -> Int {
-        let tabsCount = tabsController.tabs.count
-        let sections = tabsController.tabs.count / kItemsInSection
-        let isIncrease = tabsCount - sections > 0
-        return isIncrease ? sections + 1 : sections
+        let count = tabsManager.count
+        let sections = count / kItemsInSection
+        let isOdd = count - sections > 0
+        return isOdd ? sections + 1 : sections
     }
     
     /// Количество элементов в секции.
     func numberOfItems(in section: Int) -> Int {
-        let fullSections = section * kItemsInSection
-        let remaining = tabsController.tabs.count - fullSections
-        return remaining < kItemsInSection ? remaining : kItemsInSection
+        let full = section * kItemsInSection
+        let remaining = tabsManager.count - full
+        return min(remaining, kItemsInSection)
     }
     
     /// Модель ячейки для индекса пути.
     func item(at indexPath: IndexPath) -> Tab {
-        let fullSections = indexPath.section * kItemsInSection
-        return tabsController.tabs[fullSections + indexPath.row]
+        let index: Int = indexPath.absolute(with: kItemsInSection)
+        return tabsManager.tabs[index]
     }
     
     /// Удаляет вкладку по индексу пути.
     func removeItem(at indexPath: IndexPath) -> Int {
-        let fullSections = indexPath.section * kItemsInSection
-        let index = UInt(fullSections + indexPath.row)
-        tabsController.removeTab(at: index)
+        let index: UInt = indexPath.absolute(with: kItemsInSection)
+        tabsManager.removeTab(at: index)
         return numberOfSections()
     }
     
     /// Был нажат элемент по индексу.
     func didSelectItem(at indexPath: IndexPath, in frame: CGRect) {
-        let fullSections = indexPath.section * kItemsInSection
-        let index = UInt(fullSections + indexPath.row)
-        tabsController.selectTab(at: index)
+        let index: UInt = indexPath.absolute(with: kItemsInSection)
+        tabsManager.selectTab(at: index)
         
         let context = WebViewTransitionContext(
             frame: frame,
-            cornerRadius: 10
+            aspectRatio: tabSelector.aspectRatio,
+            cornerRadius: tabSelector.cornerRadius
         )
         coordinator.toWebView(using: context)
     }

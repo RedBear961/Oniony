@@ -1,1 +1,2 @@
-github "Swinject/Swinject" "2.6.2"
+github "PureLayout/PureLayout" "v3.1.5"
+github "Swinject/Swinject" "2.7.1"

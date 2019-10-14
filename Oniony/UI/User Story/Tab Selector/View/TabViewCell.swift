@@ -25,6 +25,9 @@ import UIKit
 /// Ячейка коллекции для отображения вкладки.
 final public class TabViewCell: UICollectionViewCell {
     
+    /// Радиус закругления ячейки.
+    public static let cornerRadius: CGFloat = 10
+    
     /// Имя вкладки.
     @IBOutlet var name: UILabel!
     
@@ -33,7 +36,7 @@ final public class TabViewCell: UICollectionViewCell {
     
     /// Настраивает ячейку после загрузки из XIB.
     public override func awakeFromNib() {
-        layer.cornerRadius = 10
+        layer.cornerRadius = TabViewCell.cornerRadius
     }
     
     /// Настраивает ячейку с помощью модели.

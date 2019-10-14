@@ -30,7 +30,7 @@ final public class AppDelegate: ESAppDelegate {
     /// Контроллер вкладок.
     lazy private var tabsManager: TabsManagement = {
         let container = configurator.container
-        return container.resolve(TabsController.self)!
+        return container.resolve(TabsManager.self)!
     }()
     
     /// Конфигурутор системы внедрения зависимостей проекта.

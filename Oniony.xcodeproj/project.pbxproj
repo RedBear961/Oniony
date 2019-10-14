@@ -18,11 +18,10 @@
 		050E3AA62325478F00197116 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E3AA42325478F00197116 /* Strings.swift */; };
 		050E3AA92325669D00197116 /* SplashScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050E3AA82325669D00197116 /* SplashScreenPresenter.swift */; };
 		0512C717233F8569007CC258 /* TabSelectorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0512C716233F8569007CC258 /* TabSelectorPresenter.swift */; };
-		0512C71A233F8916007CC258 /* TabsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0512C719233F8916007CC258 /* TabsStorage.swift */; };
 		0512C71D233F89AF007CC258 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0512C71C233F89AF007CC258 /* Tab.swift */; };
 		0512C71F233F908B007CC258 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0512C71E233F908B007CC258 /* Preferences.swift */; };
 		0512C721234098E3007CC258 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0512C720234098E3007CC258 /* UserDefaults.swift */; };
-		0512C7252340B250007CC258 /* TabsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0512C7242340B250007CC258 /* TabsController.swift */; };
+		0512C7252340B250007CC258 /* TabsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0512C7242340B250007CC258 /* TabsManager.swift */; };
 		0512C7272340BADD007CC258 /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0512C7262340BADD007CC258 /* ServiceAssembly.swift */; };
 		051D81D1233C981200370DFB /* OnionDirector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051D81D0233C981200370DFB /* OnionDirector.swift */; };
 		051D81D4233C988700370DFB /* DirectorAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051D81D3233C988700370DFB /* DirectorAssembly.swift */; };
@@ -41,7 +40,10 @@
 		05A55C9E23536031001421BC /* WebViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A55C9D23536031001421BC /* WebViewCoordinator.swift */; };
 		05A55CA02353629B001421BC /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A55C9F2353629B001421BC /* Presenter.swift */; };
 		05A55CA223536A28001421BC /* WebViewAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A55CA123536A28001421BC /* WebViewAssembly.swift */; };
+		05A55CA423537337001421BC /* PureLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05A55CA323537336001421BC /* PureLayout.framework */; };
+		05A55CA523537337001421BC /* PureLayout.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05A55CA323537336001421BC /* PureLayout.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05C77B6D23412CB300489475 /* TabSelectorController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05C77B6C23412CB300489475 /* TabSelectorController.storyboard */; };
+		05D1839B2354C89F003592A2 /* WebViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05D1839A2354C89F003592A2 /* WebViewController.storyboard */; };
 		05F2ACB12323FB240066B45B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F2ACB02323FB240066B45B /* AppDelegate.swift */; };
 		05F2ACB32323FB240066B45B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F2ACB22323FB240066B45B /* SceneDelegate.swift */; };
 		05F2ACB72323FB260066B45B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05F2ACB62323FB260066B45B /* Assets.xcassets */; };
@@ -61,6 +63,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				050135D9232450C900872DC0 /* EasySwift.framework in Embed Frameworks */,
+				05A55CA523537337001421BC /* PureLayout.framework in Embed Frameworks */,
 				050135E2232453EC00872DC0 /* Swinject.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -78,11 +81,10 @@
 		050E3AA42325478F00197116 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		050E3AA82325669D00197116 /* SplashScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenPresenter.swift; sourceTree = "<group>"; };
 		0512C716233F8569007CC258 /* TabSelectorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectorPresenter.swift; sourceTree = "<group>"; };
-		0512C719233F8916007CC258 /* TabsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsStorage.swift; sourceTree = "<group>"; };
 		0512C71C233F89AF007CC258 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		0512C71E233F908B007CC258 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		0512C720234098E3007CC258 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
-		0512C7242340B250007CC258 /* TabsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsController.swift; sourceTree = "<group>"; };
+		0512C7242340B250007CC258 /* TabsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsManager.swift; sourceTree = "<group>"; };
 		0512C7262340BADD007CC258 /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
 		051D81D0233C981200370DFB /* OnionDirector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnionDirector.swift; sourceTree = "<group>"; };
 		051D81D3233C988700370DFB /* DirectorAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorAssembly.swift; sourceTree = "<group>"; };
@@ -101,7 +103,9 @@
 		05A55C9D23536031001421BC /* WebViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewCoordinator.swift; sourceTree = "<group>"; };
 		05A55C9F2353629B001421BC /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
 		05A55CA123536A28001421BC /* WebViewAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewAssembly.swift; sourceTree = "<group>"; };
+		05A55CA323537336001421BC /* PureLayout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PureLayout.framework; path = Carthage/Build/iOS/PureLayout.framework; sourceTree = "<group>"; };
 		05C77B6C23412CB300489475 /* TabSelectorController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TabSelectorController.storyboard; sourceTree = "<group>"; };
+		05D1839A2354C89F003592A2 /* WebViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebViewController.storyboard; sourceTree = "<group>"; };
 		05F2ACAD2323FB240066B45B /* Oniony.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Oniony.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05F2ACB02323FB240066B45B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		05F2ACB22323FB240066B45B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +125,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				050135D8232450C900872DC0 /* EasySwift.framework in Frameworks */,
+				05A55CA423537337001421BC /* PureLayout.framework in Frameworks */,
 				050135E1232453EC00872DC0 /* Swinject.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -131,6 +136,7 @@
 		050135D6232450C900872DC0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				05A55CA323537336001421BC /* PureLayout.framework */,
 				050135E0232453EC00872DC0 /* Swinject.framework */,
 				050135D7232450C900872DC0 /* EasySwift.framework */,
 			);
@@ -172,8 +178,7 @@
 			children = (
 				0512C720234098E3007CC258 /* UserDefaults.swift */,
 				0512C71E233F908B007CC258 /* Preferences.swift */,
-				0512C719233F8916007CC258 /* TabsStorage.swift */,
-				0512C7242340B250007CC258 /* TabsController.swift */,
+				0512C7242340B250007CC258 /* TabsManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -325,6 +330,7 @@
 				05FC78402349C4F9000832DF /* Coordinator */,
 				05A55CA123536A28001421BC /* WebViewAssembly.swift */,
 				05FC783E23492B04000832DF /* WebViewController.swift */,
+				05D1839A2354C89F003592A2 /* WebViewController.storyboard */,
 			);
 			path = "Web View";
 			sourceTree = "<group>";
@@ -332,8 +338,8 @@
 		05FC78402349C4F9000832DF /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
-				05FC78412349C51A000832DF /* WebViewTransitionAniamator.swift */,
 				05A55C9D23536031001421BC /* WebViewCoordinator.swift */,
+				05FC78412349C51A000832DF /* WebViewTransitionAniamator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -400,6 +406,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05D1839B2354C89F003592A2 /* WebViewController.storyboard in Resources */,
 				05C77B6D23412CB300489475 /* TabSelectorController.storyboard in Resources */,
 				05F2ACBD2323FB260066B45B /* LaunchScreen.storyboard in Resources */,
 				058F3142234230FB00548D8B /* TabViewCell.xib in Resources */,
@@ -420,6 +427,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Swinject.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/PureLayout.framework",
 			);
 			name = "[Carthage] Copy Script";
 			outputFileListPaths = (
@@ -483,7 +491,7 @@
 				0548CCD3232463F200247E07 /* SplashScreenAssembly.swift in Sources */,
 				0512C721234098E3007CC258 /* UserDefaults.swift in Sources */,
 				050E3AA52325478F00197116 /* Images.swift in Sources */,
-				0512C7252340B250007CC258 /* TabsController.swift in Sources */,
+				0512C7252340B250007CC258 /* TabsManager.swift in Sources */,
 				05FC783A2348E317000832DF /* LongPressGestureHandler.swift in Sources */,
 				051D81D7233CC07400370DFB /* TabSelectorCoordinator.swift in Sources */,
 				050135DF232453C100872DC0 /* SwinjectConfigurator.swift in Sources */,
@@ -507,7 +515,6 @@
 				05A55C9E23536031001421BC /* WebViewCoordinator.swift in Sources */,
 				05FC783F23492B04000832DF /* WebViewController.swift in Sources */,
 				050135E42324541500872DC0 /* AutoAssembly.swift in Sources */,
-				0512C71A233F8916007CC258 /* TabsStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

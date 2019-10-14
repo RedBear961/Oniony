@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="e61-OY-zPU">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Web View Controller-->
+        <scene sceneID="jNT-lF-O3f">
+            <objects>
+                <viewController storyboardIdentifier="WebViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="e61-OY-zPU" customClass="WebViewController" customModule="Oniony" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Lga-Sn-Sap">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UB9-ei-ihl">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="l4k-rP-oJr">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="sZD-SX-cAJ" firstAttribute="top" secondItem="UB9-ei-ihl" secondAttribute="bottom" id="Aed-Ji-tZk"/>
+                            <constraint firstItem="UB9-ei-ihl" firstAttribute="top" secondItem="Lga-Sn-Sap" secondAttribute="top" id="X37-qf-crs"/>
+                            <constraint firstItem="UB9-ei-ihl" firstAttribute="leading" secondItem="sZD-SX-cAJ" secondAttribute="leading" id="oSL-Zs-vOo"/>
+                            <constraint firstItem="sZD-SX-cAJ" firstAttribute="trailing" secondItem="UB9-ei-ihl" secondAttribute="trailing" id="rMC-Aj-KJ0"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="sZD-SX-cAJ"/>
+                    </view>
+                    <connections>
+                        <outlet property="topView" destination="UB9-ei-ihl" id="Jby-Sn-dXA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eIE-Qn-HQS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="45" y="-1"/>
+        </scene>
+    </scenes>
+</document>

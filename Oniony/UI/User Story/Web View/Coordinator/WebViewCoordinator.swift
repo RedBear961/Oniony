@@ -44,7 +44,6 @@ final public class WebViewCoordinator: NavigationCoordinator {
     private var navigationController: UINavigationController = {
         let nc = UINavigationController()
         nc.isNavigationBarHidden = true
-        nc.isToolbarHidden = false
         nc.toolbar.barStyle = .black
         return nc
     }()

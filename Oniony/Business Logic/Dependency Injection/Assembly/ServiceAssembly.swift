@@ -27,8 +27,8 @@ final public class ServiceAssembly: AutoAssembly {
 
     /// Контроллер вкладок.
     internal func tabsController() {
-        container?.register(TabsController.self, factory: { (_) -> TabsController in
-            let controller = TabsController()
+        container?.register(TabsManager.self, factory: { (_) -> TabsManager in
+            let controller = TabsManager()
             return controller
         }).inObjectScope(.container)
     }

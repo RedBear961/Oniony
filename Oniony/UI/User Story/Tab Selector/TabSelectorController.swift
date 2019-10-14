@@ -35,11 +35,33 @@ private let kCellPortraitRatio: CGFloat = 1.1
 /// Соотношение сторон ячейки для альбомной ориентации.
 private let kCellLandscapeRatio: CGFloat = 0.6
 
+/// Протокол контроллера модуля переключения вкладок.
+public protocol TabSelector where Self: UIViewController {
+    
+    /// Текущее соотношение сторон ячеек коллекции.
+    var aspectRatio: CGFloat { get }
+    
+    /// Радиус закругления ячеек коллекции.
+    var cornerRadius: CGFloat { get }
+}
+
 /// Модуль переключения вкладок.
-final public class TabSelectorController: UICollectionViewController {
+final public class TabSelectorController: UICollectionViewController, TabSelector {
     
     /// Презентер модуля.
-    internal var presenter: TabSelectorPresenting!
+    public var presenter: TabSelectorPresenting!
+    
+    /// Текущее соотношение сторон ячеек коллекции.
+    public var aspectRatio: CGFloat {
+        let orientation = UIDevice.current.statusBarOrientation
+        let ratio = orientation.isPortrait ? kCellPortraitRatio : kCellLandscapeRatio
+        return ratio
+    }
+    
+    /// Радиус закругления ячеек коллекции.
+    public var cornerRadius: CGFloat {
+        return TabViewCell.cornerRadius
+    }
     
     /// Обработчик жеста движения.
     private var panHandler: PanGestureHandler<TabViewCell>?
@@ -67,8 +89,6 @@ final public class TabSelectorController: UICollectionViewController {
     /// Отображение будет показано.
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-//        presenter.viewWillAppear()
         collectionView.reloadData()
     }
     
@@ -112,12 +132,12 @@ public extension TabSelectorController {
     }
     
     override func collectionView(
-        _ collectionView: UICollectionView,
+        _ view: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        let cell = collectionView.cellForItem(at: indexPath)!
-        var frame = cell.frame
-        frame.y -= collectionView.contentOffset.y
+        let cell = view.cellForItem(at: indexPath)!
+        let offset = view.contentOffset.y
+        let frame = cell.frame.offset(dy: -offset)
         presenter.didSelectItem(at: indexPath, in: frame)
     }
 }
@@ -271,7 +291,7 @@ extension TabSelectorController: PanHandlerDelegate, LongPressHandlerDelegate, U
     private func deleteCell(_ cell: TabViewCell, at indexPath: IndexPath) {
         let sign: CGFloat = indexPath.row == 0 ? -1 : 1
         UIView.animate(withDuration: 0.1, animations: {
-            cell.frame = cell.frame.offsetBy(dx: sign * 1000, dy: 0)
+            cell.frame = cell.frame.offset(dx: sign * 1000)
             cell.alpha = 0
         }) { (_) in
             self.batchUpdates(at: indexPath)

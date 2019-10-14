@@ -34,17 +34,18 @@ final public class TabSelectorAssembly: AutoAssembly {
         container?.register(TabSelectorController.self, factory: { (resolver, coordinator: TabSelectorCoordinator) -> TabSelectorController in
             let storyboard = UIStoryboard(name: "TabSelectorController", bundle: nil)
             let controller = storyboard.instantiateInitialViewController() as! TabSelectorController
-            controller.presenter = resolver.resolve(TabSelectorPresenter.self, argument: coordinator)!
+            controller.presenter = resolver.resolve(TabSelectorPresenter.self, arguments: controller, coordinator)!
             return controller
         })
     }
     
     /// Презентер модуля.
     internal func tabSelectorPresenter() {
-        container?.register(TabSelectorPresenter.self, factory: { (resolver, coordinator: TabSelectorCoordinator) -> TabSelectorPresenter in
+        container?.register(TabSelectorPresenter.self, factory: { (resolver, controller: TabSelectorController, coordinator: TabSelectorCoordinator) -> TabSelectorPresenter in
             let presenter = TabSelectorPresenter()
             presenter.coordinator = coordinator
-            presenter.tabsController = resolver.resolve(TabsController.self)
+            presenter.tabsManager = resolver.resolve(TabsManager.self)
+            presenter.tabSelector = controller
             return presenter
         })
     }

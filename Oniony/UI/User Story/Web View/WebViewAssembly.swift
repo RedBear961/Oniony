@@ -23,17 +23,19 @@
 import UIKit
 import Swinject
 
+// swiftlint:disable line_length force_cast
+
 final public class WebViewAssembly: AutoAssembly {
 
     /// Контроллер модуля.
     internal func webViewController() {
         container?.register(WebViewController.self, factory: { (resolver, coordinator: WebViewCoordinator) -> WebViewController in
-//            let storyboard = UIStoryboard(name: "WebViewController", bundle: nil)
-//            let controller = storyboard.instantiateInitialViewController() as! WebViewController
-//            return controller
-            let controller = WebViewController()
-            controller.tabsManager = resolver.resolve(TabsController.self)!
+            let storyboard = UIStoryboard(name: "WebViewController", bundle: nil)
+            let controller = storyboard.instantiateInitialViewController() as! WebViewController
+            controller.tabsManager = resolver.resolve(TabsManager.self)!
             return controller
         })
     }
 }
+
+// swiftlint:enable line_length force_cast

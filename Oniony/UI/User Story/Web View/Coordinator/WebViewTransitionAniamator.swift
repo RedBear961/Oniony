@@ -32,6 +32,9 @@ public struct WebViewTransitionContext: RectPresentable, Relatable {
     /// Начальный фрейм контроллера.
     public var frame: CGRect
     
+    /// Начальное соотношение сторон.
+    public var aspectRatio: CGFloat
+    
     /// Радиус углов.
     public var cornerRadius: CGFloat
 }
@@ -76,21 +79,28 @@ final public class WebViewAnimatedTransitioning: AnimatedTransitioning {
         to: UIView,
         using transitioningContext: UIViewControllerContextTransitioning
     ) {
+        let toVC = transitioningContext.viewController(forKey: .to)
+        let navigationController = toVC as? UINavigationController
+        navigationController?.setToolbarHidden(false, animated: true)
+        
         let container = transitioningContext.containerView
         let ratio = context.relation(to: from.frame)
         let xOffset = from.size.width / 2 * ratio.wRatio
         let yOffset = from.size.height / 2 * ratio.hRatio
         
-        to.frame.size = from.size
+        var initialSize = from.size
+        initialSize.height = initialSize.width * context.aspectRatio
+        
+        to.frame.size = initialSize
         to.center = CGPoint(x: context.x + xOffset, y: context.y + yOffset)
-        to.transform = CGAffineTransform(scaleX: ratio.wRatio, y: ratio.hRatio)
+        to.transform = CGAffineTransform(scaled: ratio.wRatio)
         to.backgroundColor = .white
         to.cornerRadius = context.cornerRadius / ratio.wRatio
         container.addSubview(to)
         
-        UIView.animate(withDuration: duration, animations: {
+        UIView.spring(with: duration, damping: 0.7, velocity: 0.2, animations: {
             to.transform = CGAffineTransform(scaled: 1)
-            to.frame.origin = from.origin
+            to.frame = from.frame
             to.cornerRadius = 0
         }, completion: { (_) in
             transitioningContext.completeTransition(true)

@@ -28,6 +28,9 @@ public protocol TabsManagement {
     /// Все открытые вкладки.
     var tabs: [Tab] { get }
     
+    /// Текущее количество вкладок.
+    var count: Int { get }
+    
     /// Текущая вкладка.
     ///
     /// Если вкладки отсутствуют, создаст
@@ -76,7 +79,7 @@ public protocol TabsControlDelegate: class {
 }
 
 /// Управляющий вкладками класс.
-final public class TabsController: TabsManagement {
+final public class TabsManager: TabsManagement {
 
     /// Все открытые вкладки.
     public var tabs: [Tab] = [
@@ -89,6 +92,11 @@ final public class TabsController: TabsManagement {
         Tab(with: URL(string: "https://yandex.ru")!),
         Tab(with: URL(string: "https://google.com")!)
     ]
+    
+    /// Текущее количество вкладок.
+    public var count: Int {
+        return tabs.count
+    }
     
     /// Основной конструктор.
     public init() {

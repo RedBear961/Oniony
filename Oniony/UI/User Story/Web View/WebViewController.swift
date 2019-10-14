@@ -22,6 +22,7 @@
 
 import UIKit
 import EasySwift
+import PureLayout
 
 public final class WebViewController: UIViewController {
     
@@ -29,12 +30,17 @@ public final class WebViewController: UIViewController {
     
     public var webView: WebView!
     
+    @IBOutlet var topView: UIVisualEffectView!
+    
+    /// Стиль бара статуса.
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     public override func viewDidLoad() {
         webView = tabsManager.currentTab().webView
         view.addSubview(webView)
-    }
-    
-    public override func viewWillAppear(_ animated: Bool) {
-        webView.frame = view.frame
+        webView.autoPinEdgesToSuperviewEdges()
+        view.bringSubviewToFront(topView)
     }
 }
