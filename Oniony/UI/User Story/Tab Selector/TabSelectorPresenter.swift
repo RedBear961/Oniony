@@ -91,8 +91,8 @@ public extension TabSelectorPresenter {
         
         let context = WebViewTransitionContext(
             frame: frame,
-            aspectRatio: tabSelector.aspectRatio,
-            cornerRadius: tabSelector.cornerRadius
+            ratio: tabSelector.aspectRatio,
+            radius: tabSelector.cornerRadius
         )
         coordinator.toWebView(using: context)
     }

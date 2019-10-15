@@ -23,8 +23,11 @@
 import UIKit
 import EasySwift
 
+/// Псевдоним для сокращения.
+public typealias UIAnimatedTransitioning = UIViewControllerAnimatedTransitioning
+
 /// Аниматор перехода.
-open class AnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
+open class AnimatedTransitioning<FromVC, ToVC>: NSObject, UIAnimatedTransitioning {
     
     /// Длительность перехода, равна `0.8`.
     open var duration: TimeInterval {
@@ -41,7 +44,7 @@ open class AnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitionin
     /// Анимирует переход.
     public func animateTransition(using context: UIViewControllerContextTransitioning) {
         guard let from = context.view(forKey: .from),
-            let to = context.view(forKey: .to) else {
+              let to = context.view(forKey: .to) else {
             return
         }
         
@@ -50,17 +53,80 @@ open class AnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitionin
             to: to,
             using: context
         )
+        
+        let fromVC = context.viewController(forKey: .from) as? FromVC
+        let toVC = context.viewController(forKey: .to) as? ToVC
+        
+        if fromVC.isSome && toVC.isSome {
+            
+            self.animateTransition(
+                from: from,
+                fromVC: fromVC!,
+                to: to,
+                toVC: toVC!,
+                using: context
+            )
+        } else if fromVC.isSome {
+            
+            self.animateTransition(
+                from: from,
+                fromVC: fromVC!,
+                to: to,
+                using: context
+            )
+        } else if toVC.isSome {
+            
+            self.animateTransition(
+                from: from,
+                to: to,
+                toVC: toVC!,
+                using: context
+            )
+        }
     }
     
     /// Более удобный метод анимации перехода.
     /// В него уже переданы от куда и куда идет переход.
+    ///
+    /// - Note: Этот метод будет вызван, если начальный или конечный
+    /// контроллеры отсутствуют или не соответствуют указанным типам.
     public func animateTransition(
         from: UIView,
         to: UIView,
-        using context: UIViewControllerContextTransitioning) {
-        fatalError(
-            "AnimatedTransitioning",
-            "Невозможно использовать абстрактный класс AnimatedTransitioning в качестве прямой реализации."
-        )
-    }
+        using context: UIViewControllerContextTransitioning
+    ) {}
+    
+    /// Более удобный метод анимации перехода.
+    /// В него уже переданы от куда и куда идет переход,
+    /// а также начальный и конечный контроллеры.
+    ///
+    /// - Note: Этот метод будет вызван, если начальный и конечный
+    /// контроллеры существуют и соответствуют указанным типам.
+    public func animateTransition(
+        from: UIView,
+        fromVC: FromVC,
+        to: UIView,
+        toVC: ToVC,
+        using context: UIViewControllerContextTransitioning
+    ) {}
+    
+    /// Более удобный метод анимации перехода.
+    /// В него уже переданы от куда и куда идет переход,
+    /// а также начальный контроллер.
+    public func animateTransition(
+        from: UIView,
+        fromVC: FromVC,
+        to: UIView,
+        using context: UIViewControllerContextTransitioning
+    ) {}
+    
+    /// Более удобный метод анимации перехода.
+    /// В него уже переданы от куда и куда идет переход,
+    /// а также конечный контроллер.
+    public func animateTransition(
+        from: UIView,
+        to: UIView,
+        toVC: ToVC,
+        using context: UIViewControllerContextTransitioning
+    ) {}
 }

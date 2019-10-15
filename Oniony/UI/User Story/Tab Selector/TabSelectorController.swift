@@ -89,7 +89,7 @@ final public class TabSelectorController: UICollectionViewController, TabSelecto
     /// Отображение будет показано.
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        collectionView.reloadData()
+//        collectionView.reloadData()
     }
     
     /// Произошла смена ориентации.

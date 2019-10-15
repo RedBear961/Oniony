@@ -44,7 +44,7 @@ final public class TabSelectorAssembly: AutoAssembly {
         container?.register(TabSelectorPresenter.self, factory: { (resolver, controller: TabSelectorController, coordinator: TabSelectorCoordinator) -> TabSelectorPresenter in
             let presenter = TabSelectorPresenter()
             presenter.coordinator = coordinator
-            presenter.tabsManager = resolver.resolve(TabsManager.self)
+            presenter.tabsManager = resolver.resolve(TabsManagerMock.self)
             presenter.tabSelector = controller
             return presenter
         })

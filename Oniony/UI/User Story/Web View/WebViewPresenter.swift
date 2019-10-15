@@ -21,32 +21,38 @@
 */
 
 import UIKit
-import Swinject
 
-// swiftlint:disable line_length force_cast
-
-final public class WebViewAssembly: AutoAssembly {
-
-    /// Контроллер модуля.
-    internal func webViewController() {
-        container?.register(WebViewController.self, factory: { (resolver, coordinator: WebViewCoordinator) -> WebViewController in
-            let storyboard = UIStoryboard(name: "WebViewController", bundle: nil)
-            let controller = storyboard.instantiateInitialViewController() as! WebViewController
-            controller.presenter = resolver.resolve(WebViewPresenter.self, arguments: controller, coordinator)!
-            return controller
-        })
-    }
+/// Протокол презентера модуля веб представления,
+public protocol WebViewPresenting: Presenter {
     
-    /// Презентер модуля.
-    internal func webViewPresenter() {
-        container?.register(WebViewPresenter.self, factory: { (resolver, controller: WebViewController, coordinator: WebViewCoordinator) -> WebViewPresenter in
-            let presenter = WebViewPresenter()
-            presenter.controller = controller
-            presenter.coordinator = coordinator
-            presenter.tabsManager = resolver.resolve(TabsManagerMock.self)!
-            return presenter
-        })
-    }
+    /// Текущая рабочая вкладка.
+    func currentTab() -> Tab
+    
+    /// Показать выбор вкладок.
+    func showTabSelector()
 }
 
-// swiftlint:enable line_length force_cast
+/// Презентер модуля веб представления.
+final public class WebViewPresenter: WebViewPresenting {
+    
+    /// Контроллер модуля.
+    public var controller: WebViewInput!
+    
+    /// Координатор модуля.
+    public var coordinator: WebViewCoordinator!
+    
+    /// Менеджер вкладок.
+    public var tabsManager: TabsManagement!
+    
+    // MARK: - WebViewPresenting
+    
+    /// Текущая модель вкладки.
+    public func currentTab() -> Tab {
+        return tabsManager.currentTab()
+    }
+    
+    /// Показать выбор вкладок.
+    public func showTabSelector() {
+        coordinator.close()
+    }
+}

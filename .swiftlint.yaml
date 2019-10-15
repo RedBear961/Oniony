@@ -27,7 +27,7 @@ excluded:
     - Frameworks/
     - Oniony/SwiftGen/
 
-line_length: 110
+line_length: 130
 
 trailing_semicolon: error
 empty_count: error

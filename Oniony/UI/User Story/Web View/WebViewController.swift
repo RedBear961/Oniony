@@ -24,23 +24,61 @@ import UIKit
 import EasySwift
 import PureLayout
 
-public final class WebViewController: UIViewController {
+/// Протокол контроллера модуля веб представления.
+public protocol WebViewInput where Self: UIViewController {
+}
+
+/// Контроллер веб представления.
+public final class WebViewController: UIViewController, WebViewInput {
     
-    internal var tabsManager: TabsManagement!
+    /// Презентер модуля,
+    public var presenter: WebViewPresenting!
     
-    public var webView: WebView!
+    /// Вкладка, которую отображает этот контроллер.
+    /// - Note: Это свойство имеет force unwrap, так как при отсутствие
+    /// вкладки продолжать работу бессмысленно, этот сценарий
+    /// на данный момент не представляется.
+    public var tab: Tab!
     
-    @IBOutlet var topView: UIVisualEffectView!
+    /// Веб-отображение этого контроллера.
+    public var webView: WebView {
+        return tab.webView
+    }
+    
+    /// Отступы веб контента по X и Y.
+    public var contentOffset: CGPoint {
+        get {
+            return webView.scrollView.contentOffset
+        }
+        set(value) {
+            webView.scrollView.contentOffset = value
+        }
+    }
     
     /// Стиль бара статуса.
     public override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
+    /// Заглушка в стиле визуального эффекта, что верх смотрелся красиво.
+    @IBOutlet var topView: UIVisualEffectView!
+    
+    /// Модуль загружен.
     public override func viewDidLoad() {
-        webView = tabsManager.currentTab().webView
+        prepareWebView()
+    }
+    
+    /// Выполняет первоначальную настройку веб отображения.
+    private func prepareWebView() {
+        tab = presenter.currentTab()
+        let webView = tab.webView
         view.addSubview(webView)
         webView.autoPinEdgesToSuperviewEdges()
         view.bringSubviewToFront(topView)
+    }
+    
+    /// Нажата кнопка перехода ко вкладкам.b
+    @IBAction func touchTabs(_ sender: UIBarButtonItem) {
+        presenter.showTabSelector()
     }
 }

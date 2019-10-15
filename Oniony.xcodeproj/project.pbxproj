@@ -44,6 +44,7 @@
 		05A55CA523537337001421BC /* PureLayout.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05A55CA323537336001421BC /* PureLayout.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05C77B6D23412CB300489475 /* TabSelectorController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05C77B6C23412CB300489475 /* TabSelectorController.storyboard */; };
 		05D1839B2354C89F003592A2 /* WebViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05D1839A2354C89F003592A2 /* WebViewController.storyboard */; };
+		05D1839D2354D301003592A2 /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D1839C2354D301003592A2 /* WebViewPresenter.swift */; };
 		05F2ACB12323FB240066B45B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F2ACB02323FB240066B45B /* AppDelegate.swift */; };
 		05F2ACB32323FB240066B45B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F2ACB22323FB240066B45B /* SceneDelegate.swift */; };
 		05F2ACB72323FB260066B45B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05F2ACB62323FB260066B45B /* Assets.xcassets */; };
@@ -106,6 +107,7 @@
 		05A55CA323537336001421BC /* PureLayout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PureLayout.framework; path = Carthage/Build/iOS/PureLayout.framework; sourceTree = "<group>"; };
 		05C77B6C23412CB300489475 /* TabSelectorController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TabSelectorController.storyboard; sourceTree = "<group>"; };
 		05D1839A2354C89F003592A2 /* WebViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WebViewController.storyboard; sourceTree = "<group>"; };
+		05D1839C2354D301003592A2 /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
 		05F2ACAD2323FB240066B45B /* Oniony.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Oniony.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05F2ACB02323FB240066B45B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		05F2ACB22323FB240066B45B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 			children = (
 				05FC78402349C4F9000832DF /* Coordinator */,
 				05A55CA123536A28001421BC /* WebViewAssembly.swift */,
+				05D1839C2354D301003592A2 /* WebViewPresenter.swift */,
 				05FC783E23492B04000832DF /* WebViewController.swift */,
 				05D1839A2354C89F003592A2 /* WebViewController.storyboard */,
 			);
@@ -511,6 +514,7 @@
 				0512C71D233F89AF007CC258 /* Tab.swift in Sources */,
 				050E3AA62325478F00197116 /* Strings.swift in Sources */,
 				051D81D4233C988700370DFB /* DirectorAssembly.swift in Sources */,
+				05D1839D2354D301003592A2 /* WebViewPresenter.swift in Sources */,
 				051D81D1233C981200370DFB /* OnionDirector.swift in Sources */,
 				05A55C9E23536031001421BC /* WebViewCoordinator.swift in Sources */,
 				05FC783F23492B04000832DF /* WebViewController.swift in Sources */,

@@ -26,10 +26,19 @@ import UIKit
 final public class ServiceAssembly: AutoAssembly {
 
     /// Контроллер вкладок.
-    internal func tabsController() {
+    internal func tabsManager() {
         container?.register(TabsManager.self, factory: { (_) -> TabsManager in
             let controller = TabsManager()
             return controller
         }).inObjectScope(.container)
     }
+    
+    #if DEBUG
+    /// Контроллер вкладок.
+    internal func tabsManagerMock() {
+        container?.register(TabsManagerMock.self, factory: { (_) -> TabsManagerMock in
+            return TabsManagerMock()
+        }).inObjectScope(.container)
+    }
+    #endif
 }

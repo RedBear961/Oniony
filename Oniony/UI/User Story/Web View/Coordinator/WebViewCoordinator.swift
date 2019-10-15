@@ -71,4 +71,12 @@ final public class WebViewCoordinator: NavigationCoordinator {
         navigationController.transitioningDelegate = transitiongDelegate
         show(on: controller)
     }
+    
+    /// Закрывает модуль.
+    ///
+    /// Если для показа модуля был использован контекст,
+    /// этот контекст будет использован и для закрытия.
+    public func close() {
+        navigationController.dismiss(animated: true)
+    }
 }

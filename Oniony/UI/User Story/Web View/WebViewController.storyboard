@@ -33,6 +33,16 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="sZD-SX-cAJ"/>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="kw2-Fg-RqR"/>
+                        <barButtonItem title="Вкладки" id="8lz-34-DKh">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="touchTabs:" destination="e61-OY-zPU" id="geZ-jl-GIo"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
                     <connections>
                         <outlet property="topView" destination="UB9-ei-ihl" id="Jby-Sn-dXA"/>
                     </connections>
