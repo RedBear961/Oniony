@@ -30,11 +30,17 @@ private let kItemsInSection = 2
 /// Протокол презентера модуля переключения вкладок.
 public protocol TabSelectorPresenting: CollectionPresenter {
     
+    /// Порядковый номер последней секции.
+    var lastSection: Int { get }
+    
     /// Модель ячейки для индекса пути.
     func item(at indexPath: IndexPath) -> Tab
     
     /// Был нажат элемент по индексу.
     func didSelectItem(at indexPath: IndexPath, in frame: CGRect)
+    
+    /// Заполнена ли последняя секции.
+    func isFulled(_ section: Int) -> Bool
 }
 
 /// Презентер модуля переключения вкладок.
@@ -55,6 +61,11 @@ final public class TabSelectorPresenter: TabSelectorPresenting {
 }
 
 public extension TabSelectorPresenter {
+    
+    /// Порядковый номер последней секции.
+    var lastSection: Int {
+        return numberOfSections() - 1
+    }
     
     /// Количество секций коллекции.
     func numberOfSections() -> Int {
@@ -95,5 +106,10 @@ public extension TabSelectorPresenter {
             radius: tabSelector.cornerRadius
         )
         coordinator.toWebView(using: context)
+    }
+    
+    /// Заполнена ли последняя секции.
+    func isFulled(_ section: Int) -> Bool {
+        return numberOfItems(in: section) > 1
     }
 }

@@ -27,6 +27,14 @@ import EasySwift
 @UIApplicationMain
 final public class AppDelegate: ESAppDelegate {
     
+    /// Глобальный экземпляр делегата.
+    public class var shared: AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+    
+    /// Основная оконная сцена приложения.
+    public private(set) var windowScene: UIWindowScene!
+    
     /// Контроллер вкладок.
     lazy private var tabsManager: TabsManagement = {
         let container = configurator.container
@@ -40,6 +48,15 @@ final public class AppDelegate: ESAppDelegate {
         return c
     }()
     
+    /// Обновляет оконную цену приложения.
+    public func update(_ scene: UIWindowScene) {
+        DispatchQueue.once {
+            self.windowScene = scene
+        }
+    }
+    
+    // MARK: - Application life-cycle
+    
     /// Приложение было запущено.
     public func applicationDidFinishLaunching(_ application: UIApplication) {
         tabsManager.beginSession()
@@ -49,4 +66,10 @@ final public class AppDelegate: ESAppDelegate {
     public func applicationWillTerminate(_ application: UIApplication) {
         tabsManager.finishSession()
     }
+}
+
+/// Текущая ориентация девайса.
+public func interfaceOrientation() -> UIInterfaceOrientation {
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    return appDelegate.windowScene.interfaceOrientation
 }

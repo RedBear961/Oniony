@@ -96,6 +96,11 @@ open class GestureHandler<Recognizer: UIGestureRecognizer, View: UIView>: Concre
         view.addGestureRecognizer(self.gesture)
     }
     
+    /// Подписывает объект на делегатные события получателя жестов.
+    public func subscribe(_ delegate: UIGestureRecognizerDelegate) {
+        gesture.delegate = delegate
+    }
+    
     /// Первоначальная обработка жеста.
     @objc private func handle(_ gesture: UIGestureRecognizer) {
         guard let view = obtainView() else {

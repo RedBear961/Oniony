@@ -37,6 +37,18 @@ public protocol PanHandlerDelegate: GestureHandlerDelegate {
     func panEnded(in point: CGPoint, for view: UIView)
 }
 
+public extension PanHandlerDelegate {
+    
+    /// Жест начался в точке.
+    func panDidStart(in point: CGPoint, for view: UIView) {}
+    
+    /// Жест продолжен с изменением от изначальной позиции.
+    func panContinued(with translation: CGPoint, for view: UIView) {}
+    
+    /// Жест закончен в точке.
+    func panEnded(in point: CGPoint, for view: UIView) {}
+}
+
 /// Обработчика жеста движения.
 public final class PanGestureHandler<View: UIView>: GestureHandler<UIPanGestureRecognizer, View> {
     

@@ -34,6 +34,8 @@ final public class SceneDelegate: ESSceneDelegate {
 
     /// Сцена была создана.
     public override func windowSceneWillConnect(_ scene: UIWindowScene) {
+        AppDelegate.shared.update(scene)
+        
         let window = UIWindow(windowScene: scene)
         let container = SwinjectConfigurator.shared.container
         let coordinator = SplashScreenCoordinator(for: window, in: container)

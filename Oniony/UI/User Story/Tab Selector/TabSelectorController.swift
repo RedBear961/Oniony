@@ -33,7 +33,7 @@ private let kHalfCellIndent = kCellIndent / 2
 private let kCellPortraitRatio: CGFloat = 1.1
 
 /// Соотношение сторон ячейки для альбомной ориентации.
-private let kCellLandscapeRatio: CGFloat = 0.6
+private let kCellLandscapeRatio: CGFloat = 0.42
 
 /// Протокол контроллера модуля переключения вкладок.
 public protocol TabSelector where Self: UIViewController {
@@ -48,14 +48,16 @@ public protocol TabSelector where Self: UIViewController {
 /// Модуль переключения вкладок.
 final public class TabSelectorController: UICollectionViewController, TabSelector {
     
+    // MARK: - Зависимости
+    
     /// Презентер модуля.
     public var presenter: TabSelectorPresenting!
     
+    // MARK: - Публичные свойства
+    
     /// Текущее соотношение сторон ячеек коллекции.
     public var aspectRatio: CGFloat {
-        let orientation = UIDevice.current.statusBarOrientation
-        let ratio = orientation.isPortrait ? kCellPortraitRatio : kCellLandscapeRatio
-        return ratio
+        return orientation.isPortrait ? kCellPortraitRatio : kCellLandscapeRatio
     }
     
     /// Радиус закругления ячеек коллекции.
@@ -63,33 +65,47 @@ final public class TabSelectorController: UICollectionViewController, TabSelecto
         return TabViewCell.cornerRadius
     }
     
+    // MARK: - Приватные свойства
+    
+    /// Текущий размер элемента.
+    private var itemSize: CGSize = .zero
+    
+    private var orientation: UIInterfaceOrientation = .unknown
+    
     /// Обработчик жеста движения.
-    private var panHandler: PanGestureHandler<TabViewCell>?
+    lazy private var panHandler: PanGestureHandler<TabViewCell> = {
+        let handler = PanGestureHandler<TabViewCell>(for: collectionView)
+        handler.delegate = self
+        handler.gesture.delegate = self
+        return handler
+    }()
     
     /// Обработчик длительного нажатия.
-    private var longPressHandler: LongPressGestureHandler<TabViewCell>?
+    lazy private var longPressHandler: LongPressGestureHandler<TabViewCell> = {
+        let handler = LongPressGestureHandler<TabViewCell>(for: collectionView)
+        handler.delegate = self
+        handler.gesture.delegate = self
+        return handler
+    }()
+    
+    // MARK: - Жизненный цикл
     
     /// Модуль был загружен.
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        panHandler = PanGestureHandler(for: collectionView)
-        panHandler?.delegate = self
-        panHandler?.gesture.delegate = self
-        
-        longPressHandler = LongPressGestureHandler(for: collectionView)
-        longPressHandler?.delegate = self
-        longPressHandler?.gesture.delegate = self
+        panHandler.subscribe(self)
+        longPressHandler.subscribe(self)
         
         let nib = UINib(for: TabViewCell.self)
-        collectionView.register(nib, forCellWithReuseIdentifier: TabViewCell.selfIdentifier)
+        collectionView.register(nib, forCellWithReuseIdentifier: TabViewCell.reuseIdentifier)
         presenter.viewDidLoad()
     }
     
     /// Отображение будет показано.
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        collectionView.reloadData()
+        updateFlow()
     }
     
     /// Произошла смена ориентации.
@@ -100,9 +116,22 @@ final public class TabSelectorController: UICollectionViewController, TabSelecto
         super.viewWillTransition(to: size, with: coordinator)
         collectionView.reloadData()
     }
+    
+    // MARK: - Приватные функции
+    
+    /// Обновляет флоу коллекции.
+    private func updateFlow() {
+        // На экране 3 промежутка между отступами и 2 ячейки на нем.
+        let screenSize = collectionView.size
+        let width = (screenSize.width - kCellIndent * 3) / 2
+        let height = width * aspectRatio
+        itemSize = CGSize(width: width, height: height)
+    }
 }
 
 public extension TabSelectorController {
+    
+    // MARK: - Делегат коллекции
     
     /// Количество секций в таблице.
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -124,10 +153,10 @@ public extension TabSelectorController {
     ) -> UICollectionViewCell {
         let data = presenter.item(at: indexPath)
         let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: TabViewCell.selfIdentifier,
+            withReuseIdentifier: TabViewCell.reuseIdentifier,
             for: indexPath
         ) as! TabViewCell
-        cell.configure(using: data)
+        cell.configure(using: data, size: itemSize, and: orientation)
         return cell
     }
     
@@ -144,13 +173,19 @@ public extension TabSelectorController {
 
 extension TabSelectorController: UICollectionViewDelegateFlowLayout {
     
-    /// Размер ячейки.
+    // MARK: - Размер и положение ячеек
+    
     public func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return itemSize()
+        let current = AppDelegate.shared.windowScene.interfaceOrientation
+        if current != orientation {
+            orientation = current
+            updateFlow()
+        }
+        return itemSize
     }
     
     /// Отступы для ячейки.
@@ -159,52 +194,41 @@ extension TabSelectorController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         insetForSectionAt section: Int
     ) -> UIEdgeInsets {
-        let endSection = presenter.numberOfSections() - 1
-        let numItems = presenter.numberOfItems(in: section)
-        var insets = numItems == 1 ? singleInsets() : UIEdgeInsets(kCellIndent)
+        let lastSection = presenter.lastSection
+        let isFulled = presenter.isFulled(lastSection)
+        var insets = isFulled ? singleInsets() : UIEdgeInsets(kCellIndent)
 
         // Делает фикс верха и низа для равномерного размещения
         // всех ячеек в коллекции.
         let fix = kHalfCellIndent
         switch section {
-        case 0:
-            insets.bottom = fix
+            case 0:
+                insets.bottom = fix
 
-        case endSection:
-            insets.top = fix
+            case lastSection:
+                insets.top = fix
 
-        default:
-            insets.top = fix
-            insets.bottom = fix
+            default:
+                insets.top = fix
+                insets.bottom = fix
         }
 
         return insets
     }
     
-    /// Вычисляет размер ячейки.
-    private func itemSize() -> CGSize {
-        let screenSize = collectionView.frame.size
-        let orientation = UIDevice.current.statusBarOrientation
-        let ratio = orientation.isPortrait ? kCellPortraitRatio : kCellLandscapeRatio
-        
-        // На экране 3 промежутка между отступами и 2 ячейки на нем.
-        let width = (screenSize.width - kCellIndent * 3) / 2
-        let height = width * ratio
-        return CGSize(width: width, height: height)
-    }
-    
     /// Создает шаблон отступом для секции с одиночном ячейкой.
     /// Эти отступы требуют фикса верха и низа.
     private func singleInsets() -> UIEdgeInsets {
-        let screenWidth = collectionView.frame.width
+        let width = collectionView.width
         var insets = UIEdgeInsets(kCellIndent)
-        insets.left = kCellIndent
-        insets.right = screenWidth - (itemSize().width + kCellIndent)
+        insets.right = width - (itemSize.width + kCellIndent)
         return insets
     }
 }
 
 extension TabSelectorController: PanHandlerDelegate, LongPressHandlerDelegate, UIGestureRecognizerDelegate {
+    
+    // MARK: - Обработка жестов
     
     /// Запрашивает отображение для работы.
     public func gestureHandler(viewAt point: CGPoint) -> UIView? {
@@ -214,13 +238,9 @@ extension TabSelectorController: PanHandlerDelegate, LongPressHandlerDelegate, U
         return collectionView.cellForItem(at: indexPath)
     }
     
-    /// Жест начался в точке.
-    public func panDidStart(in point: CGPoint, for view: UIView) {
-    }
-    
     /// Жест продолжен с изменением от изначальной позиции.
     public func panContinued(with translation: CGPoint, for view: UIView) {
-        guard let x = panHandler?.defaultCenter?.x else {
+        guard let x = panHandler.defaultCenter?.x else {
             return
         }
         
@@ -241,15 +261,15 @@ extension TabSelectorController: PanHandlerDelegate, LongPressHandlerDelegate, U
     
     /// Жест закончен в точке.
     public func panEnded(in point: CGPoint, for view: UIView) {
-        guard let center = panHandler?.defaultCenter else {
+        guard let center = panHandler.defaultCenter else {
             return
         }
         
         let tab = view as! TabViewCell
         let indexPath = collectionView.indexPath(for: tab)!
         let diff = abs(view.center.x - center.x)
-        if diff > view.frame.size.width / 2 {
-            deleteCell(tab, at: indexPath)
+        if diff > view.width / 2 {
+            delete(tab, at: indexPath)
             return
         }
         
@@ -261,7 +281,7 @@ extension TabSelectorController: PanHandlerDelegate, LongPressHandlerDelegate, U
     /// Разрешает начать жест движение, если активен жест длительное нажатие.
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if gestureRecognizer is UILongPressGestureRecognizer { return true }
-        return longPressHandler?.view != nil
+        return longPressHandler.view != nil
     }
     
     /// Расзрешает продолжить жест движение после жеста длительного нажатия.
@@ -287,8 +307,10 @@ extension TabSelectorController: PanHandlerDelegate, LongPressHandlerDelegate, U
         }
     }
     
-    /// Удаляет ячейку из таблицы.
-    private func deleteCell(_ cell: TabViewCell, at indexPath: IndexPath) {
+    // MARK: - Обновление коллекции
+    
+    /// Удаляет ячейку из коллекции.
+    private func delete(_ cell: TabViewCell, at indexPath: IndexPath) {
         let sign: CGFloat = indexPath.row == 0 ? -1 : 1
         UIView.animate(withDuration: 0.1, animations: {
             cell.frame = cell.frame.offset(dx: sign * 1000)
@@ -298,17 +320,18 @@ extension TabSelectorController: PanHandlerDelegate, LongPressHandlerDelegate, U
         }
     }
     
-    /// Проводит обновление таблицы.
+    /// Проводит обновление коллекции.
     private func batchUpdates(at indexPath: IndexPath) {
         let before = presenter.numberOfSections()
         collectionView.performBatchUpdates({
             let after = self.presenter.removeItem(at: indexPath)
-            
             if before != after {
-                self.collectionView.deleteSections(IndexSet(arrayLiteral: after))
-            } else {
-                self.collectionView.deleteItems(at: [indexPath])
+                let indexSet = IndexSet(arrayLiteral: after)
+                self.collectionView.deleteSections(indexSet)
+                return
             }
+            
+            self.collectionView.deleteItems(at: [indexPath])
         })
     }
 }

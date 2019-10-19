@@ -28,11 +28,20 @@ final public class TabViewCell: UICollectionViewCell {
     /// Радиус закругления ячейки.
     public static let cornerRadius: CGFloat = 10
     
+    /// Текущая ориентация ячейки.
+    public var orientation: UIInterfaceOrientation = .unknown
+    
     /// Имя вкладки.
     @IBOutlet var name: UILabel!
     
     /// Изображение вкладки.
     @IBOutlet var imageView: UIImageView!
+    
+    /// Ширина ячейки.
+    @IBOutlet var width: NSLayoutConstraint!
+    
+    /// Высота ячейки.
+    @IBOutlet var height: NSLayoutConstraint!
     
     /// Настраивает ячейку после загрузки из XIB.
     public override func awakeFromNib() {
@@ -40,9 +49,32 @@ final public class TabViewCell: UICollectionViewCell {
     }
     
     /// Настраивает ячейку с помощью модели.
-    public func configure(using tab: Tab) {
+    public func configure(
+        using tab: Tab,
+        size: CGSize,
+        and newOrientation: UIInterfaceOrientation
+    ) {
         name.text = tab.title
-        let image = tab.snapshot(in: bounds)
+        var isRedraw = false
+        
+        // Меняет ограничения и добавляет перерисовку
+        // из-за смены ориентации.
+        if newOrientation != orientation {
+            update(with: size)
+            orientation = newOrientation
+            isRedraw = true
+        }
+        
+        let image = tab.snapshot(
+            in: size.toBounds,
+            redraw: isRedraw
+        )
         imageView.image = image
+    }
+    
+    /// Обновляет ограничения.
+    private func update(with size: CGSize) {
+        width.constant = size.width
+        height.constant = size.height
     }
 }

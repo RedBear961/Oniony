@@ -82,8 +82,7 @@ open class WebViewAnimatedTransitioning<FromVC, ToVC>: AnimatedTransitioning<Fro
     /// Находит отступы координат веб контроллера, чтобы он
     /// находился в центре ячейки.
     fileprivate func toOffset(
-        to view: UIView,
-        for context: WebViewTransitionContext
+        to view: UIView
     ) -> CGPoint {
         let ratio = context.relation(to: view.frame)
         let size = view.size.scaledBy(0.5)
@@ -92,13 +91,13 @@ open class WebViewAnimatedTransitioning<FromVC, ToVC>: AnimatedTransitioning<Fro
         return CGPoint(x: x, y: y)
     }
     
+    /// Настраивает `to` так, чтобы она была идентична ячейке коллекции.
     fileprivate func adjust(
         _ to: UIView,
-        with from: UIView,
-        for context: WebViewTransitionContext
+        with from: UIView
     ) {
         let wRatio = context.relation(to: from.frame).wRatio
-        let offset = toOffset(to: from, for: context)
+        let offset = toOffset(to: from)
         let center = CGPoint(
             x: context.x + offset.x,
             y: context.y + offset.y
@@ -130,7 +129,7 @@ final public class WebViewAnimatedPresenting: WebViewAnimatedTransitioning<Never
         let contentOffset = webview.contentOffset
         let container = transitioningContext.containerView
         
-        adjust(to, with: from, for: context)
+        adjust(to, with: from)
         container.addSubview(to)
         
         UIView.spring(with: duration, damping: 0.7, velocity: 0.2, animations: {
@@ -169,7 +168,7 @@ final public class WebViewAnimatedDismissing: WebViewAnimatedTransitioning<UINav
         
         // Анимирует переход.
         UIView.animate(with: duration, animations: {
-            self.adjust(from, with: to, for: self.context)
+            self.adjust(from, with: to)
             
             webview.contentOffset = .zero
         }, completion: { (_) in
