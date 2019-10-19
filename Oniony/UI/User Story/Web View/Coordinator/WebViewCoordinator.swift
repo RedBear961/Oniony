@@ -26,7 +26,7 @@ import Swinject
 public protocol WebViewCoordinatorDelegate: class {
 }
 
-final public class WebViewCoordinator: NavigationCoordinator {
+final public class WebViewCoordinator: NSObject, NavigationCoordinator {
 
     /// Модуль переключения вкладок.
     public private(set) var controller: WebViewController!
@@ -40,36 +40,26 @@ final public class WebViewCoordinator: NavigationCoordinator {
     /// DI-контейнер для работы координатора.
     private var container: Container
     
-    /// Контроллер навигации.
-    private var navigationController: UINavigationController = {
-        let nc = UINavigationController()
-        nc.isNavigationBarHidden = true
-        nc.toolbar.barStyle = .black
-        return nc
-    }()
-    
-    /// Делегат перехода на контроллер переключения вкладок.
-    private var transitiongDelegate: WebViewTransitioningDelegate?
-    
     /// Основной конструктор координатора.
     /// - Parameter container: DI-контейнер приложения.
     public init(container: Container) {
         self.container = container
+        super.init()
         self.controller = container.resolve(WebViewController.self, argument: self)!
-        navigationController.modalPresentationStyle = .fullScreen
+        self.controller.modalPresentationStyle = .fullScreen
     }
 
     /// Запускает показ модуля.
-    public func show(on controller: TabSelectorController) {
-        navigationController.pushViewController(self.controller, animated: true)
-        controller.present(navigationController, animated: true)
+    public func show(on controller: UINavigationController) {
+        controller.delegate = self
+        controller.pushViewController(self.controller, animated: false)
     }
     
     /// Запускает показ модуля, используя контекст представления.
-    public func show(on controller: TabSelectorController, using context: WebViewTransitionContext) {
-        transitiongDelegate = WebViewTransitioningDelegate(with: context)
-        navigationController.transitioningDelegate = transitiongDelegate
-        show(on: controller)
+    public func show(on controller: UINavigationController, using context: WebViewTransitionContext) {
+        self.context = context
+        controller.delegate = self
+        controller.pushViewController(self.controller, animated: true)
     }
     
     /// Закрывает модуль.
@@ -77,6 +67,32 @@ final public class WebViewCoordinator: NavigationCoordinator {
     /// Если для показа модуля был использован контекст,
     /// этот контекст будет использован и для закрытия.
     public func close() {
-        navigationController.dismiss(animated: true)
+        controller.navigationController?.popViewController(animated: true)
+    }
+}
+
+extension WebViewCoordinator: UINavigationControllerDelegate {
+    
+    /// Создает аниматора перехода.
+    public func navigationController(
+        _ navigationController: UINavigationController,
+        animationControllerFor operation: UINavigationController.Operation,
+        from fromVC: UIViewController,
+        to toVC: UIViewController
+    ) -> UIViewControllerAnimatedTransitioning? {
+        guard let context = context else {
+            return nil
+        }
+        
+        switch fromVC {
+            case is TabSelectorController:
+                return WebViewAnimatedPresenting(using: context)
+            
+            case is WebViewController:
+                return WebViewAnimatedDismissing(using: context)
+            
+            default:
+                return nil
+        }
     }
 }

@@ -55,8 +55,15 @@ final public class TabSelectorPresenter: TabSelectorPresenting {
     /// Контроллер модуля.
     public var tabSelector: TabSelector!
     
+    /// Первый ли раз показывается контроллер.
+    private var isFirstShow = true
+    
     /// Модуль был загружен.
     public func viewDidLoad() {
+        if isFirstShow {
+            coordinator.toWebView()
+            isFirstShow = false
+        }
     }
 }
 
@@ -84,8 +91,8 @@ public extension TabSelectorPresenter {
     
     /// Модель ячейки для индекса пути.
     func item(at indexPath: IndexPath) -> Tab {
-        let index: Int = indexPath.absolute(with: kItemsInSection)
-        return tabsManager.tabs[index]
+        let index: UInt = indexPath.absolute(with: kItemsInSection)
+        return tabsManager.tab(at: index)!
     }
     
     /// Удаляет вкладку по индексу пути.

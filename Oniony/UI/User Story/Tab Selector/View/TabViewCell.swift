@@ -29,7 +29,7 @@ final public class TabViewCell: UICollectionViewCell {
     public static let cornerRadius: CGFloat = 10
     
     /// Текущая ориентация ячейки.
-    public var orientation: UIInterfaceOrientation = .unknown
+    public var orientation: UIInterfaceOrientation = AppDelegate.shared.orientation
     
     /// Имя вкладки.
     @IBOutlet var name: UILabel!
@@ -55,21 +55,19 @@ final public class TabViewCell: UICollectionViewCell {
         and newOrientation: UIInterfaceOrientation
     ) {
         name.text = tab.title
+        update(with: size)
         var isRedraw = false
         
         // Меняет ограничения и добавляет перерисовку
         // из-за смены ориентации.
         if newOrientation != orientation {
-            update(with: size)
             orientation = newOrientation
             isRedraw = true
         }
         
-        let image = tab.snapshot(
-            in: size.toBounds,
-            redraw: isRedraw
-        )
-        imageView.image = image
+        tab.snapshot(in: frame, redraw: isRedraw) { (image) in
+            self.imageView.image = image
+        }
     }
     
     /// Обновляет ограничения.

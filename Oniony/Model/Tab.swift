@@ -21,7 +21,6 @@
 */
 
 import UIKit
-import SwiftUI
 import EasySwift
 
 /// Псевдонимм адреса, для внесения ясности, что
@@ -39,7 +38,7 @@ public extension URL {
 }
 
 /// Модель веб-вкладки.
-public class Tab {
+public class Tab: NSObject {
     
     /// Экземпляр веб отображения
     ///
@@ -62,10 +61,13 @@ public class Tab {
     }
     
     /// Создает новую вкладку с адресом `about:blank`.
-    public init() {
+    public override init() {
         let webView = WebView()
-        webView.loadHTMLString("", baseURL: .blank)
         self.webView = webView
+        super.init()
+        
+        webView.delegate = self
+        webView.loadHTMLString("", baseURL: .blank)
         webView.frame = defaultRect()
     }
     
@@ -73,27 +75,40 @@ public class Tab {
     public init(with url: URL) {
         let webView = WebView()
         self.webView = webView
-        webView.frame = defaultRect()
+        super.init()
         
+        webView.frame = defaultRect()
+        webView.delegate = self
         let request = URLRequest(url: url)
         webView.loadRequest(request)
     }
     
     /// Создает снэпшот текущей страницы.
-    public func snapshot(in rect: CGRect, redraw: Bool = false) -> UIImage {
-        var image = screenshot(in: rect, redraw: redraw)
-        
-        if rect != .zero, let ciImage = image.ciImage() {
-            let ratio = image.size.relation(to: rect.size)
-            let size = rect.size.scaledBy(ratio.width)
-            let origin = CGPoint(x: 0, y: ciImage.extent.height - size.height)
-            let frame = CGRect(origin: origin, size: size)
-            let cropped = ciImage.cropped(to: frame)
+    public func snapshot(
+        in rect: CGRect,
+        redraw: Bool = false,
+        completion block: @escaping (UIImage) -> Void
+    ) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            var image = UIImage()
+            DispatchQueue.main.sync {
+                 image = self.screenshot(in: rect, redraw: redraw)
+            }
             
-            image = cropped.uiImage
+            if rect != .zero, let ciImage = image.ciImage() {
+                let ratio = image.size.relation(to: rect.size)
+                let size = rect.size.scaledBy(ratio.width)
+                let origin = CGPoint(x: 0, y: ciImage.extent.height - size.height)
+                let frame = CGRect(origin: origin, size: size)
+                let cropped = ciImage.cropped(to: frame)
+                
+                image = cropped.uiImage
+            }
+            
+            DispatchQueue.main.async {
+                block(image)
+            }
         }
-        
-        return image
     }
     
     /// Создает скриншот вкладки полного размера.
@@ -123,5 +138,14 @@ public class Tab {
         let screenSize = UIScreen.main.bounds.size
         let resultSize = screenSize.applying(CGAffineTransform(scaleX: 0.4, y: 0.4))
         return CGRect(origin: .zero, size: resultSize.rounded)
+    }
+}
+
+extension Tab: UIWebViewDelegate {
+    
+    /// Веб отображение было загружено.
+    public func webViewDidFinishLoad(_ webView: WebView) {
+        let rect = UIScreen.main.bounds
+        _ = screenshot(in: rect, redraw: true)
     }
 }

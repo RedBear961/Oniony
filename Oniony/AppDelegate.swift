@@ -35,6 +35,11 @@ final public class AppDelegate: ESAppDelegate {
     /// Основная оконная сцена приложения.
     public private(set) var windowScene: UIWindowScene!
     
+    /// Текущая ориентация интерфейса.
+    public var orientation: UIInterfaceOrientation {
+        return windowScene.interfaceOrientation
+    }
+    
     /// Контроллер вкладок.
     lazy private var tabsManager: TabsManagement = {
         let container = configurator.container

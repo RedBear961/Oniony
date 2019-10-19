@@ -25,9 +25,6 @@ import UIKit
 /// Протокол управляющего вкладками.
 public protocol TabsManagement {
     
-    /// Все открытые вкладки.
-    var tabs: [Tab] { get }
-    
     /// Текущее количество вкладок.
     var count: Int { get }
     
@@ -37,6 +34,9 @@ public protocol TabsManagement {
     /// новую руководствуясь политикой
     /// создания вкладок.
     func currentTab() -> Tab
+    
+    /// Выдает вкладку по ее индексу.
+    func tab(at index: UInt) -> Tab?
     
     /// Назначает новую действующую вкладку.
     ///
@@ -104,6 +104,16 @@ final public class TabsManager: TabsManagement {
         return new
     }
     
+    /// Выдает вкладку по ее индексу.
+    public func tab(at index: UInt) -> Tab? {
+        let i = Int(index)
+        guard i < tabs.count else {
+            return nil
+        }
+        
+        return tabs[i]
+    }
+    
     /// Назначает новую действующую вкладку.
     public func selectTab(at index: UInt) {
         let i = Int(index)
@@ -140,61 +150,71 @@ final public class TabsManager: TabsManagement {
 public final class TabsManagerMock: TabsManagement {
     
     /// Все открытые вкладки.
-        public var tabs: [Tab] = [
-            Tab(with: URL(string: "https://yandex.ru")!),
-            Tab(with: URL(string: "https://google.com")!),
-            Tab(with: URL(string: "https://mail.ru")!),
-            Tab(with: URL(string: "https://yandex.ru")!),
-            Tab(with: URL(string: "https://google.com")!),
-            Tab(with: URL(string: "https://mail.ru")!),
-            Tab(with: URL(string: "https://yandex.ru")!),
-            Tab(with: URL(string: "https://google.com")!)
-        ]
-        
-        /// Текущее количество вкладок.
-        public var count: Int {
-            return tabs.count
+    public var tabs: [Tab] = [
+        Tab(with: URL(string: "https://yandex.ru")!),
+        Tab(with: URL(string: "https://google.com")!),
+        Tab(with: URL(string: "https://mail.ru")!),
+        Tab(with: URL(string: "https://yandex.ru")!),
+        Tab(with: URL(string: "https://google.com")!),
+        Tab(with: URL(string: "https://mail.ru")!),
+        Tab(with: URL(string: "https://yandex.ru")!),
+        Tab(with: URL(string: "https://google.com")!)
+    ]
+    
+    /// Текущее количество вкладок.
+    public var count: Int {
+        return tabs.count
+    }
+    
+    private var _currentTab: Tab
+    
+    /// Основной конструктор.
+    public init() {
+        _currentTab = tabs.first!
+    }
+    
+    /// Текущая вкладка.
+    public func currentTab() -> Tab {
+        return _currentTab
+    }
+
+    /// Выдает вкладку по ее индексу.
+    public func tab(at index: UInt) -> Tab? {
+        let i = Int(index)
+        guard i < tabs.count else {
+            return nil
         }
         
-        private var _currentTab: Tab
-        
-        /// Основной конструктор.
-        public init() {
-            _currentTab = tabs.first!
+        return tabs[i]
+    }
+    
+    /// Назначает новую действующую вкладку.
+    public func selectTab(at index: UInt) {
+        let i = Int(index)
+        guard i < tabs.count else {
+            return
         }
         
-        /// Текущая вкладка.
-        public func currentTab() -> Tab {
-            return _currentTab
+        let tab = tabs[i]
+        _currentTab = tab
+    }
+    
+    /// Удаляет вкладку по индексу.
+    public func removeTab(at index: UInt) {
+        let i = Int(index)
+        guard i < tabs.count else {
+            return
         }
         
-        /// Назначает новую действующую вкладку.
-        public func selectTab(at index: UInt) {
-            let i = Int(index)
-            guard i < tabs.count else {
-                return
-            }
-            
-            let tab = tabs[i]
-            _currentTab = tab
-        }
-        
-        /// Удаляет вкладку по индексу.
-        public func removeTab(at index: UInt) {
-            let i = Int(index)
-            guard i < tabs.count else {
-                return
-            }
-            
-            tabs.remove(at: i)
-        }
-        
-        /// Начинает новую сессию.
-        public func beginSession() {
-        }
-        
-        /// Выполняет действия по завершению сессии
-        /// пользователя.
-        public func finishSession() {
-        }
+        tabs.remove(at: i)
+    }
+    
+    /// Начинает новую сессию.
+    public func beginSession() {
+    }
+    
+    /// Выполняет действия по завершению сессии
+    /// пользователя.
+    public func finishSession() {
+    }
 }

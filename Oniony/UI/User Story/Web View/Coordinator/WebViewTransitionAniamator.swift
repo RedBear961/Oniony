@@ -39,35 +39,6 @@ public struct WebViewTransitionContext: RectPresentable, Relatable {
     public var radius: CGFloat
 }
 
-/// Делегат перехода на контроллер веб отображения.
-final public class WebViewTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
-    
-    /// Контекст перехода.
-    public let context: WebViewTransitionContext
-    
-    /// Основной конструктор.
-    public init(with context: WebViewTransitionContext) {
-        self.context = context
-        super.init()
-    }
-    
-    /// Создает аниматор перехода для контроллера переключения вкладок.
-    public func animationController(
-        forPresented presented: UIViewController,
-        presenting: UIViewController,
-        source: UIViewController
-    ) -> UIViewControllerAnimatedTransitioning? {
-        return WebViewAnimatedPresenting(using: context)
-    }
-    
-    /// Создает аниматор закрытия модуля.
-    public func animationController(
-        forDismissed dismissed: UIViewController
-    ) -> UIViewControllerAnimatedTransitioning? {
-        return WebViewAnimatedDismissing(using: context)
-    }
-}
-
 open class WebViewAnimatedTransitioning<FromVC, ToVC>: AnimatedTransitioning<FromVC, ToVC> {
     
     /// Контекст перехода.
@@ -114,19 +85,19 @@ open class WebViewAnimatedTransitioning<FromVC, ToVC>: AnimatedTransitioning<Fro
 }
 
 /// Аниматор перехода на контроллер модуля веб отображения.
-final public class WebViewAnimatedPresenting: WebViewAnimatedTransitioning<Never, UINavigationController> {
+final public class WebViewAnimatedPresenting: WebViewAnimatedTransitioning<Never, WebViewController> {
     
     /// Анимирует переход.
     public override func animateTransition(
         from: UIView,
         to: UIView,
-        toVC: UINavigationController,
+        toVC: WebViewController,
         using transitioningContext: UIViewControllerContextTransitioning
     ) {
         //  Настройка свойств начала анимации.
-        toVC.setToolbarHidden(false, animated: false)
-        let webview = toVC.root as! WebViewController
-        let contentOffset = webview.contentOffset
+        let navVC = toVC.navigationController!
+        navVC.setToolbarHidden(false, animated: false)
+        let contentOffset = toVC.contentOffset
         let container = transitioningContext.containerView
         
         adjust(to, with: from)
@@ -137,14 +108,14 @@ final public class WebViewAnimatedPresenting: WebViewAnimatedTransitioning<Never
             to.frame = from.frame
             to.cornerRadius = 0
             
-            webview.contentOffset = contentOffset
+            toVC.contentOffset = contentOffset
         }, completion: { (_) in
             transitioningContext.completeTransition(true)
         })
     }
 }
 
-final public class WebViewAnimatedDismissing: WebViewAnimatedTransitioning<UINavigationController, Never> {
+final public class WebViewAnimatedDismissing: WebViewAnimatedTransitioning<WebViewController, Never> {
     
     /// Длительность закрытия.
     public override var duration: TimeInterval {
@@ -154,14 +125,14 @@ final public class WebViewAnimatedDismissing: WebViewAnimatedTransitioning<UINav
     /// Анимирует закрытие.
     public override func animateTransition(
         from: UIView,
-        fromVC: UINavigationController,
+        fromVC: WebViewController,
         to: UIView,
         using transitioningContext: UIViewControllerContextTransitioning
     ) {
         //  Настройка свойств начала анимации.
-        fromVC.setToolbarHidden(true, animated: true)
-        let webview = fromVC.root as! WebViewController
-        let contentOffset = webview.contentOffset
+        let navVC = fromVC.navigationController!
+        navVC.setToolbarHidden(true, animated: true)
+        let contentOffset = fromVC.contentOffset
         let container = transitioningContext.containerView
         to.frame = from.frame
         container.insertSubview(to, belowSubview: from)
@@ -170,10 +141,10 @@ final public class WebViewAnimatedDismissing: WebViewAnimatedTransitioning<UINav
         UIView.animate(with: duration, animations: {
             self.adjust(from, with: to)
             
-            webview.contentOffset = .zero
+            fromVC.contentOffset = .zero
         }, completion: { (_) in
             
-            webview.contentOffset = contentOffset
+            fromVC.contentOffset = contentOffset
             transitioningContext.completeTransition(true)
         })
     }

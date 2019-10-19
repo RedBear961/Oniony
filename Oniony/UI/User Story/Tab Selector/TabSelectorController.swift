@@ -70,7 +70,8 @@ final public class TabSelectorController: UICollectionViewController, TabSelecto
     /// Текущий размер элемента.
     private var itemSize: CGSize = .zero
     
-    private var orientation: UIInterfaceOrientation = .unknown
+    /// Ориентация интерфейса.
+    private var orientation = AppDelegate.shared.orientation
     
     /// Обработчик жеста движения.
     lazy private var panHandler: PanGestureHandler<TabViewCell> = {
@@ -105,6 +106,8 @@ final public class TabSelectorController: UICollectionViewController, TabSelecto
     /// Отображение будет показано.
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        let navVC = navigationController!
+        navVC.isNavigationBarHidden = false
         updateFlow()
     }
     
@@ -126,6 +129,14 @@ final public class TabSelectorController: UICollectionViewController, TabSelecto
         let width = (screenSize.width - kCellIndent * 3) / 2
         let height = width * aspectRatio
         itemSize = CGSize(width: width, height: height)
+    }
+    
+    /// Рект ячейки по индексу пути.
+    private func rect(at indexPath: IndexPath) -> CGRect {
+        let cell = collectionView.cellForItem(at: indexPath)!
+        let offset = collectionView.contentOffset.y
+        let frame = cell.frame.offset(dy: -offset)
+        return frame
     }
 }
 
@@ -164,9 +175,7 @@ public extension TabSelectorController {
         _ view: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        let cell = view.cellForItem(at: indexPath)!
-        let offset = view.contentOffset.y
-        let frame = cell.frame.offset(dy: -offset)
+        let frame = rect(at: indexPath)
         presenter.didSelectItem(at: indexPath, in: frame)
     }
 }
@@ -180,8 +189,8 @@ extension TabSelectorController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let current = AppDelegate.shared.windowScene.interfaceOrientation
-        if current != orientation {
+        let current = AppDelegate.shared.orientation
+        if orientation != current {
             orientation = current
             updateFlow()
         }

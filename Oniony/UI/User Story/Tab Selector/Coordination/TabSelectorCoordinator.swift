@@ -24,7 +24,7 @@ import Swinject
 import UIKit
 
 /// Координатор модуля переключения вкладок.
-final public class TabSelectorCoordinator: NavigationCoordinator, WebViewCoordinatorDelegate {
+final public class TabSelectorCoordinator: NavigationCoordinator {
 
     /// Модуль переключения вкладок.
     public private(set) var controller: TabSelectorController!
@@ -63,10 +63,17 @@ final public class TabSelectorCoordinator: NavigationCoordinator, WebViewCoordin
     }
     
     /// Выполняет переход на модуль веб представления.
+    public func toWebView() {
+        let child = WebViewCoordinator(container: container)
+        child.show(on: navigationController)
+        self.child = child
+    }
+    
+    /// Выполняет переход на модуль веб представления, используя контекст перехода.
     public func toWebView(using context: WebViewTransitionContext) {
         let child = WebViewCoordinator(container: container)
-        child.delegate = self
-        child.show(on: controller, using: context)
+        child.delegate = controller.presenter as? WebViewCoordinatorDelegate
+        child.show(on: navigationController, using: context)
         self.child = child
     }
 }

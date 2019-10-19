@@ -68,6 +68,12 @@ public final class WebViewController: UIViewController, WebViewInput {
         prepareWebView()
     }
     
+    /// Модуль будет отображен.
+    public override func viewWillAppear(_ animated: Bool) {
+        let navVC = navigationController!
+        navVC.isNavigationBarHidden = true
+    }
+    
     /// Выполняет первоначальную настройку веб отображения.
     private func prepareWebView() {
         tab = presenter.currentTab()
