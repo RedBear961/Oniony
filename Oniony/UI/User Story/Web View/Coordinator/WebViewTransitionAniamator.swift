@@ -95,8 +95,6 @@ final public class WebViewAnimatedPresenting: WebViewAnimatedTransitioning<Never
         using transitioningContext: UIViewControllerContextTransitioning
     ) {
         //  Настройка свойств начала анимации.
-        let navVC = toVC.navigationController!
-        navVC.setToolbarHidden(false, animated: false)
         let contentOffset = toVC.contentOffset
         let container = transitioningContext.containerView
         
@@ -130,8 +128,6 @@ final public class WebViewAnimatedDismissing: WebViewAnimatedTransitioning<WebVi
         using transitioningContext: UIViewControllerContextTransitioning
     ) {
         //  Настройка свойств начала анимации.
-        let navVC = fromVC.navigationController!
-        navVC.setToolbarHidden(true, animated: true)
         let contentOffset = fromVC.contentOffset
         let container = transitioningContext.containerView
         to.frame = from.frame

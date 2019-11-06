@@ -65,7 +65,14 @@ final public class TabViewCell: UICollectionViewCell {
             isRedraw = true
         }
         
-        tab.snapshot(in: frame, redraw: isRedraw) { (image) in
+        tab.snapshot(in: bounds, redraw: isRedraw) { (image) in
+            self.imageView.image = image
+        }
+    }
+    
+    public func forceRedraw(using tab: Tab) {
+        name.text = tab.title
+        tab.snapshot(in: bounds, redraw: true) { (image) in
             self.imageView.image = image
         }
     }

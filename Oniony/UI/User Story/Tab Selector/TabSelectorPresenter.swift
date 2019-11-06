@@ -60,10 +60,15 @@ final public class TabSelectorPresenter: TabSelectorPresenting {
     
     /// Модуль был загружен.
     public func viewDidLoad() {
-        if isFirstShow {
+        Condition.when(&isFirstShow) {
             coordinator.toWebView()
-            isFirstShow = false
         }
+    }
+    
+    public func viewWillAppear() {
+        let indexPath = tabsManager.indexPathOfCurrentTab()
+        let tab = tabsManager.currentTab()
+        tabSelector.updateCell(at: indexPath, using: tab)
     }
 }
 

@@ -18,6 +18,16 @@ public enum Images {
             return image(named: "Logo")
         }
     }
+
+    public enum webView {
+
+        public enum toolbar {
+
+            public static var control: UIImage {
+                return image(named: "control")
+            }
+        }
+    }
 }
 
 /// Приватное расширение для получения изображений по имени.

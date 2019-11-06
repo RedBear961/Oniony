@@ -63,9 +63,32 @@ public final class WebViewController: UIViewController, WebViewInput {
     /// Заглушка в стиле визуального эффекта, что верх смотрелся красиво.
     @IBOutlet var topView: UIVisualEffectView!
     
+    /// Основной контейнер контента.
+    @IBOutlet var container: _IBContainer!
+    
+    /// Бар управления вебом.
+    private var toolbarView: WebToolbarView!
+    
     /// Модуль загружен.
     public override func viewDidLoad() {
+        navigationController?.isToolbarHidden = true
         prepareWebView()
+    }
+    
+    /// Модуль был загружен.
+    public override func viewDidAppear(_ animated: Bool) {
+        let frame = CGRect(x: 0, y: view.height, width: view.width, height: 130)
+        toolbarView = WebToolbarView(frame: frame)
+        toolbarView.delegate = self
+        view.addSubview(toolbarView)
+        UIView.spring(with: 0.5, damping: 0.7, velocity: 0.2, animations: {
+            self.toolbarView.y -= 130
+        }, completion: { (_) in
+            self.toolbarView.autoSetDimension(.height, toSize: frame.height)
+            self.toolbarView.autoPinEdge(toSuperviewEdge: .bottom)
+            self.toolbarView.autoPinEdge(toSuperviewEdge: .leading)
+            self.toolbarView.autoPinEdge(toSuperviewEdge: .trailing)
+        })
     }
     
     /// Модуль будет отображен.
@@ -78,13 +101,15 @@ public final class WebViewController: UIViewController, WebViewInput {
     private func prepareWebView() {
         tab = presenter.currentTab()
         let webView = tab.webView
-        view.addSubview(webView)
+        container.addSubview(webView)
         webView.autoPinEdgesToSuperviewEdges()
-        view.bringSubviewToFront(topView)
     }
+}
+
+extension WebViewController: WebToolbarDelegate {
     
-    /// Нажата кнопка перехода ко вкладкам.b
-    @IBAction func touchTabs(_ sender: UIBarButtonItem) {
+    public func tabsDidTouch(_ toolbar: WebToolbarView) {
+        toolbarView.hide(with: 0.3)
         presenter.showTabSelector()
     }
 }

@@ -15,6 +15,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E5E-ye-oEf" customClass="_IBContainer" customModule="Oniony" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UB9-ei-ihl">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="l4k-rP-oJr">
@@ -26,30 +30,38 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="sZD-SX-cAJ" firstAttribute="top" secondItem="UB9-ei-ihl" secondAttribute="bottom" id="Aed-Ji-tZk"/>
+                            <constraint firstAttribute="top" secondItem="UB9-ei-ihl" secondAttribute="bottom" constant="-44" id="Aed-Ji-tZk"/>
+                            <constraint firstItem="E5E-ye-oEf" firstAttribute="top" secondItem="Lga-Sn-Sap" secondAttribute="top" id="NmC-C1-t5W"/>
                             <constraint firstItem="UB9-ei-ihl" firstAttribute="top" secondItem="Lga-Sn-Sap" secondAttribute="top" id="X37-qf-crs"/>
+                            <constraint firstAttribute="bottom" secondItem="E5E-ye-oEf" secondAttribute="bottom" id="XtL-e6-4u4"/>
+                            <constraint firstItem="E5E-ye-oEf" firstAttribute="leading" secondItem="Lga-Sn-Sap" secondAttribute="leading" id="aN9-jh-iz0"/>
+                            <constraint firstAttribute="trailing" secondItem="E5E-ye-oEf" secondAttribute="trailing" id="bA7-Aa-pM1"/>
                             <constraint firstItem="UB9-ei-ihl" firstAttribute="leading" secondItem="sZD-SX-cAJ" secondAttribute="leading" id="oSL-Zs-vOo"/>
-                            <constraint firstItem="sZD-SX-cAJ" firstAttribute="trailing" secondItem="UB9-ei-ihl" secondAttribute="trailing" id="rMC-Aj-KJ0"/>
+                            <constraint firstAttribute="trailing" secondItem="UB9-ei-ihl" secondAttribute="trailing" id="rMC-Aj-KJ0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="sZD-SX-cAJ"/>
                     </view>
                     <toolbarItems>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="kw2-Fg-RqR"/>
-                        <barButtonItem title="Вкладки" id="8lz-34-DKh">
+                        <barButtonItem title="Вкладки" image="square.on.square" catalog="system" id="8lz-34-DKh">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="touchTabs:" destination="e61-OY-zPU" id="geZ-jl-GIo"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="container" destination="E5E-ye-oEf" id="D6C-fp-bgi"/>
                         <outlet property="topView" destination="UB9-ei-ihl" id="Jby-Sn-dXA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eIE-Qn-HQS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="45" y="-1"/>
+            <point key="canvasLocation" x="44.927536231884062" y="-1.3392857142857142"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="square.on.square" catalog="system" width="64" height="58"/>
+    </resources>
 </document>

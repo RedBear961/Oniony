@@ -36,7 +36,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="200" height="30"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;Имя вкладки&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pKR-GA-LC7">
-                                <rect key="frame" x="8" y="6" width="111" height="18"/>
+                                <rect key="frame" x="8" y="6" width="184" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -46,6 +46,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="FTd-dV-XAp"/>
                             <constraint firstItem="pKR-GA-LC7" firstAttribute="centerY" secondItem="VkP-kP-IfL" secondAttribute="centerY" id="POj-HX-NS4"/>
+                            <constraint firstAttribute="trailing" secondItem="pKR-GA-LC7" secondAttribute="trailing" constant="8" id="ait-hg-IIp"/>
                             <constraint firstItem="pKR-GA-LC7" firstAttribute="leading" secondItem="VkP-kP-IfL" secondAttribute="leading" constant="8" id="nRf-Al-c66"/>
                         </constraints>
                     </view>

@@ -21,6 +21,7 @@
 */
 
 import UIKit
+import EasySwift
 
 /// Протокол управляющего вкладками.
 public protocol TabsManagement {
@@ -37,6 +38,12 @@ public protocol TabsManagement {
     
     /// Выдает вкладку по ее индексу.
     func tab(at index: UInt) -> Tab?
+    
+    /// Находит индекс пути для вкладки.
+    func indexPath(for tab: Tab) -> IndexPath?
+    
+    /// Находит индекс пути текущей вкладки.
+    func indexPathOfCurrentTab() -> IndexPath
     
     /// Назначает новую действующую вкладку.
     ///
@@ -74,12 +81,21 @@ public protocol TabsManagement {
     func finishSession()
 }
 
+public extension TabsManagement {
+    
+    /// Находит вкладку по индексу пути.
+    func tab(at indexPath: IndexPath) -> Tab? {
+        let index: UInt = indexPath.absolute(with: 2)
+        return tab(at: index)
+    }
+}
+
 /// Делегат, контролирующий изменения вкладок.
 public protocol TabsControlDelegate: class {
 }
 
 /// Управляющий вкладками класс.
-final public class TabsManager: TabsManagement {
+final public class TabsManager {
 
     /// Все открытые вкладки.
     public var tabs: [Tab] = []
@@ -136,6 +152,17 @@ final public class TabsManager: TabsManagement {
         tabs.remove(at: i)
     }
     
+    /// Находит индекс пути для вкладки.
+    public func indexPath(for tab: Tab) -> IndexPath? {
+        guard let index = tabs.firstIndex(of: tab) else {
+            return nil
+        }
+        
+        let sections = Int(index) / 2
+        let rows = sections - Int(index)
+        return IndexPath(row: rows, section: sections)
+    }
+    
     /// Начинает новую сессию.
     public func beginSession() {
     }
@@ -186,6 +213,29 @@ public final class TabsManagerMock: TabsManagement {
         }
         
         return tabs[i]
+    }
+    
+    /// Находит индекс пути для вкладки.
+    public func indexPath(for tab: Tab) -> IndexPath? {
+        guard let index = tabs.firstIndex(of: tab) else {
+            return nil
+        }
+        
+        let div = Div(lhs: Int(index), rhs: 2)
+        return IndexPath(
+            row: div.remainder,
+            section: div.quotient
+        )
+    }
+    
+    public func indexPathOfCurrentTab() -> IndexPath {
+        guard let indexPath = indexPath(for: currentTab()) else {
+            fatalError(
+                "TabsManagerMock",
+                "Не удалось получить индекс пути для текущий вкладки, что невозмможно."
+            )
+        }
+        return indexPath
     }
     
     /// Назначает новую действующую вкладку.

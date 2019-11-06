@@ -23,17 +23,21 @@
 import UIKit
 import EasySwift
 
-/// Стандартный отступ между ячейками.
-private let kCellIndent: CGFloat = 20
-
-/// Половинный отступ между ячейками (для выравнивания по ввертикали).
-private let kHalfCellIndent = kCellIndent / 2
-
-/// Соотношение сторон ячейки для портретной ориентации.
-private let kCellPortraitRatio: CGFloat = 1.1
-
-/// Соотношение сторон ячейки для альбомной ориентации.
-private let kCellLandscapeRatio: CGFloat = 0.42
+/// Константы, применяемые в этом файле.
+fileprivate extension CGFloat {
+    
+    /// Стандартный отступ между ячейками.
+    static let indent: CGFloat = 20
+    
+    /// Половинный отступ между ячейками (для выравнивания по ввертикали).
+    static let halfIndent: CGFloat = indent / 2
+    
+    /// Соотношение сторон ячейки для портретной ориентации.
+    static let portraitRatio: CGFloat = 1.1
+    
+    /// Соотношение сторон ячейки для альбомной ориентации.
+    static let landscapeRatio: CGFloat = 0.42
+}
 
 /// Протокол контроллера модуля переключения вкладок.
 public protocol TabSelector where Self: UIViewController {
@@ -43,6 +47,9 @@ public protocol TabSelector where Self: UIViewController {
     
     /// Радиус закругления ячеек коллекции.
     var cornerRadius: CGFloat { get }
+    
+    /// Обновить вкладку по индексу.
+    func updateCell(at indexPath: IndexPath, using tab: Tab)
 }
 
 /// Модуль переключения вкладок.
@@ -57,7 +64,7 @@ final public class TabSelectorController: UICollectionViewController, TabSelecto
     
     /// Текущее соотношение сторон ячеек коллекции.
     public var aspectRatio: CGFloat {
-        return orientation.isPortrait ? kCellPortraitRatio : kCellLandscapeRatio
+        return orientation.isPortrait ? .portraitRatio : .landscapeRatio
     }
     
     /// Радиус закругления ячеек коллекции.
@@ -109,6 +116,7 @@ final public class TabSelectorController: UICollectionViewController, TabSelecto
         let navVC = navigationController!
         navVC.isNavigationBarHidden = false
         updateFlow()
+        presenter.viewWillAppear()
     }
     
     /// Произошла смена ориентации.
@@ -120,13 +128,18 @@ final public class TabSelectorController: UICollectionViewController, TabSelecto
         collectionView.reloadData()
     }
     
+    public func updateCell(at indexPath: IndexPath, using tab: Tab) {
+        let cell = collectionView.cellForItem(at: indexPath) as? TabViewCell
+        cell?.forceRedraw(using: tab)
+    }
+    
     // MARK: - Приватные функции
     
     /// Обновляет флоу коллекции.
     private func updateFlow() {
         // На экране 3 промежутка между отступами и 2 ячейки на нем.
         let screenSize = collectionView.size
-        let width = (screenSize.width - kCellIndent * 3) / 2
+        let width = (screenSize.width - .indent * 3) / 2
         let height = width * aspectRatio
         itemSize = CGSize(width: width, height: height)
     }
@@ -171,6 +184,7 @@ public extension TabSelectorController {
         return cell
     }
     
+    /// Нажат ячейка по индексу.
     override func collectionView(
         _ view: UICollectionView,
         didSelectItemAt indexPath: IndexPath
@@ -205,11 +219,11 @@ extension TabSelectorController: UICollectionViewDelegateFlowLayout {
     ) -> UIEdgeInsets {
         let lastSection = presenter.lastSection
         let isFulled = presenter.isFulled(lastSection)
-        var insets = isFulled ? singleInsets() : UIEdgeInsets(kCellIndent)
+        var insets = isFulled ? singleInsets() : UIEdgeInsets(.indent)
 
         // Делает фикс верха и низа для равномерного размещения
         // всех ячеек в коллекции.
-        let fix = kHalfCellIndent
+        let fix: CGFloat = .halfIndent
         switch section {
             case 0:
                 insets.bottom = fix
@@ -229,8 +243,8 @@ extension TabSelectorController: UICollectionViewDelegateFlowLayout {
     /// Эти отступы требуют фикса верха и низа.
     private func singleInsets() -> UIEdgeInsets {
         let width = collectionView.width
-        var insets = UIEdgeInsets(kCellIndent)
-        insets.right = width - (itemSize.width + kCellIndent)
+        var insets = UIEdgeInsets(.indent)
+        insets.right = width - (itemSize.width + .indent)
         return insets
     }
 }
